@@ -4,8 +4,91 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e5250683802a3ca91c5909397d0e1f6",
+    "content-hash": "02faf80994b8a475acd6dca9ed4b7573",
     "packages": [
+        {
+            "name": "aerni/laravel-spotify",
+            "version": "v1.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aerni/laravel-spotify.git",
+                "reference": "3c7d96dc094e9ec9a9146b35b589c0f04f9fa30c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aerni/laravel-spotify/zipball/3c7d96dc094e9ec9a9146b35b589c0f04f9fa30c",
+                "reference": "3c7d96dc094e9ec9a9146b35b589c0f04f9fa30c",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.5|^7.0",
+                "illuminate/support": "^7.0|^8.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.0",
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Aerni\\Spotify\\Providers\\SpotifyClientServiceProvider",
+                        "Aerni\\Spotify\\Providers\\SpotifyServiceProvider"
+                    ],
+                    "aliases": {
+                        "SpotifyClient": "Aerni\\Spotify\\Facades\\SpotifyClientFacade",
+                        "Spotify": "Aerni\\Spotify\\Facades\\SpotifyFacade",
+                        "SpotifySeed": "Aerni\\Spotify\\Facades\\SpotifySeedFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Aerni\\Spotify\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Aerni",
+                    "email": "hello@michaelaerni.ch",
+                    "homepage": "https://www.michaelaerni.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel wrapper for the Spotify Web API",
+            "homepage": "https://github.com/aerni/laravel-spotify",
+            "keywords": [
+                "Album",
+                "Artists",
+                "albums",
+                "api",
+                "artist",
+                "browse",
+                "laravel",
+                "music",
+                "playlist",
+                "playlists",
+                "search",
+                "songs",
+                "spotify",
+                "spotify-api",
+                "spotify-web-api",
+                "track",
+                "tracks",
+                "wrapper"
+            ],
+            "support": {
+                "issues": "https://github.com/aerni/laravel-spotify/issues",
+                "source": "https://github.com/aerni/laravel-spotify/tree/v1.6.1"
+            },
+            "time": "2021-01-02T15:06:29+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.0.3",
@@ -1647,16 +1730,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.36.0",
+            "version": "v8.36.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c07477098c3685fcf812920d2fa8fa3a77e1e0bf"
+                "reference": "0debd8ad6b5aa1f61ccc73910adf049af4ca0444"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c07477098c3685fcf812920d2fa8fa3a77e1e0bf",
-                "reference": "c07477098c3685fcf812920d2fa8fa3a77e1e0bf",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0debd8ad6b5aa1f61ccc73910adf049af4ca0444",
+                "reference": "0debd8ad6b5aa1f61ccc73910adf049af4ca0444",
                 "shasum": ""
             },
             "require": {
@@ -1811,7 +1894,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-04-06T13:58:47+00:00"
+            "time": "2021-04-07T12:37:22+00:00"
         },
         {
             "name": "laravel/jetstream",

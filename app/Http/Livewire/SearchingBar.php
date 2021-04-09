@@ -2,14 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Likable;
 use App\Models\Song;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class SearchingBar extends Component
 {
-    use Likable;
     use WithPagination;
 
     public $term = "";

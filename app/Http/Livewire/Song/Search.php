@@ -9,24 +9,36 @@ class Search extends Component
 {
     public $song;
     public $likes;
-
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    public $liked;
 
     public function like()
     {
         if ($this->song->isLikedBy(current_user())) {
             $this->song->dislike();
+            $this->likes--;
+            if ($this->likes == 0) {
+                $this->likes = null;
+            }
+            $this->liked = false;
         } else {
             $this->song->like();
+            $this->likes++;
+            $this->liked = true;
         }
-        $this->emit('refreshComponent');
     }
+
 
     public function mount(Song $song)
     {
         $this->song = $song;
-        $this->likes = $song->likes;
 
+        $this->liked = $song->isLikedBy(current_user());
+
+        if ($song->likes == null || $song->likes == 0) {
+            $this->likes = null;
+        } else {
+            $this->likes = $song->likes;
+        }
     }
 
     public function render()

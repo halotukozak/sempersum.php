@@ -35,14 +35,16 @@ trait Likable
 
     public function dislike($user = null)
     {
-        $user ? $id = $user->id : $id =  current_user()->id;
-        return $this->likes()->delete([
-            'user_id' => $id
-        ]);
+        $user ? $id = $user->id : $id = current_user()->id;
+        return $this->likes()
+            ->where('user_id', '=', $id)
+            ->update(['liked' => 0
+            ]);
     }
 
-    public function isLikedBy(User $user)
+    public function isLikedBy(User $user = null)
     {
+        if (!$user) return false;
         return (bool)$user->likes
             ->where('song_id', $this->id)
             ->where('liked', true)

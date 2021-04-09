@@ -13,21 +13,34 @@ class Searching extends Component
     use WithPagination;
 
     public $term = "";
+    public $songs = [];
 
-    public function updatingTerm()
+    public function mount()
     {
-        $this->render();
+        $this->resetBar();
+    }
+
+    public function resetBar()
+    {
+        $this->songs = [];
+        $this->term = "";
+    }
+
+    public function updatedTerm()
+    {
+        $this->songs = Song::where('title', 'like', '%' . $this->term . '%')
+            ->withLikes()
+            ->get()
+            ->toArray();
+        $this->resetPage();
     }
 
     public function render()
     {
-        $term = '%' . $this->term . '%';
         return view('livewire.searching', [
-            'songs' => $this->songs = Song::where('title', 'like', $term)
+            'songs' => $this->songs = Song::where('title', 'like', '%' . $this->term . '%')
                 ->withLikes()
-                ->paginate(10)
+                ->get(),
         ]);
     }
-
-
 }

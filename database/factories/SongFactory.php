@@ -26,7 +26,7 @@ class SongFactory extends Factory
     {
         return [
             'artist_id' => Artist::factory(),
-            'slug' => $this->faker->slug,
+            'slug' => $this->faker->slug(),
             'title' => $this->faker->sentence(4),
             'text' => '
 Bbm
@@ -75,16 +75,16 @@ Przezroczysty świat
 
             ',
             'spotifyId' => '7eHEO2L50fQXg48HA5f1ya',
-            'deezerLink' => '398369572',
+            'deezerId' => '398369572',
             'youtubeId' => '1fz7Igd7iSw',
             'soundcloudId' => '255455712',
-            'comments' => $this->faker->text,
+            'comments' => $this->faker->text(),
             'key' => $this->faker->randomElement([
                 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'Bb', 'B'
             ]),
-            'isVerified' => $this->faker->boolean,
-            'isBanned' => $this->faker->boolean,
-            'isOutOfDate' => $this->faker->boolean,
+            'isVerified' => $this->faker->boolean(),
+            'isBanned' => $this->faker->boolean(),
+            'isOutOfDate' => $this->faker->boolean(),
         ];
     }
 }

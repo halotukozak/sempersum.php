@@ -13,6 +13,9 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            spacing: {
+                128: '32rem',
+            },
         },
     },
 
@@ -21,6 +24,7 @@ module.exports = {
             opacity: ['disabled'],
         },
         width: ["responsive", "hover", "focus"],
+        textColor: ['dark'],
     },
 
     darkMode: 'class',
