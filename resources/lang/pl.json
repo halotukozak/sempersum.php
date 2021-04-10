@@ -31,7 +31,7 @@
     "Create API Token": "Utwórz token API",
     "Create New Team": "Utwórz nowy zespół",
     "Create Team": "Utwórz zespół",
-    "Create": "Utworz",
+    "Create": "Utwórz",
     "Created.": "Tworzone.",
     "Current Password": "Aktualne hasło",
     "Dashboard": "Panel",
@@ -67,7 +67,7 @@
     "Last active": "Ostatnio aktywny",
     "Last used": "Ostatnio używany",
     "Leave Team": "Opuść zespół",
-    "Leave": "Opuszcz",
+    "Leave": "Opuść",
     "Login": "Zaloguj się",
     "Logout Other Browser Sessions": "Wyloguj się z innych sesji przeglądarek",
     "Logout": "Wyloguj się",
@@ -183,7 +183,7 @@
     "You may not leave a team that you created.": "Nie możesz opuścić zespołu, które stworzyłeś",
     "Your email address is not verified.": "Twój adres email nie jest zweryfikowany.",
     "Connected Accounts": "Połączone konta",
-    "Manage and remove your connect accounts.": "Zarządzaj i usuwaj połaczone konta.",
+    "Manage and remove your connect accounts.": "Zarządzaj i usuwaj połączone konta.",
     "Your connected accounts.": "Twoje połączone konta.",
     "You have no connected accounts.": "Nie masz żadnych połączonych kont.",
     "You are free to connect any social accounts to your profile and may remove any connected accounts at any time. If you feel any of your connected accounts have been compromised, you should disconnect them immediately and change your password.": "Możesz połączyć swoje social media z profilem a także usunąć wszelkie połączenia w dowolnym momencie.",
@@ -194,5 +194,6 @@
     "Or" : "lub",
     "I agree to the :terms_of_service and :privacy_policy" : "Akceptuję :terms_of_service i :privacy_policy",
     "Terms of Service" : "Regulamin serwisu",
-    "Privacy Policy" : "Politykę prywatności"
+    "Privacy Policy" : "Politykę prywatności",
+    "Cancel" : "Anuluj"
 }

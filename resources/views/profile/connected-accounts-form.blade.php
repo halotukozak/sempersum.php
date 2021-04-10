@@ -44,9 +44,9 @@
                                 @endif
                             </div>
                         @else
-                            <x-action-link href="{{ route('oauth.redirect', ['provider' => $provider]) }}">
+                            <x-jet-button href="{{ route('oauth.redirect', ['provider' => $provider]) }}">
                                 {{ __('Connect') }}
-                            </x-action-link>
+                            </x-jet-button>
                         @endif
                     </x-slot>
 

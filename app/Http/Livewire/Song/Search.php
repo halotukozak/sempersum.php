@@ -13,17 +13,22 @@ class Search extends Component
 
     public function like()
     {
-        if ($this->song->isLikedBy(current_user())) {
-            $this->song->dislike();
-            $this->likes--;
-            if ($this->likes == 0) {
-                $this->likes = null;
+        if (current_user()) {
+            if ($this->song->isLikedBy(current_user())) {
+                $this->song->dislike();
+                $this->likes--;
+                if ($this->likes == 0) {
+                    $this->likes = null;
+                }
+                $this->liked = false;
+            } else {
+                $this->song->like();
+                $this->likes++;
+                $this->liked = true;
             }
-            $this->liked = false;
-        } else {
-            $this->song->like();
-            $this->likes++;
-            $this->liked = true;
+        }
+        else {
+            $this->redirect(route('login'));
         }
     }
 
