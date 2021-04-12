@@ -3,11 +3,11 @@
 
     if (hideButton) {
         hideButton.addEventListener("click", function (event) {
-            spans = document.getElementsByClassName("c");
+            spans = document.getElementsByClassName("chordLine");
 
             let i = 0;
             while (spans[i] != null) {
-                spans[i].classList.toggle("d-none");
+                spans[i].classList.toggle("spanHidden");
                 i++;
             }
         });

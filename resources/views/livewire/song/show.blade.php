@@ -12,204 +12,135 @@
                 </button>
                 <span class="text-2xl md:text-4xl font-black text-gray-700 dark:text-gray-200">{{ $song->title }}</span>
                 <div class="flex justify-center mb-3">
-                    @if ($song->artist->path() == "")
-                        <a href="{{ $song->artist->path() }}">
-                            <img class="object-cover w-20 h-20 rounded-full"
-                                 alt="Artist's avatar."
-                                 src="{{ $song->artist->avatar() }}">
-                        </a>
-                    @else
-                        <div class="object-cover w-20 h-20 rounded-full bg-blue-600"></div>
-                    @endif
+                    <a href="{{ $song->artist->path() }}">
+                        <img class="object-cover w-20 h-20 rounded-full"
+                             alt="Artist's avatar."
+                             src="{{ $song->artist->avatar() }}">
+                    </a>
+                    <div class="relative h-0 pb-fluid-video">
+                        <button wire:click="followArtist" class="bg-green-500">Spotify</button>
+                    </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row d-flex justify-content-between">
-                            <div class="col">
-                                <span class="h2">{{ $song->title }}</span>
+            <div class="inline-flex space-x-2 m-3">
+                @auth
+                    <x-jet-button>Edytuj</x-jet-button>
+                @endauth
 
-                                <div class="text-muted">
-                                    {{ $song->comments }}
+                @can('verify', $song)
+                    @if(!($song->isVerified))
+                        <x-jet-button>Zatwierdź</x-jet-button>
+                    @endif
+                @endcan
+                <x-jet-dropdown>
+                    <x-slot name="trigger">
+                        <x-jet-button>Transponuj</x-jet-button>
+                    </x-slot>
+                    <x-slot name="content">
+                        @foreach ($keys as $key)
+                            <x-jet-dropdown-link class="key">{{ $key }}</x-jet-dropdown-link>
+                        @endforeach</x-slot>
+                </x-jet-dropdown>
+
+                <x-jet-button id="hide" role="button">Ukryj akordy</x-jet-button>
+            </div>
+
+            <pre data-key="{{ $song->key }}" class="m-3">{{ $song->text }}</pre>
+
+            <div class="dark:text-white p-2" x-data="{selected:{!! $preferred_playback !!}}">
+                <ul class="shadow-box">
+                    @if($song->youtubeId)
+                        <li class="relative rounded-xl dark:bg-gray-800 ">
+                            <button type="button" class="w-full px-8 py-6 text-left"
+                                    @click="selected !== 1 ? selected = 1 : selected = null"
+                                    x-bind:class="selected == 1 ? 'bg-gray-900' : ''">
+                                <div class="flex items-center justify-between">
+                                    <span>YouTube <i class="fab fa-youtube"></i></span>
                                 </div>
-                                <hr class="d-none d-md-block">
-                                <div class="p-1 flex-column d-none d-md-block">
-                                    @foreach($song->tags as $tag)
-                                        <a href="{{ route('search', ['tag' => $tag->name]) }}"
-                                           class="btn btn-outline-info m-1">#{{ $tag->name }}</a>
-                                    @endforeach
+                            </button>
+                            <div class="relative overflow-hidden transition-all max-h-0 duration-700"
+                                 style=""
+                                 x-ref="container1"
+                                 x-bind:style="selected == 1 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
+                                <div class="p-6">
+                                    <iframe class=""
+                                            src="https://www.youtube-nocookie.com/embed/{{ $song->youtubeId }}?controls=0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen>
+                                    </iframe>
                                 </div>
                             </div>
-                            <div class="flex-column text-center justify-content-center">
-                                <iframe class="d-block mx-auto"
-                                        src="https://open.spotify.com/follow/1/?uri={{ $song->artist->spotify('uri') }}&size=basic&theme=light&show-count=0"
-                                        width="100" height="35" scrolling="no" style="border:none;"
-                                        allowtransparency="true">
-                                </iframe>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        @auth
-                            <a class="btn btn-lg btn-primary m-2" href="{{ $song->path() }}/edit">
-                                <span class="p-1">Edytuj</span>
-                            </a>
-                        @endauth
-
-                        @can('verify', $song)
-                            @if(!($song->isVerified))
-                                <form method="POST" action="{{ $song->path() }}/verify" class="d-inline">
-                                    @csrf
-                                    <button class="btn btn-lg btn-primary" type="submit">
-                                        <span class="p-1">Zatwierdź</span>
-                                    </button>
-                                </form>
-                            @endif
-                        @endcan
-
-                        <button class="btn btn-lg btn-primary m-2" id="hide" role="button">
-                            <span class="p-1 mx-auto">Ukryj akordy</span>
-                        </button>
-
-                        <pre data-key="{{ $song->key }}" class="text-dark m-auto px-md-5">
-                        {{ $song->text }}
-                </pre>
-
-                        <hr class="d-md-none">
-                        <div class="p-1 d-md-none justify-content-center">
-                            @foreach($song->tags as $tag)
-                                <a href="{{ route('search', ['tag' => $tag->name]) }}"
-                                   class="btn btn-outline-info m-1">#{{ $tag->name }}</a>
-                            @endforeach
-                        </div>
-                        <div>
-                            @if($song->youtubeId)
-                                <div class="accordion" id="accordionExample">
-                                    <div class="card">
-                                        <div class="card-header p-0" id="headingOne">
-                                            <h5 class="mb-0">
-                                                <button
-                                                    class="btn btn-light collapsed justify-content-center p-3 col d-flex align-middle"
-                                                    type="button" data-toggle="collapse"
-                                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    <div class="col col-md-6"><i class="icon-youtube h2 pr-2"></i><span
-                                                            class="h2 m-2">YouTube</span>
-                                                    </div>
-                                                </button>
-                                            </h5>
-
-                                        </div>
-                                        <div id="collapseOne"
-                                             class="collapse {{ current_user()->preferred_playback == "youtube" ? "show" : "" }}"
-                                             aria-labelledby="headingOne"
-                                             data-parent="#accordionExample">
-                                            <div class="card-body p-0">
-                                                <div class="embed-responsive m-0 embed-responsive-16by9">
-                                                    <iframe class="embed-responsive-item"
-                                                            src="https://www.youtube-nocookie.com/embed/{{ $song->youtubeId }}?controls=0"
-                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                            allowfullscreen>
-                                                    </iframe>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endif
-                                    @if($song->spotifyId)
-                                        <div class="card">
-                                            <div class="card-header p-0" id="headingTwo">
-                                                <h5 class="mb-0">
-                                                    <button
-                                                        class="btn btn-light collapsed justify-content-center p-3 col d-flex "
-                                                        type="button" data-toggle="collapse"
-                                                        data-target="#collapseTwo" aria-expanded="false"
-                                                        aria-controls="collapseTwo">
-                                                        <div class=" col col-md-6"><i class="icon-spotify h1"></i><span
-                                                                class="h2 m-2">Spotify</span>
-                                                        </div>
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseTwo"
-                                                 class="collapse {{ current_user()->preferred_playback == "spotify" ? "show" : "" }}"
-                                                 aria-labelledby="headingTwo"
-                                                 data-parent="#accordionExample">
-                                                <div class="card-body p-0">
-                                                    <iframe class="embed-responsive m-0"
-                                                            src="https://open.spotify.com/embed/track/{{ $song->spotifyId}}"
-                                                            width="auto" height="380" allowtransparency="true"
-                                                            allow="encrypted-media">
-                                                    </iframe>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    @if($song->soundcloudLink)
-                                        <div class="card">
-                                            <div class="card-header p-0" id="headingThree">
-                                                <h5 class="mb-0">
-                                                    <button
-                                                        class="btn btn-light collapsed justify-content-center p-3 col d-flex "
-                                                        type="button" data-toggle="collapse"
-                                                        data-target="#collapseThree" aria-expanded="false"
-                                                        aria-controls="collapseThree">
-                                                        <div class=" col col-md-6"><i class="icon-soundcloud h2"></i><span
-                                                                class="h2 m-2">SoundCloud</span>
-                                                        </div>
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseThree"
-                                                 class="collapse {{ (current_user()->preferred_playback == "soundcloud") || (current_user()->preferred_playback == null) ? "show" : "" }}"
-                                                 aria-labelledby="headingThree"
-                                                 data-parent="#accordionExample">
-                                                <div class="card-body p-0">
-                                                    <iframe class="embed-responsive m-0"
-                                                            width="100%" height="300" scrolling="no"
-                                                            frameborder="no" allow="autoplay"
-                                                            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{ $song->soundcloudLink }}&color=%23b0acac&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true">
-                                                    </iframe>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    @if($song->deezerId)
-                                        <div class="card">
-                                            <div class="card-header p-0" id="headingFour">
-                                                <h5 class="mb-0 ">
-                                                    <button
-                                                        class="btn btn-light collapsed justify-content-center p-3 col d-flex "
-                                                        type="button" data-toggle="collapse"
-                                                        data-target="#collapseFour" aria-expanded="false"
-                                                        aria-controls="collapseFour">
-                                                        <div class=" col col-md-6"><i class="icon-deezer h2 m-2"></i><span
-                                                                class="h2 m-2"> Deezer</span>
-                                                        </div>
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseFour"
-                                                 class="collapse {{ current_user()->preferred_playback == "deezer" ? "show" : "" }}"
-                                                 aria-labelledby="headingFour"
-                                                 data-parent="#accordionExample">
-                                                <div class="card-body p-0">
-                                                    <iframe class="embed-responsive m-0"
-                                                            title="deezer-widget"
-                                                            src="https://widget.deezer.com/widget/auto/track/{{ $song->deezerId }}"
-                                                            width="100%"
-                                                            height="300" frameborder="0" allowtransparency="true"
-                                                            allow="encrypted-media">
-                                                    </iframe>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
+                        </li>
+                    @endif
+                    @if($song->spotifyId)
+                        <li class="relative rounded-xl dark:bg-gray-800">
+                            <button type="button" class="w-full px-8 py-6 text-left"
+                                    @click="selected !== 2 ? selected = 2 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span>Spotify <i class="fab fa-spotify"></i></span>
                                 </div>
-                        </div>
-                    </div>
-                </div>
+                            </button>
+                            <div class="relative overflow-hidden transition-all max-h-0 duration-700"
+                                 style=""
+                                 x-ref="container1"
+                                 x-bind:style="selected == 2 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
+                                <div class="p-6">
+                                    <iframe class="embed-responsive m-0"
+                                            src="https://open.spotify.com/embed/track/{{ $song->spotifyId}}"
+                                            width="auto" height="380" allowtransparency="true"
+                                            allow="encrypted-media">
+                                    </iframe>
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+                    @if($song->soundcloudId)
+                        <li class="relative rounded-xl dark:bg-gray-800">
+                            <button type="button" class="w-full px-8 py-6 text-left"
+                                    @click="selected !== 3 ? selected = 3 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span>SoundCloud <i class="fab fa-soundcloud"></i></span>
+                                </div>
+                            </button>
+                            <div class="relative overflow-hidden transition-all max-h-0 duration-700"
+                                 style=""
+                                 x-ref="container1"
+                                 x-bind:style="selected == 3 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
+                                <div class="p-6">
+                                    <iframe class="embed-responsive m-0"
+                                            width="100%" height="300" scrolling="no"
+                                            frameborder="no" allow="autoplay"
+                                            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{ $song->soundcloudId }}&color=%23b0acac&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                                    </iframe>
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+                    @if($song->deezerId)
+                        <li class="relative rounded-xl dark:bg-gray-800">
+                            <button type="button" class="w-full px-8 py-6 text-left"
+                                    @click="selected !== 4 ? selected = 4 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span>Deezer <i class="fab fa-deezer"></i></span>
+                                </div>
+                            </button>
+                            <div class="relative overflow-hidden transition-all max-h-0 duration-700"
+                                 style=""
+                                 x-ref="container1"
+                                 x-bind:style="selected == 4 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
+                                <div class="p-6">
+                                    <iframe class="embed-responsive m-0"
+                                            title="deezer-widget"
+                                            src="https://widget.deezer.com/widget/auto/track/{{ $song->deezerId }}"
+                                            width="100%"
+                                            height="300" frameborder="0" allowtransparency="true"
+                                            allow="encrypted-media">
+                                    </iframe>
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+                </ul>
             </div>
         </div>
     </div>
@@ -217,7 +148,7 @@
     <script src="{{ asset('js/jquery-transposer.js') }}"></script>
     <script src="{{ asset('js/chord-hider.js') }}"></script>
     <script type="text/javascript" defer>
-        $(function() {
+        $(function () {
             $("pre").transpose();
         });
     </script>

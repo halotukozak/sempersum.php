@@ -16,6 +16,7 @@ module.exports = {
             spacing: {
                 128: '32rem',
             },
+            extend: { padding: { "fluid-video": "56.25%" } },
         },
     },
 

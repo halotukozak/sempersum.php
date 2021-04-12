@@ -11,7 +11,6 @@ class Song extends Model
 
     protected $guarded = [];
 
-    public $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D','D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
 
 
     public function artist()

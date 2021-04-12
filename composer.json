@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
+        "ext-curl": "*",
         "aerni/laravel-spotify": "^1.6",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -16,7 +17,8 @@
         "laravel/sanctum": "^2.6",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.0"
+        "livewire/livewire": "^2.0",
+        "socialiteproviders/spotify": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -29,7 +29,6 @@ class Artist extends Model
 
     public function avatar()
     {
-        return "";
         return Spotify::artist($this->spotifyId)->get()['images'][2]['url'];
     }
 
