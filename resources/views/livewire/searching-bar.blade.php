@@ -26,7 +26,7 @@
                     </a>
                 </div>
                 @if($loop->iteration == 10)
-                    <a href="{{ route('start') }}">
+                    <a href="{{ route('start', ['search' => $term ]) }}">
                         <div
                             class="text-center relative block z-10 bg-white w-full rounded-t-none shadow-lg p-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 rounded-b-md">
                             <span class="dark:text-gray-300 text-xl">Zobacz więcej...</span>

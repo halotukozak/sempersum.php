@@ -18,6 +18,7 @@ class Searching extends Component
     public function mount()
     {
         $this->resetBar();
+        $this->term = request('search');
     }
 
     public function resetBar()
