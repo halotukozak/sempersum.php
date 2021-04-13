@@ -1,27 +1,44 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="shadow bg-white dark:bg-gray-600 rounded-lg mx-3 md:m-auto">
-            <div class="p-6 sm:px-10 bg-white dark:bg-gray-800 dark:border-gray-600 rounded-lg">
-                <button wire:click="like"
-                        class="pr-5"
-                        type="submit">
-                    <span class="text-2xl text-gray-700 inline-block p-2">
-                        <i class="text-2xl text-red-800 hover:text-red-7600 {{ $liked ? 'fas' : "far" }} fa-heart"></i>
-                        {!! $likes == null ? '&nbsp;&nbsp;' : $likes !!}
-                    </span>
-                </button>
-                <span class="text-2xl md:text-4xl font-black text-gray-700 dark:text-gray-200">{{ $song->title }}</span>
-                <div class="flex justify-center mb-3">
+            <div class="px-6 py-4 mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800 shadow-md mt-16">
+                <div class="flex justify-center -mt-16 md:justify-end mb-3">
                     <a href="{{ $song->artist->path() }}">
                         <img class="object-cover w-20 h-20 rounded-full"
                              alt="Artist's avatar."
                              src="{{ $song->artist->avatar() }}">
                     </a>
-                    <div class="relative h-0 pb-fluid-video">
-                        <button wire:click="followArtist" class="bg-green-500">Spotify</button>
-                    </div>
                 </div>
+                <button wire:click="like"
+                        class="inline-flex -mt-10 align-top"
+                        type="submit">
+                <span class="text-2xl text-gray-700 inline-block p-2">
+                    <i class="text-2xl text-red-800 hover:text-red-7600 {{ $liked ? 'fas' : "far" }} fa-heart"></i>
+            {!! $likes == null ? '&nbsp;&nbsp;' : $likes !!}
+            </span>
+                </button>
+                <a href="{{ $song->path() }}">
+
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-white md:mt-0 md:text-3xl">{{ $song->title }}</h2>
+
+                    <p class="mt-6 text-gray-600 dark:text-gray-200">
+                        @foreach($song->tags as $tag)
+                            {{--            <a href="{{ route('search', ['tag' => $tag->name]) }}"/>--}}
+                            <x-jet-secondary-button class="my-1 font-semibold">{{ $tag->name }}</x-jet-secondary-button>
+                        @endforeach
+                    </p>
+
+                    <div class="flex justify-end mt-4">
+                        <object>
+                            <a href="{{ $song->artist->path() }}"
+                               class="text-xl font-medium text-indigo-500 dark:text-indigo-300">{{ $song->artist->name }}
+                            </a>
+                        </object>
+                    </div>
+                </a>
             </div>
+
+
             <div class="inline-flex space-x-2 m-3">
                 @auth
                     <x-jet-button>Edytuj</x-jet-button>
@@ -50,10 +67,10 @@
             <div class="dark:text-white p-2" x-data="{selected:{!! $preferred_playback !!}}">
                 <ul class="shadow-box">
                     @if($song->youtubeId)
-                        <li class="relative rounded-xl dark:bg-gray-800 ">
-                            <button type="button" class="w-full px-8 py-6 text-left"
+                        <li class="relative dark:bg-gray-800 rounded-xl">
+                            <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md"
                                     @click="selected !== 1 ? selected = 1 : selected = null"
-                                    x-bind:class="selected == 1 ? 'bg-gray-900' : ''">
+                                    x-bind:class="selected == 1 ? 'bg-gray-50 dark:bg-gray-900' : ''">
                                 <div class="flex items-center justify-between">
                                     <span>YouTube <i class="fab fa-youtube"></i></span>
                                 </div>

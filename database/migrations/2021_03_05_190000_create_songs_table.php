@@ -22,7 +22,6 @@ class CreateSongsTable extends Migration
             $table->string('deezerId')->nullable();
             $table->string('youtubeId')->nullable();
             $table->string('soundcloudId')->nullable();
-            $table->text('comments')->nullable();
             $table->boolean('isVerified')->default(false);
             $table->boolean('isBanned')->default(false);
             $table->boolean('isOutOfDate')->default(false);

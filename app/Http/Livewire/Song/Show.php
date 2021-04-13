@@ -77,6 +77,7 @@ class Show extends Component
 
     public function followArtist()
     {
+        return Socialite::driver('google')->user();
 
 
     }

@@ -37,7 +37,7 @@
 
     @if (JoelButcher\Socialstream\Socialstream::hasGitlabSupport())
         <a href="{{ route('oauth.redirect', ['provider' => JoelButcher\Socialstream\Providers::gitlab()]) }}">
-            <x-gitlab-icon class="h-6 w-6 mx-2" />
+            <x-gitlab-icon />
         </a>
     @endif
 

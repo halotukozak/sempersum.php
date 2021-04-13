@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "951d316823236dd0c1708be0e4a8fcbd",
+    "content-hash": "9a582e26bb51a90a9af16d7a79b378dd",
     "packages": [
         {
             "name": "aerni/laravel-spotify",
@@ -3746,17 +3746,17 @@
             "time": "2020-12-01T23:09:06+00:00"
         },
         {
-            "name": "socialiteproviders/spotify",
+            "name": "socialiteproviders/zoho",
             "version": "4.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/SocialiteProviders/Spotify.git",
-                "reference": "f47da534af1fe3905d6d1ff63902e66f73206fce"
+                "url": "https://github.com/SocialiteProviders/Zoho.git",
+                "reference": "7edf769faf6ee851a3c698486dc1f42edba09ed9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SocialiteProviders/Spotify/zipball/f47da534af1fe3905d6d1ff63902e66f73206fce",
-                "reference": "f47da534af1fe3905d6d1ff63902e66f73206fce",
+                "url": "https://api.github.com/repos/SocialiteProviders/Zoho/zipball/7edf769faf6ee851a3c698486dc1f42edba09ed9",
+                "reference": "7edf769faf6ee851a3c698486dc1f42edba09ed9",
                 "shasum": ""
             },
             "require": {
@@ -3767,7 +3767,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "SocialiteProviders\\Spotify\\": ""
+                    "SocialiteProviders\\Zoho\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3776,13 +3776,13 @@
             ],
             "authors": [
                 {
-                    "name": "Brian Faust",
-                    "email": "hello@brianfaust.de"
+                    "name": "glowlogix",
+                    "email": "support@glowlogix.com"
                 }
             ],
-            "description": "Spotify OAuth2 Provider for Laravel Socialite",
+            "description": "Zoho OAuth2 Provider for Laravel Socialite",
             "support": {
-                "source": "https://github.com/SocialiteProviders/Spotify/tree/4.1.0"
+                "source": "https://github.com/SocialiteProviders/Zoho/tree/4.1.0"
             },
             "time": "2020-12-01T23:10:59+00:00"
         },
