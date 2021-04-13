@@ -37,31 +37,33 @@
                     </object>
                 </div>
             </div>
-            <div class="flex items-center md:space-x-2 md:p-4">
+            <div class="flex justify-center md:justify-start space-x-2 my-1 md:px-4 md:py-2 flex-wrap">
                 @auth
-                    <x-button-icon icon="fas fa-pen">Edytuj</x-button-icon>
+                    <a href="{{ route('editSong', ['song' => $song] ) }}"><x-button-icon icon="fas fa-pen" class="flex-none">Edytuj</x-button-icon></a>
                 @endauth
 
                 @can('verify', $song)
                     @if(!($song->isVerified))
-                        <x-jet-button>Zatwierdź</x-jet-button>
+                        <x-jet-button class="flex-none">Zatwierdź</x-jet-button>
                     @endif
                 @endcan
-                <x-jet-dropdown width="auto">
-                    <x-slot name="trigger">
-                        <x-button-icon icon="fas fa-sliders-h">Transponuj</x-button-icon>
-                    </x-slot>
-                    <x-slot name="content">
-                        @foreach ($keys as $key)
-                            <x-jet-dropdown-link class="key">{{ $key }}</x-jet-dropdown-link>
-                        @endforeach
-                    </x-slot>
-                </x-jet-dropdown>
+                <x-button-icon icon="fas fa-volume-mute" id="hide" role="button">Ukryj&nbsp;akordy</x-button-icon>
 
-                <x-button-icon icon="fas fa-volume-mute" id="hide" role="button">Ukryj akordy</x-button-icon>
+                <div class="inline-flex">
+                    <x-jet-dropdown align="left">
+                        <x-slot name="trigger">
+                            <x-button-icon icon="fas fa-sliders-h">Transponuj</x-button-icon>
+                        </x-slot>
+                        <x-slot name="content">
+                            @foreach ($keys as $key)
+                                <x-jet-dropdown-link class="key">{{ $key }}</x-jet-dropdown-link>
+                            @endforeach
+                        </x-slot>
+                    </x-jet-dropdown>
+                </div>
             </div>
 
-            <pre data-key="{{ $song->key }}" class="m-3 whitespace-pre-wrap">{{ $song->text }}</pre>
+            <pre wire:ignore data-key="{{ $song->key }}" class="m-3 whitespace-pre-wrap">{{ $song->text }}</pre>
 
             <div class="dark:text-white p-2" x-data="{selected:{!! $preferred_playback !!}}">
                 <ul class="shadow-box space-y-2">
@@ -169,9 +171,9 @@
     <script src="{{ asset('js/jquery.js')}}"></script>
     <script src="{{ asset('js/jquery-transposer.js') }}"></script>
     <script src="{{ asset('js/chord-hider.js') }}"></script>
-    <script type="text/javascript" defer>
-        $(function () {
-            $("pre").transpose();
-        });
+    <script type="text/javascript">
+            $(function () {
+                $("pre").transpose();
+            });
     </script>
 </div>

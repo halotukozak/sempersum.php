@@ -32,7 +32,6 @@ class Song extends Component
 
         $this->preferedPlayback();
 
-
     }
 
     public function like()
@@ -53,6 +52,7 @@ class Song extends Component
         } else {
             $this->redirect(route('login'));
         }
+
     }
 
     protected function preferedPlayback()
@@ -86,6 +86,8 @@ class Song extends Component
 
     public function render()
     {
+        $this->dispatchBrowserEvent('contentChanged');
+
         return view('livewire.song');
     }
 }
