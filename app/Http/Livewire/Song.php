@@ -77,17 +77,8 @@ class Song extends Component
 
     }
 
-    public function followArtist()
-    {
-        return Socialite::driver('google')->user();
-
-
-    }
-
     public function render()
     {
-        $this->dispatchBrowserEvent('contentChanged');
-
         return view('livewire.song');
     }
 }

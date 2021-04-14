@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class SoundcloudLink implements Rule
+class SoundcloudId implements Rule
 {
 
     public function __construct()

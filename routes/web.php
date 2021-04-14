@@ -10,6 +10,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/song/create', \App\Http\Livewire\CreateSong::class)->name('createSong');
+
 Route::get('/song/{song}', \App\Http\Livewire\Song::class)->name('song');
 
 Route::get('/song/{song}/edit', \App\Http\Livewire\EditSong::class)->name('editSong');
