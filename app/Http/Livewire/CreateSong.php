@@ -18,7 +18,7 @@ class CreateSong extends Component
     public $youtubeId;
     public $soundcloudId;
     public $key;
-    public $artistId;
+    public $artist;
     public $tags;
     public $isVerified;
 
@@ -27,6 +27,7 @@ class CreateSong extends Component
 
     public function addSong()
     {
+        return;
         $this->validate([
 
         ]);
@@ -34,6 +35,9 @@ class CreateSong extends Component
 
     public function updated($field)
     {
+        $this->title = ucfirst($this->title);
+
+
         $this->validateOnly($field, [
             'title' => ['required', 'min:3', 'max:255'],
             'text' => ['required'],
@@ -44,7 +48,7 @@ class CreateSong extends Component
             'tags' => ['exists:tags,id'],
             'isVerified' => [false],
             'key' => ['required', new KeyOK],
-            'artistId' => ['exists:artists']
+//            'artistId' => ['exists:artists']
         ]);
     }
 

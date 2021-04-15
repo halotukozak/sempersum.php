@@ -2,16 +2,17 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Song;
+use App\Models\Artist;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class SearchingBar extends Component
+
+class ArtistSelect extends Component
 {
     use WithPagination;
 
     public $term = "";
-    public $songs = [];
+    public $artists = [];
     public $highlightIndex = 0;
 
     public function mount()
@@ -21,14 +22,14 @@ class SearchingBar extends Component
 
     public function resetBar()
     {
-        $this->songs = [];
+        $this->artists = [];
         $this->term = '';
         $this->highlightIndex = 0;
     }
 
     public function incrementHighlight()
     {
-        if ($this->highlightIndex === count($this->songs) - 1) {
+        if ($this->highlightIndex === count($this->artists) - 1) {
             $this->highlightIndex = 0;
             return;
         }
@@ -38,28 +39,28 @@ class SearchingBar extends Component
     public function decrementHighlight()
     {
         if ($this->highlightIndex === 0) {
-            $this->highlightIndex = count($this->songs) - 1;
+            $this->highlightIndex = count($this->artists) - 1;
             return;
         }
         $this->highlightIndex--;
     }
 
-    public function selectSong()
+    public function selectArtist()
     {
-        $song = $this->songs[$this->highlightIndex] ?? null;
-        if ($song) {
-            $this->redirect($song->path());
+        $artist = $this->artists[$this->highlightIndex] ?? null;
+        if ($artist) {
+//
         }
     }
 
     public function updatedTerm()
     {
-        $this->songs = Song::where('title', 'like', '%' . $this->term . '%')
+        $this->artists = Artist::where('name', 'like', '%' . $this->term . '%')
             ->get();
     }
 
     public function render()
     {
-        return view('livewire.searching-bar');
+        return view('livewire.artist-select');
     }
 }

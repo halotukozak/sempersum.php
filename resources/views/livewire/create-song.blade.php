@@ -39,17 +39,30 @@
                     <form wire:submit.prevent="addSong" autocomplete="off">
                         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                             <div>
+                                @error('title')
+                                {{ $message }}
+                                @enderror
                                 <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł</label>
                                 <input wire:model="title" id="title" type="text"
                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                             </div>
                             <div>
-                                <label class="text-gray-700 dark:text-gray-200" for="key">Key</label>
-                                <input wire:model="key" id="key" type="text"
-                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                <label class="text-gray-700 dark:text-gray-200" for="key">Klucz</label>
+                                <select wire:model="key" id="key" type="text"
+                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    @foreach($keys as $key)
+                                        <option
+                                            class="block px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-100 transition"
+                                            value="{{ $key }}">{{ $key }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            {{ $artist }}
+                            <div>
+                                <label class="text-gray-700 dark:text-gray-200" for="artist">Artysta</label>
+                                <livewire:artist-select wire:model="artist"/>
                             </div>
                         </div>
-                        <livewire:select name="key" wire:model="key" readable="Klucz" :options="$keys"/>
                         <div class="flex justify-end mt-6">
                             <button
                                 class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">

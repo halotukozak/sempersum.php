@@ -18,13 +18,13 @@
     @if(!empty($term))
         @if(!empty($songs))
             @foreach($songs as $i => $song)
-                <div
-                    class="relative block z-10 bg-white w-full rounded-t-none shadow-lg p-4 {{ $highlightIndex === $i ? "bg-gray-200" : "" }} hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif">
-                    <a href="{{ route('song', $song['slug']) }}"
-                       class="no-underline">
-                        <span class="dark:text-gray-300">{{ $song['title'] }}</span>
-                    </a>
-                </div>
+                <a href="{{ $song->path() }}"
+                   class="relative block z-10 bg-white w-full rounded-t-none shadow-lg p-4 {{ $highlightIndex === $i ? "bg-gray-200" : "" }} hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif">
+                    <div
+                        class="no-underline">
+                        <span class="dark:text-gray-300">{{ $song->title }}</span>
+                    </div>
+                </a>
                 @if($loop->iteration == 10)
                     <a href="{{ route('start', ['search' => $term ]) }}">
                         <div
