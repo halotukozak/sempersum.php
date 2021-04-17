@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Artist;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,56 +12,100 @@ class ArtistSelect extends Component
 {
     use WithPagination;
 
-    public $term = "";
-    public $artists = [];
-    public $highlightIndex = 0;
+    public $name;
 
-    public function mount()
-    {
-        $this->resetBar();
-    }
+    public $value = null;
+    public $optionsValues;
+    public $allOptions;
 
-    public function resetBar()
-    {
-        $this->artists = [];
-        $this->term = '';
-        $this->highlightIndex = 0;
-    }
+    public $term;
 
-    public function incrementHighlight()
-    {
-        if ($this->highlightIndex === count($this->artists) - 1) {
-            $this->highlightIndex = 0;
-            return;
-        }
-        $this->highlightIndex++;
-    }
+    public $options;
+    public $emptyOptions;
+    public $isSearching;
+    public $selectedOption;
 
-    public function decrementHighlight()
+    public function mount($name)
     {
-        if ($this->highlightIndex === 0) {
-            $this->highlightIndex = count($this->artists) - 1;
-            return;
-        }
-        $this->highlightIndex--;
-    }
-
-    public function selectArtist()
-    {
-        $artist = $this->artists[$this->highlightIndex] ?? null;
-        if ($artist) {
-//
-        }
+        $this->name = $name;
+        $this->allOptions = Artist::all();
+        $this->options = $this->options();
     }
 
     public function updatedTerm()
     {
-        $this->artists = Artist::where('name', 'like', '%' . $this->term . '%')
-            ->get();
+        $this->options = $this->options($this->term);
+    }
+
+    public function options($term = null)
+    {
+        if ($term) {
+            $options = Artist::whereLike('name', $term)->get();
+            if ($options == []) {
+                return null;
+            }
+            return $options;
+        } else
+            return null;
+    }
+
+    public function selectedOption($value)
+    {
+        return null;
+    }
+
+    public function notifyValueChanged()
+    {
+        $this->emit("{$this->name}Updated", [
+            'name' => $this->name,
+            'value' => $this->value,
+        ]);
+    }
+
+    public function selectOption($optionId)
+    {
+        $option = Artist::find($optionId);
+        $this->selectedOption = $option;
+        $this->selectValue($option->id);
+    }
+
+    public function selectValue($value)
+    {
+        $this->value = $value;
+        if ($this->value == null) {
+            $this->emit('livewire-select-focus-search', ['name' => $this->name]);
+        }
+
+        if ($this->value != null) {
+            $this->emit('livewire-select-focus-selected', ['name' => $this->name]);
+        }
+
+        $this->notifyValueChanged();
+    }
+
+    public function updatedValue()
+    {
+        $this->selectValue($this->value);
+    }
+
+    public function isSearching(): bool
+    {
+        return !empty($this->term);
+    }
+
+    public function isEmpty(): bool
+    {
+        if ($this->options && count($this->options) > 0) {
+            return false;
+        } else
+            return true;
     }
 
     public function render()
     {
+        $this->isSearching = !empty($this->term);
+        $this->emptyOptions = $this->isEmpty();
+
         return view('livewire.artist-select');
     }
 }

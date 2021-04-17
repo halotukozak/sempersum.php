@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Artist;
 use Livewire\Component;
 use App\Rules\DeezerId;
 use App\Rules\KeyOK;
@@ -24,6 +25,7 @@ class CreateSong extends Component
 
     public $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
 
+    protected $listeners = ['artistUpdated' => 'setArtist'];
 
     public function addSong()
     {
@@ -31,6 +33,11 @@ class CreateSong extends Component
         $this->validate([
 
         ]);
+    }
+
+    public function setArtist($info)
+    {
+        $this->artist = Artist::find($info['value']);
     }
 
     public function updated($field)

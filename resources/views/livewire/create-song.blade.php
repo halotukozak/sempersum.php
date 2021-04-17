@@ -7,8 +7,8 @@
                     @if(isset($artist) && ($artist->avatar() != null))
                         <img
                             class="object-cover w-32 h-32 rounded-full border-2 dark:border-blue-400 dark:border-opacity-75"
-                            alt="Artist's avatar.">
-                        src="{{ $artist->avatar() }}">
+                            alt="Artist's avatar."
+                            src="{{ $artist->avatar() }}">
                     @else
                         <div
                             class="bg-blue-400 rounded-full w-32 h-32 border-2 dark:border-blue-400 dark:border-opacity-75">
@@ -30,6 +30,11 @@
                         @endforeach
                     @endisset
                 </p>
+
+                <div class="flex justify-end mt-4">
+                    <span
+                        class="text-xl font-medium text-indigo-500 dark:text-indigo-300">{!! $artist ? $artist->name : "&nbsp;" !!}</span>
+                </div>
 
             </div>
             <div class="flex justify-center md:justify-start space-x-2 my-1 px-1 md:px-6 md:py-2 flex-wrap">
@@ -57,10 +62,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {{ $artist }}
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="artist">Artysta</label>
-                                <livewire:artist-select wire:model="artist"/>
+                                <livewire:artist-select name="artist"/>
                             </div>
                         </div>
                         <div class="flex justify-end mt-6">
