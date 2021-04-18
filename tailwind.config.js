@@ -16,13 +16,15 @@ module.exports = {
             spacing: {
                 128: '32rem',
             },
-            extend: { padding: { "fluid-video": "56.25%" } },
+            extend: {padding: {"fluid-video": "56.25%"}},
         },
     },
 
     variants: {
         extend: {
             opacity: ['disabled'],
+            backgroundColor: ['checked'],
+            borderColor: ['checked'],
         },
         width: ["responsive", "hover", "focus"],
         textColor: ['dark'],

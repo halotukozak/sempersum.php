@@ -104,15 +104,17 @@
                             @endif
                         @endforeach
                     @elseif ($isSearching)
-                        <div class="block z-10 bg-white w-full rounded-t-none shadow-lg p-4 dark:bg-gray-800">
+                        <div
+                            class="block z-10 bg-white w-full rounded-t-none shadow-lg p-4 dark:bg-gray-800 rounded-b-md">
                             Przykro mi, ale nie wiem o co Ci chodzi...
                         </div>
                     @endif
-                    <div wire:loading class="block z-10 bg-white w-full rounded-t-none shadow-lg p-4 dark:bg-gray-800">
+                    <div wire:loading
+                         class="block z-10 bg-white w-full rounded-t-none shadow-lg p-4 dark:bg-gray-800 rounded-b-md">
                         Szukam...
                     </div>
                 </div>
             </div>
-
         @endif
-    </div></div>
+    </div>
+</div>

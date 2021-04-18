@@ -28,10 +28,14 @@
             </div>
 
             <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
+                <x-jet-label for="remember_me">
+                    <div class="flex items-center">
+                        <x-jet-checkbox name="remember_me" id="remember_me"/>
+                        <div class="ml-2">
+                            {{ __('Remember me') }}
+                        </div>
+                    </div>
+                </x-jet-label>
             </div>
 
             <div class="flex items-center justify-end mt-4">

@@ -44,17 +44,18 @@
                     <form wire:submit.prevent="addSong" autocomplete="off">
                         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                             <div>
-                                @error('title')
-                                {{ $message }}
-                                @enderror
                                 <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł</label>
-                                <input wire:model="title" id="title" type="text"
+                                <input wire:model="title" id="title" type="text" placeholder="Wpisz tytuł..."
                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="key">Klucz</label>
                                 <select wire:model="key" id="key" type="text"
                                         class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <option
+                                        class="block px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-100 transition"
+                                        value="">Wybierz klucz...
+                                    </option>
                                     @foreach($keys as $key)
                                         <option
                                             class="block px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-100 transition"
@@ -66,12 +67,57 @@
                                 <label class="text-gray-700 dark:text-gray-200" for="artist">Artysta</label>
                                 <livewire:artist-select name="artist"/>
                             </div>
-                        </div>
-                        <div class="flex justify-end mt-6">
-                            <button
-                                class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-                                {{__('Save') }}
-                            </button>
+                            <div>
+                                <label for="text"
+                                       class="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                    Tekst piosenki</label>
+                                <textarea wire:model="text" id="text"
+                                          class="block w-full h-56 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring font-mono"></textarea>
+                            </div>
+                            <div>
+                                @error('spotifyId')
+                                {{ $message }}
+                                @enderror
+                                <label class="text-gray-700 dark:text-gray-200" for="spotifyId">Link do Spotify<i
+                                        class="fab fa-spotify p-1"></i></label>
+                                <input wire:model="spotifyId" id="spotifyId" type="text" placeholder="Wprowadź link..."
+                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            </div>
+                            <div>
+                                <label class="text-gray-700 dark:text-gray-200" for="deezerId">Link do Deezer<i
+                                        class="fab fa-deezer p-1"></i></label>
+                                <input wire:model="deezerId" id="deezerId" type="text" placeholder="Wprowadź link..."
+                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            </div>
+                            <div>
+                                <label class="text-gray-700 dark:text-gray-200" for="youtubeId">Link do YouTube<i
+                                        class="fab fa-youtube p-1"></i></label>
+                                <input wire:model="youtubeId" id="youtubeId" type="text" placeholder="Wprowadź link..."
+                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            </div>
+                            <div>
+                                <label class="text-gray-700 dark:text-gray-200" for="soundcloudId">Link do SoundCloud<i
+                                        class="fab fa-soundcloud p-1"></i></label>
+                                <input wire:model="soundcloudId" id="soundcloudId" type="text"
+                                       placeholder="Wprowadź link..."
+                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            </div>
+                            <div>
+                                <x-jet-label for="isVerified">
+                                    <div class="flex items-center">
+                                        <x-jet-checkbox name="isVerified" id="isVerified"/>
+                                        <div class="ml-2">
+                                            Chcę zweryfikować tę piosenkę.
+                                        </div>
+                                    </div>
+                                </x-jet-label>
+                            </div>
+                            <div class="flex justify-end mt-6">
+                                <button
+                                    class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+                                    {{__('Save') }}
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </section>
