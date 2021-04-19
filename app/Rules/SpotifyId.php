@@ -2,11 +2,13 @@
 
 namespace App\Rules;
 
+use Aerni\Spotify\Exceptions\SpotifyApiException;
 use Illuminate\Contracts\Validation\Rule;
 use Spotify;
 
 class SpotifyId implements Rule
 {
+
     /**
      * Create a new rule instance.
      *
@@ -26,15 +28,17 @@ class SpotifyId implements Rule
      */
     public function passes($attribute, $value)
     {
-        try {
-            Spotify::track($value)->get();
+//        $url = "https://open.spotify.com/embed/track/" . $value;
+//        $headers = get_headers($url);
+//
+//        dd([$url, $headers, $value]);
+//
+//        if (!strpos($headers[0], '200')) {
+//            return false;
+//        }
+//        return true;
 
-        } catch (SpotifyException $e) {
-            if (isset($e)) {
-                return false;
-            }
-        }
-        return true;
+
     }
 
     /**

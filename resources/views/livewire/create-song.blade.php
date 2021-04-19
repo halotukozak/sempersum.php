@@ -20,9 +20,7 @@
                     <i class="text-2xl text-red-800 hover:text-red-7600 fas fa-heart"></i>
             </span>
                 </div>
-
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-white md:mt-0 md:text-3xl">{!! $title ? $title : '&nbsp;' !!}</h2>
-
                 <p class="mt-6 text-gray-600 dark:text-gray-200">
                     @isset($tags)
                         @foreach($tags as $tag)
@@ -30,19 +28,20 @@
                         @endforeach
                     @endisset
                 </p>
-
                 <div class="flex justify-end mt-4">
                     <span
                         class="text-xl font-medium text-indigo-500 dark:text-indigo-300">{!! $artist ? $artist->name : "&nbsp;" !!}</span>
                 </div>
-
             </div>
             <div class="flex justify-center md:justify-start space-x-2 my-1 px-1 md:px-6 md:py-2 flex-wrap">
                 <section class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
-                    <h2 class="text-lg font-semibold text-gray-700 dark:text-white">Dodawanie piosenki</h2>
-
                     <form wire:submit.prevent="addSong" autocomplete="off">
                         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                            <div class="col-span-full">
+                                <label class="text-gray-700 dark:text-gray-200 text-xl text-semibold">Łatwe dodawanie piosenek za
+                                    pomocą Spotify <i class="fab fa-spotify p-1"></i></label>
+                                <livewire:spotify.song-search name="spotifyId"/>
+                            </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł</label>
                                 <input wire:model="title" id="title" type="text" placeholder="Wpisz tytuł..."
@@ -67,21 +66,12 @@
                                 <label class="text-gray-700 dark:text-gray-200" for="artist">Artysta</label>
                                 <livewire:artist-select name="artist"/>
                             </div>
-                            <div>
+                            <div col-span-full>
                                 <label for="text"
                                        class="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
                                     Tekst piosenki</label>
                                 <textarea wire:model="text" id="text"
                                           class="block w-full h-56 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring font-mono"></textarea>
-                            </div>
-                            <div>
-                                @error('spotifyId')
-                                {{ $message }}
-                                @enderror
-                                <label class="text-gray-700 dark:text-gray-200" for="spotifyId">Link do Spotify<i
-                                        class="fab fa-spotify p-1"></i></label>
-                                <input wire:model="spotifyId" id="spotifyId" type="text" placeholder="Wprowadź link..."
-                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="deezerId">Link do Deezer<i

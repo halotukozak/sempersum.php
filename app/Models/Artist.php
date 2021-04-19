@@ -45,9 +45,5 @@ class Artist extends Model
         return Spotify::artist($id)->get()[$attribute];
     }
 
-    public function postsOrderedByUser()
-    {
-        return $this->hasMany('Post')->orderByUser();
-    }
 
 }

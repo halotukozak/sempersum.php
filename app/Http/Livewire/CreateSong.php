@@ -9,6 +9,9 @@ use App\Rules\KeyOK;
 use App\Rules\SoundcloudId;
 use App\Rules\SpotifyId;
 use App\Rules\YoutubeId;
+use Illuminate\Support\Str;
+
+use Spotify;
 
 class CreateSong extends Component
 {
@@ -25,7 +28,7 @@ class CreateSong extends Component
 
     public $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
 
-    protected $listeners = ['artistUpdated' => 'setArtist'];
+    protected $listeners = ['artistUpdated' => 'setArtist', 'spotifyIdUpdated' => 'setSpotifyId'];
 
     public function addSong()
     {
@@ -40,10 +43,25 @@ class CreateSong extends Component
         $this->artist = Artist::find($info['value']);
     }
 
+    public function setSpotifyId($info)
+    {
+        $this->spotifyId = $info['value'];
+        if ($info['value']) {
+            $tempSpotify = Spotify::track($this->spotifyId)->get();
+            $this->title = $tempSpotify['name'];
+            $artistSpotify = $tempSpotify['artists'][0];
+            $this->artist = Artist::where('spotifyId', $artistSpotify['id'])->firstOrCreate([
+                'name' => $artistSpotify['name'],
+                'slug' => Str::slug($artistSpotify['name'], '-'),
+                'spotifyId' => $artistSpotify['id']
+            ]);
+            $this->emit('artistBeforeTitle', $this->artist->id);
+        }
+    }
+
     public function updated($field)
     {
-        $this->title = ucfirst($this->title);
-
+        $this->prepare();
 
         $this->validateOnly($field, [
             'title' => ['required', 'min:3', 'max:255'],
@@ -62,6 +80,17 @@ class CreateSong extends Component
     public function mount()
     {
 
+    }
+
+    public function prepare()
+    {
+        $this->title = ucfirst($this->title);
+        $this->spotifyId = str_replace("https://open.spotify.com/", "", $this->spotifyId);
+        $this->spotifyId = str_replace("spotify:", "", $this->spotifyId);
+        $this->spotifyId = str_replace("track:", "", $this->spotifyId);
+        $this->spotifyId = str_replace("embed/", "", $this->spotifyId);
+        $this->spotifyId = str_replace("track/", "", $this->spotifyId);
+        $this->spotifyId = str_replace(strstr($this->spotifyId, '?'), "", $this->spotifyId);
     }
 
     public function render()

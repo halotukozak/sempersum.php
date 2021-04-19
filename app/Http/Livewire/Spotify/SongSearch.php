@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Spotify;
 
-use App\Models\Artist;
-use Illuminate\Database\Eloquent\Collection;
+use Spotify;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-
-class ArtistSelect extends Component
+class SongSearch extends Component
 {
     use WithPagination;
 
     public $name;
 
-    public $value;
+    public $value = null;
     public $optionsValues;
     public $allOptions;
 
@@ -25,18 +23,11 @@ class ArtistSelect extends Component
     public $isSearching;
     public $selectedOption;
 
-    protected $listeners = ['artistBeforeTitle' => 'artistBeforeTitle'];
-
     public function mount($name)
     {
         $this->name = $name;
-        $this->allOptions = Artist::all();
+        $this->allOptions = [];
         $this->options = $this->options();
-    }
-
-    public function artistBeforeTitle($info)
-    {
-            $this->selectOption($info);
     }
 
     public function updatedTerm()
@@ -47,7 +38,7 @@ class ArtistSelect extends Component
     public function options($term = null)
     {
         if ($term) {
-            $options = Artist::whereLike('name', $term)->get();
+            $options = Spotify::searchTracks($term)->limit(10)->get('tracks')['items'];
             if ($options == []) {
                 return null;
             }
@@ -71,9 +62,9 @@ class ArtistSelect extends Component
 
     public function selectOption($optionId)
     {
-        $option = Artist::find($optionId);
+        $option = Spotify::track($optionId)->get();
         $this->selectedOption = $option;
-        $this->selectValue($option->id);
+        $this->selectValue($option['id']);
     }
 
     public function selectValue($value)
@@ -113,6 +104,7 @@ class ArtistSelect extends Component
         $this->isSearching = !empty($this->term);
         $this->emptyOptions = $this->isEmpty();
 
-        return view('livewire.artist-select');
+        return view('livewire.spotify.song-search');
     }
+
 }
