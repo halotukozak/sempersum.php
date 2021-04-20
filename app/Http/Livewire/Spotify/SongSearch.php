@@ -23,6 +23,23 @@ class SongSearch extends Component
     public $isSearching;
     public $selectedOption;
 
+    public $playingSong = null;
+
+    protected $listeners = [
+        'play' => 'play',
+        'stop' => 'stop',];
+
+    public function play($id = null)
+    {
+        $this->playingSong = $id;
+    }
+
+    public function stop()
+    {
+        $this->play();
+    }
+
+
     public function mount($name)
     {
         $this->name = $name;

@@ -28,7 +28,10 @@ class CreateSong extends Component
 
     public $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
 
-    protected $listeners = ['artistUpdated' => 'setArtist', 'spotifyIdUpdated' => 'setSpotifyId'];
+    protected $listeners = ['artistUpdated' => 'setArtist',
+        'spotifyIdUpdated' => 'setSpotifyId',
+        'keyUpdated' => 'setKey',
+    ];
 
     public function addSong()
     {
@@ -36,6 +39,11 @@ class CreateSong extends Component
         $this->validate([
 
         ]);
+    }
+
+    public function setKey($info)
+    {
+        $this->key = $info['value'];
     }
 
     public function setArtist($info)

@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Artist;
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -25,18 +24,22 @@ class ArtistSelect extends Component
     public $isSearching;
     public $selectedOption;
 
+    public $disabled = false;
+
     protected $listeners = ['artistBeforeTitle' => 'artistBeforeTitle'];
 
-    public function mount($name)
+    public function mount($name, $disabled = false)
     {
         $this->name = $name;
         $this->allOptions = Artist::all();
         $this->options = $this->options();
+        $this->disabled = $disabled;
     }
 
     public function artistBeforeTitle($info)
     {
             $this->selectOption($info);
+            $this->disabled = true;
     }
 
     public function updatedTerm()

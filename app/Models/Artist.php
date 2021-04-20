@@ -29,7 +29,7 @@ class Artist extends Model
 
     public function avatar()
     {
-        return Spotify::artist($this->spotifyId)->get()['images'][2]['url'];
+        return Spotify::artist($this->spotifyId)->get()['images'][1]['url'];
     }
 
     public function path($append = '')

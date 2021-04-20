@@ -43,14 +43,22 @@
     <div class="relative">
         @if(!empty($value))
             <button type="button"
-                    class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    class="relative
+                        w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
+                                           dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                           focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                     x-on:keydown.enter.prevent="removeSelection(@this)"
                     x-on:keydown.space.prevent="removeSelection(@this)"
                     id="{{ $name }}-selected"
                     wire:click.prevent="selectValue(null)">
                     <span class="flex items-center">
+                        <img
+                            src="{{ $selectedOption['album']['images'][1]['url'] }}"
+                            alt="" class="flex-shrink-0 h-6 w-6 rounded-full" />
                         <span class="ml-3 block truncate">
-                          {{ $selectedOption['name'] }}
+                            <span class="ml-3 block truncate">
+                                {{ $selectedOption['name'] }}
+                            </span>
                         </span>
                     </span>
                 <input type="hidden" value="{{ $value }}" name="{{ $name }}">
@@ -94,16 +102,21 @@
                                     <span class="ml-3 block truncate">
                                       {{ $option['name'] }}
                                     </span>
-                                    @if ($option['preview_url'])
+                                    @if ($option['preview_url'] != 0)
                                         <div>
-                                            <button class="p-0.5"
-                                                    @mouseover="$refs.play{{$option['id']}}.play()"
-                                                    @mouseleave="$refs.play{{$option['id']}}.pause()">
+                                            <button class="px-2.5"
+                                                    wire:mouseover="$emit('play', '{{ $option['id'] }}')"
+                                                    wire:mouseleave="$emit('stop')"
+                                            >
                                             <i class="fas fa-play"></i>
-                                                  <audio
-                                                      x-ref="play{{$option['id']}}"
-                                                      src="{{ $option['preview_url'] }}"></audio>
-                                 </button>
+                                            </button>
+                                            @if($playingSong == $option['id'])
+                                                <audio
+                                                    type="audio/mp3"
+                                                    src="{{ $option['preview_url'] }}"
+                                                    autoplay
+                                                ></audio>
+                                            @endif
                                         </div>
                                     @else
                                         <div></div>

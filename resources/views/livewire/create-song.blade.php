@@ -38,33 +38,27 @@
                     <form wire:submit.prevent="addSong" autocomplete="off">
                         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                             <div class="col-span-full">
-                                <label class="text-gray-700 dark:text-gray-200 text-xl text-semibold">Łatwe dodawanie piosenek za
+                                <label class="text-gray-700 dark:text-gray-200 text-xl text-semibold select-none">Łatwe dodawanie
+                                    piosenek za
                                     pomocą Spotify <i class="fab fa-spotify p-1"></i></label>
                                 <livewire:spotify.song-search name="spotifyId"/>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł</label>
                                 <input wire:model="title" id="title" type="text" placeholder="Wpisz tytuł..."
-                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
+                                       dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                       focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
+                                        disabled:bg-gray-100 disabled:dark:bg-gray-100"
+                                       @if($spotifyId != null) disabled @endif>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="key">Klucz</label>
-                                <select wire:model="key" id="key" type="text"
-                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                                    <option
-                                        class="block px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-100 transition"
-                                        value="">Wybierz klucz...
-                                    </option>
-                                    @foreach($keys as $key)
-                                        <option
-                                            class="block px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-100 transition"
-                                            value="{{ $key }}">{{ $key }}</option>
-                                    @endforeach
-                                </select>
+                                <livewire:select name="key" :options="$keys" placeholder="Wybierz klucz..."/>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="artist">Artysta</label>
-                                <livewire:artist-select name="artist"/>
+                                <livewire:artist-select name="artist" disabled="{{$spotifyId != null}}"/>
                             </div>
                             <div col-span-full>
                                 <label for="text"

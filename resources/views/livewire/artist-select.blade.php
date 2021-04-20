@@ -43,11 +43,16 @@
     <div class="relative">
         @if(!empty($value))
             <button type="button"
-                    class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    class="relative
+    w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
+                                           dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                           focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
+                                        disabled:bg-gray-100 disabled:dark:bg-gray-100 disabled:cursor-defualt"
                     x-on:keydown.enter.prevent="removeSelection(@this)"
                     x-on:keydown.space.prevent="removeSelection(@this)"
                     id="{{ $name }}-selected"
-                    wire:click.prevent="selectValue(null)">
+                    wire:click.prevent="selectValue(null)"
+                    @if($disabled) disabled @endif>
                     <span class="flex items-center">
                         <img
                             src="{{ $selectedOption->avatar() }}"
