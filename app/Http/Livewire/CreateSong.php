@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\Artist;
+use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Rules\DeezerId;
 use App\Rules\KeyOK;
@@ -31,6 +33,7 @@ class CreateSong extends Component
     protected $listeners = ['artistUpdated' => 'setArtist',
         'spotifyIdUpdated' => 'setSpotifyId',
         'keyUpdated' => 'setKey',
+        'tagsUpdated' => 'setTag'
     ];
 
     public function addSong()
@@ -41,12 +44,26 @@ class CreateSong extends Component
         ]);
     }
 
-    public function setKey($info)
+    public function setTag($info)
+    {
+        $tags = collect();
+        foreach ($info as $name) {
+            $name = implode($name);
+            $tag = Tag::firstOrCreate(['name' => $name]);
+            $tags->push($tag);
+        }
+        $this->tags = $tags;
+    }
+
+
+    public
+    function setKey($info)
     {
         $this->key = $info['value'];
     }
 
-    public function setArtist($info)
+    public
+    function setArtist($info)
     {
         $this->artist = Artist::find($info['value']);
     }

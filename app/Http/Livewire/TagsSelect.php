@@ -6,7 +6,13 @@ use Livewire\Component;
 
 class TagsSelect extends Component
 {
-    public function render()
+    public function tagsUpdate($tags)
+    {
+        $this->emit('tagsUpdated', $tags);
+    }
+
+    public
+    function render()
     {
         return view('livewire.tags-select');
     }

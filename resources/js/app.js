@@ -1,9 +1,9 @@
 require('./bootstrap');
 require('alpinejs');
 
-document.getElementById('switchTheme').addEventListener('click', function() {
+document.getElementById('switchTheme').addEventListener('click', function () {
     let htmlClasses = document.querySelector('html').classList;
-    if(localStorage.theme == 'dark') {
+    if (localStorage.theme == 'dark') {
         htmlClasses.remove('dark');
         localStorage.removeItem('theme')
     } else {

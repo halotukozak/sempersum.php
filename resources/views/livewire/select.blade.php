@@ -1,5 +1,5 @@
 <div
-    class="px-1 pt-3 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 focus:outline-none focus:text-gray-700 focus:border-gray-300"
+    class="px-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 focus:outline-none focus:text-gray-700 focus:border-gray-300"
     x-data="{
     isOpen: false,
     selectedIndex: -1,

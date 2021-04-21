@@ -54,7 +54,7 @@
                     <span class="flex items-center">
                         <img
                             src="{{ $selectedOption['album']['images'][1]['url'] }}"
-                            alt="" class="flex-shrink-0 h-6 w-6 rounded-full" />
+                            alt="" class="flex-shrink-0 h-6 w-6 rounded-full"/>
                         <span class="ml-3 block truncate">
                             <span class="ml-3 block truncate">
                                 {{ $selectedOption['name'] }}
@@ -90,7 +90,8 @@
                 >
                     @if($options && !$emptyOptions)
                         @foreach($options as $option)
-                            <div class="block z-10 bg-white w-full rounded-t-none shadow-lg p dark:bg-gray-800">
+                            <div
+                                class="block z-10 bg-white w-full rounded-t-none shadow-lg p dark:bg-gray-800 cursor-pointer">
                                 <span
                                     class="flex items-center justify-between z-10 bg-white w-full rounded-t-none shadow-lg p-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif"
                                     wire:click="selectOption('{{$option['id']}}')"

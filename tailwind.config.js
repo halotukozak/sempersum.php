@@ -24,7 +24,8 @@ module.exports = {
             opacity: ['disabled'],
             backgroundColor: ['checked', 'disabled'],
             borderColor: ['checked'],
-            cursor: ['disabled']
+            cursor: ['disabled'],
+            textColor: ['hover'],
         },
         width: ["responsive", "hover", "focus"],
         textColor: ['dark'],

@@ -11,8 +11,6 @@ class Song extends Model
 
     protected $guarded = [];
 
-
-
     public function artist()
     {
         return $this->belongsTo(Artist::class, 'artist_id');
@@ -22,7 +20,6 @@ class Song extends Model
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
-
 
     public function getRouteKeyName()
     {

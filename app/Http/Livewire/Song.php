@@ -15,7 +15,6 @@ class Song extends Component
     public $preferred_playback = null;
     public $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
 
-
     public function mount($song)
     {
         $this->song = Model::where('slug', $song)->withLikes()->first();

@@ -1,5 +1,5 @@
 <div
-    class="px-1 pt-3 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 focus:outline-none focus:text-gray-700 focus:border-gray-300"
+    class="px-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 focus:outline-none focus:text-gray-700 focus:border-gray-300"
     x-data="{
     isOpen: true,
     selectedIndex: -1,
@@ -43,11 +43,10 @@
     <div class="relative">
         @if(!empty($value))
             <button type="button"
-                    class="relative
-    w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
-                                           dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
-                                           focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
-                                        disabled:bg-gray-100 disabled:dark:bg-gray-100 disabled:cursor-defualt"
+                    class="relative w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
+                           dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                           focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
+                           disabled:bg-gray-100 disabled:dark:bg-gray-100 disabled:cursor-default"
                     x-on:keydown.enter.prevent="removeSelection(@this)"
                     x-on:keydown.space.prevent="removeSelection(@this)"
                     id="{{ $name }}-selected"
