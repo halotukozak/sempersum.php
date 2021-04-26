@@ -70,13 +70,13 @@
                 @foreach($options as $option)
                     <div class="block z-10 bg-white w-full rounded-t-none shadow-lg p dark:bg-gray-800">
                                 <span
-                                    class="flex items-center z-10 bg-white w-full rounded-t-none shadow-lg p-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif"
+                                    class="flex items-center z-10 bg-white w-full rounded-t-none shadow-lg p-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif  cursor-pointer"
                                     wire:click="selectOption('{{$option}}')"
                                     x-on:click="isOpen = false"
                                     x-on:keydown="isOpen = false"
                                     x-bind:class="{ 'bg-gray-200': selectedIndex === {{ $loop->index }}}"
                                     x-on:mouseover="selectedIndex = {{ $loop->index }}">
-                                    <span class="ml-3 block truncate">
+                                    <span class="ml-3 block truncate dark:text-white">
                                       {{ $option }}
                                     </span>
                                 </span>

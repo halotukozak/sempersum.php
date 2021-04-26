@@ -24,7 +24,7 @@
                 <p class="mt-6 text-gray-600 dark:text-gray-200">
                     @isset($tags)
                         @foreach($tags as $tag)
-                            <x-jet-secondary-button class="my-1 font-semibold">{{ $tag->name }}</x-jet-secondary-button>
+                            <x-jet-secondary-button class="my-1 font-semibold">#{{ $tag->name }}</x-jet-secondary-button>
                         @endforeach
                     @endisset
                 </p>
@@ -43,12 +43,12 @@
                                     dodawanie
                                     piosenek za
                                     pomocą Spotify <i class="fab fa-spotify p-1"></i></label>
+                                <br/>
                                 <livewire:spotify.song-search name="spotifyId"/>
                             </div>
                             <div>
-                                <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł<span
-                                        {{ Popper::alignment('start')->arrow()->theme('dark')->pop('To pole jest wymagane') }}
-                                        class="text-red-700">*</span></label>
+                                <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł <span
+                                        class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
 
                                 <input wire:model="title" id="title" type="text" placeholder="Wpisz tytuł..."
                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
@@ -63,18 +63,19 @@
                             <div>
                                 <label
                                     class="text-gray-700 dark:text-gray-200"
-                                    for="artist">Artysta</label>
+                                    for="artist">Artysta
+                                </label>
                                 <livewire:artist-select name="artist" disabled="{{$spotifyId != null}}"/>
                             </div>
                             <div>
-                                <label class="text-gray-700 dark:text-gray-200" for="key">Klucz<span
-                                        class="text-red-700">*</span></label>
+                                <label class="text-gray-700 dark:text-gray-200" for="key">Klucz <span
+                                        class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
                                 <livewire:select name="key" :options="$keys" placeholder="Wybierz klucz..."/>
                             </div>
                             <div class="col-span-full">
                                 <label for="text"
                                        class="text-gray-700 dark:text-gray-200">
-                                    Tekst piosenki<span class="text-red-700">*</span></label>
+                                    Tekst piosenki <span class="text-red-700" {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
                                 <textarea wire:model="text" id="text"
                                           class="block w-full h-56 px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring font-mono "></textarea>
                             </div>

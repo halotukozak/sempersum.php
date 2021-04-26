@@ -52,18 +52,16 @@ class CreateSong extends Component
             $tag = Tag::firstOrCreate(['name' => $name]);
             $tags->push($tag);
         }
+        dd($tags);
         $this->tags = $tags;
     }
 
-
-    public
-    function setKey($info)
+    public function setKey($info)
     {
         $this->key = $info['value'];
     }
 
-    public
-    function setArtist($info)
+    public function setArtist($info)
     {
         $this->artist = Artist::find($info['value']);
     }
@@ -82,6 +80,7 @@ class CreateSong extends Component
             ]);
             $this->emit('artistBeforeTitle', $this->artist->id);
         }
+        $this->updated('title');
     }
 
     public function updated($field)
@@ -110,6 +109,7 @@ class CreateSong extends Component
     public function prepare()
     {
         $this->title = ucfirst($this->title);
+
         $this->spotifyId = str_replace("https://open.spotify.com/", "", $this->spotifyId);
         $this->spotifyId = str_replace("spotify:", "", $this->spotifyId);
         $this->spotifyId = str_replace("track:", "", $this->spotifyId);

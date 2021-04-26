@@ -27,7 +27,7 @@ return [
      * Path location to the themes files.
      * Popper will only inject the used themes.
      */
-    'themes-path' => base_path().'/vendor/andcarpi/laravel-popper/resources/css/',
+    'themes-path' => base_path().'/public/css/tips/',
 
     /*
      * If you have problems with small tooltips, you probably using bootstrap 3.
@@ -49,8 +49,8 @@ return [
          * Type can be 'sharp' or 'round'
          */
         'arrow' => [
-            'active' => false,
-            'type' => 'sharp',
+            'active' => true,
+            'type' => 'round',
         ],
 
         /*
@@ -71,7 +71,7 @@ return [
          * Tooltip theme
          * Values: 'dark', 'light', 'google', 'light-border'
          */
-        'theme' => 'dark',
+        'theme' => 'light',
 
         /*
          * What will trigger the Tooltip
@@ -105,7 +105,7 @@ return [
          * Show and Hide duration must be integers
          */
         'animation' => [
-            'mode' => 'shift-away',
+            'mode' => 'shift-toward',
             'show_duration' => 275,
             'hide_duration' => 250,
         ],

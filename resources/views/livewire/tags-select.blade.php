@@ -2,9 +2,10 @@
     <div x-data="tagSelect()" x-init="init('parentEl')" @click.away="clearSearch()" @keydown.escape="clearSearch()">
         <div class="relative" @keydown.enter.prevent="addTag(textInput)">
             <input x-model="textInput" x-ref="textInput" @input="search($event.target.value)"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline px-4 py-2 mt-2 "
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline px-4 py-2 mt-2 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
                    placeholder="Dodaj trochę tagów...">
-            <div :class="[open ? 'block inline-flex items-center cursor-pointer text-sm rounded mt-2 mr-1 text-gray-700 hover:text-green-500' : 'hidden']">
+            <div
+                :class="[open ? 'block inline-flex items-center cursor-pointer text-sm rounded mt-2 mr-1 text-green-500' : 'hidden']">
                 <a
                     @click.prevent="addTag(textInput)">
                     <span class="ml-2 mr-1 leading-relaxed truncate max-w-xs">Dodaj</span>
@@ -12,12 +13,12 @@
                 </a>
             </div>
             <template x-for="(tag, index) in tags">
-                <div class="bg-blue-100 inline-flex items-center text-sm rounded mt-2 mr-1">
-                    <span class="ml-2 mr-1 leading-relaxed truncate max-w-xs" x-text="tag"></span>
-                    <button @click.prevent="removeTag(index)"
-                            class="w-6 h-8 inline-block align-middle text-gray-500 hover:text-gray-600 focus:outline-none">
-                        <i class="fas fa-times"></i>
-                    </button>
+                <div class="bg-gray-100 dark:bg-gray-600 inline-flex items-center text-sm rounded mt-2 mr-1">
+                    <button
+                        @click.prevent="removeTag(index)"
+                        x-text="['#' + tag]"
+                        class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+                                            </button>
                 </div>
             </template>
         </div>

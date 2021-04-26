@@ -127,6 +127,7 @@
       <path value="$PROJECT_DIR$/vendor/aerni/laravel-spotify" />
       <path value="$PROJECT_DIR$/vendor/socialiteproviders/manager" />
       <path value="$PROJECT_DIR$/vendor/socialiteproviders/zoho" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
       <path value="$PROJECT_DIR$/vendor/andcarpi/laravel-popper" />
     </include_path>
   </component>
