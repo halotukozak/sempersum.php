@@ -28,16 +28,13 @@ class SpotifyId implements Rule
      */
     public function passes($attribute, $value)
     {
-//        $url = "https://open.spotify.com/embed/track/" . $value;
-//        $headers = get_headers($url);
-//
-//        dd([$url, $headers, $value]);
-//
-//        if (!strpos($headers[0], '200')) {
-//            return false;
-//        }
-//        return true;
+        $url = "https://open.spotify.com/embed/track/" . $value;
+        $headers = get_headers($url);
 
+        if (!strpos($headers[0], '200')) {
+            return false;
+        }
+        return true;
 
     }
 

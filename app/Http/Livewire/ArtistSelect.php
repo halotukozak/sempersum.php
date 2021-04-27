@@ -38,8 +38,13 @@ class ArtistSelect extends Component
 
     public function artistBeforeTitle($info)
     {
+        if ($info) {
             $this->selectOption($info);
             $this->disabled = true;
+        } else {
+            $this->selectOption($info);
+            $this->disabled = false;
+        }
     }
 
     public function updatedTerm()
@@ -74,9 +79,14 @@ class ArtistSelect extends Component
 
     public function selectOption($optionId)
     {
-        $option = Artist::find($optionId);
-        $this->selectedOption = $option;
-        $this->selectValue($option->id);
+        if ($optionId) {
+            $option = Artist::find($optionId);
+            $this->selectedOption = $option;
+            $this->selectValue($option->id);
+        } else {
+            $this->selectedOption = null;
+            $this->selectValue(null);
+        }
     }
 
     public function selectValue($value)

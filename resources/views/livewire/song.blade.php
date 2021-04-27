@@ -133,7 +133,7 @@
                                     <iframe class="embed-responsive m-0"
                                             width="100%" height="300" scrolling="no"
                                             frameborder="no" allow="autoplay"
-                                            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{ $song->soundcloudId }}&color=%23b0acac&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                                            src="https://w.soundcloud.com/player/?url={{ $song->soundcloudId }}&color=%23b0acac&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true">
                                     </iframe>
                                 </div>
                             </div>

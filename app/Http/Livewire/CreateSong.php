@@ -47,12 +47,11 @@ class CreateSong extends Component
     public function setTag($info)
     {
         $tags = collect();
-        foreach ($info as $name) {
-            $name = implode($name);
+        $names = $info['tags'];
+        foreach ($names as $name) {
             $tag = Tag::firstOrCreate(['name' => $name]);
             $tags->push($tag);
         }
-        dd($tags);
         $this->tags = $tags;
     }
 
@@ -79,8 +78,11 @@ class CreateSong extends Component
                 'spotifyId' => $artistSpotify['id']
             ]);
             $this->emit('artistBeforeTitle', $this->artist->id);
+        } else {
+            $this->emit('artistBeforeTitle', null);
         }
         $this->updated('title');
+        $this->updated('spotifyId');
     }
 
     public function updated($field)
@@ -92,7 +94,7 @@ class CreateSong extends Component
             'text' => ['required'],
             'spotifyId' => ['unique:songs,spotifyId', new SpotifyId],
             'youtubeId' => ['unique:songs,youtubeId', new YoutubeId],
-            'deezerId' => ['integer', 'unique:songs,deezerId', new DeezerId],
+            'deezerId' => ['unique:songs,deezerId', new DeezerId],
             'soundcloudId' => ['url', 'unique:songs,soundcloudId', new SoundcloudId],
             'tags' => ['exists:tags,id'],
             'isVerified' => [false],
@@ -106,16 +108,51 @@ class CreateSong extends Component
 
     }
 
+    protected function youtube_id_from_url($url)
+    {
+        $pattern =
+            '%^# Match any youtube URL
+        (?:https?://)?  # Optional scheme. Either http or https
+        (?:www\.)?      # Optional www subdomain
+        (?:             # Group host alternatives
+          youtu\.be/    # Either youtu.be,
+        | youtube\.com  # or youtube.com
+          (?:           # Group path alternatives
+            /embed/     # Either /embed/
+          | /v/         # or /v/
+          | /watch\?v=  # or /watch\?v=
+          )             # End path alternatives.
+        )               # End host alternatives.
+        ([\w-]{10,12})  # Allow 10-12 for 11 char youtube id.
+        $%x';
+        $result = preg_match($pattern, $url, $matches);
+        if ($result) {
+            return $matches[1];
+        }
+        return $url;
+    }
+
+    protected function deezer_id_from_url($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        $html = curl_exec($ch);
+        $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+        curl_close($ch);
+
+        $url = str_replace(["https://deezer.page.link/", "https://www.deezer.com/pl/track/"], "", $url);
+        $temporary = strstr($url, '?');
+        return str_replace($temporary, "", $url);
+    }
+
     public function prepare()
     {
         $this->title = ucfirst($this->title);
 
-        $this->spotifyId = str_replace("https://open.spotify.com/", "", $this->spotifyId);
-        $this->spotifyId = str_replace("spotify:", "", $this->spotifyId);
-        $this->spotifyId = str_replace("track:", "", $this->spotifyId);
-        $this->spotifyId = str_replace("embed/", "", $this->spotifyId);
-        $this->spotifyId = str_replace("track/", "", $this->spotifyId);
-        $this->spotifyId = str_replace(strstr($this->spotifyId, '?'), "", $this->spotifyId);
+        $this->deezerId = $this->deezer_id_from_url($this->deezerId);
+        $this->youtubeId = $this->youtube_id_from_url($this->youtubeId);
     }
 
     public function render()

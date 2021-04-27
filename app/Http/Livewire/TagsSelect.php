@@ -11,8 +11,7 @@ class TagsSelect extends Component
         $this->emit('tagsUpdated', $tags);
     }
 
-    public
-    function render()
+    public function render()
     {
         return view('livewire.tags-select');
     }

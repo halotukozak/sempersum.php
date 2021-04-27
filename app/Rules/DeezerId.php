@@ -13,8 +13,7 @@ class DeezerId implements Rule
 
     public function passes($attribute, $value)
     {
-
-        $headers = get_headers('https://api.deezer.com/oembed?url=https://www.deezer.com/track/' . $value);
+        $headers = get_headers('https://api.deezer.com/oembed?url=https://www.deezer.com/pl/track/' . $value);
 
         if (!strpos($headers[0], '200')) {
             return false;

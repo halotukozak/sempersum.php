@@ -25,6 +25,9 @@ class YoutubeId implements Rule
      */
     public function passes($attribute, $value)
     {
+        if ($value = false) {
+            return true;
+        }
 
         $headers = get_headers('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=' . $value);
 

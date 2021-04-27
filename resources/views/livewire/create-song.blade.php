@@ -24,7 +24,8 @@
                 <p class="mt-6 text-gray-600 dark:text-gray-200">
                     @isset($tags)
                         @foreach($tags as $tag)
-                            <x-jet-secondary-button class="my-1 font-semibold">#{{ $tag->name }}</x-jet-secondary-button>
+                            <x-jet-secondary-button class="my-1 font-semibold">
+                                #{{ $tag['name'] }}</x-jet-secondary-button>
                         @endforeach
                     @endisset
                 </p>
@@ -76,8 +77,18 @@
                                 <label for="text"
                                        class="text-gray-700 dark:text-gray-200">
                                     Tekst piosenki <span class="text-red-700" {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
-                                <textarea wire:model="text" id="text"
-                                          class="block w-full h-56 px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring font-mono "></textarea>
+                                <textarea
+                                    wire:model="text"
+                                    wire:ignore
+                                    id="text"
+                                    x-data="{ resize: () => { $el.style.height = '15px'; $el.style.height = $el.scrollHeight + 'px' } }"
+                                    x-init="resize()"
+                                    @input="resize()"
+                                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300
+                                rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
+                                font-mono resize-none overflow-hidden"
+                                ></textarea>
                             </div>
                             <div>
                                 <label for="tags"
@@ -90,6 +101,9 @@
                                         class="fab fa-deezer p-1"></i></label>
                                 <input wire:model="deezerId" id="deezerId" type="text" placeholder="Wprowadź link..."
                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                @error('deezerId')
+                                <span class="invalid"> {{ $message }} </span>
+                                @enderror
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="youtubeId">Link do YouTube<i
@@ -122,6 +136,96 @@
                             </div>
                         </div>
                     </form>
+                    <div class="dark:text-white p-2">
+                        <ul class="shadow-box space-y-2">
+                            @if($youtubeId)
+                                <li class="relative dark:bg-gray-800 rounded-md">
+                                    <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md bg-gray-50 dark:bg-gray-900">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-2xl">YouTube<i class="fab fa-youtube px-2"></i></span>
+                                        </div>
+                                    </button>
+                                    <div class="relative overflow-hidden transition-all max-h-0 duration-700"
+                                         style="max-height: 500px">
+                                        <div class="p-6">
+                                            <div class="aspect-w-16 aspect-h-9">
+                                                <iframe class=""
+                                                        src="https://www.youtube-nocookie.com/embed/{{ $youtubeId }}"
+                                                        frameborder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowfullscreen>
+                                                </iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                            @if($spotifyId)
+                                <li class="relative dark:bg-gray-800 rounded-md">
+                                    <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-2xl">Spotify<i class="fab fa-spotify px-2"></i></span>
+                                        </div>
+                                    </button>
+                                    <div class="relative overflow-hidden transition-all max-h-0 duration-700"
+                                         style="max-height: 400px">
+                                        <div class="p-6">
+                                            <iframe class="w-full"
+                                                    src="https://open.spotify.com/embed/track/{{ $spotifyId}}"
+                                                    width="auto" height="380" allowtransparency="true"
+                                                    allow="encrypted-media">
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                            @if($soundcloudId)
+                                <li class="relative dark:bg-gray-800 rounded-md">
+                                    <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-2xl">SoundCloud<i
+                                                    class="fab fa-soundcloud px-2"></i></span>
+                                        </div>
+                                    </button>
+                                    <div class="relative overflow-hidden transition-all max-h-0 duration-700"
+                                         style=""
+                                         x-ref="container1"
+                                         x-bind:style="'max-height: ' + $refs.container1.scrollHeight + 'px'">
+                                        <div class="p-6">
+                                            <iframe class="embed-responsive m-0"
+                                                    width="100%" height="300" scrolling="no"
+                                                    frameborder="no" allow="autoplay"
+                                                    src="https://w.soundcloud.com/player/?url={{ $soundcloudId }}&color=%23b0acac&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                            @if($deezerId)
+                                <li class="relative dark:bg-gray-800 rounded-md">
+                                    <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-2xl">Deezer<i class="fab fa-deezer px-2"></i></span>
+                                        </div>
+                                    </button>
+                                    <div class="relative overflow-hidden transition-all max-h-0 duration-700"
+                                         style=""
+                                         x-ref="container1"
+                                         x-bind:style="'max-height: ' + $refs.container1.scrollHeight + 'px'">
+                                        <div class="p-6">
+                                            <iframe class="embed-responsive m-0"
+                                                    title="deezer-widget"
+                                                    src="https://widget.deezer.com/widget/auto/track/{{ $deezerId }}"
+                                                    width="100%"
+                                                    height="300" frameborder="0" allowtransparency="true"
+                                                    allow="encrypted-media">
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
                 </section>
             </div>
         </div>
