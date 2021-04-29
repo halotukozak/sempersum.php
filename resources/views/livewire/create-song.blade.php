@@ -24,7 +24,7 @@
                 <p class="mt-6 text-gray-600 dark:text-gray-200">
                     @isset($tags)
                         @foreach($tags as $tag)
-                            <x-jet-secondary-button class="my-1 font-semibold">
+                            <x-jet-secondary-button wire:key="{{ $loop->index }}" class="my-1 font-semibold">
                                 #{{ $tag['name'] }}</x-jet-secondary-button>
                         @endforeach
                     @endisset
@@ -55,11 +55,9 @@
                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
                                        dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
                                        focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
-                                       disabled:bg-gray-100 disabled:dark:bg-gray-100
-                       @error('title') ring-2 ring-red-500 @enderror"
+                                       disabled:bg-gray-100 disabled:dark:bg-gray-100"
                                        @if($spotifyId != null) disabled @endif>
-                                <p class="text-red-500 text-sm p-1 font-semibold">@error('title'){{ $message }}@enderror
-                                    &nbsp;</p>
+                                <p class="text-red-500 text-sm p-1 font-semibold">@error('title'){{ $message }}@enderror</p>
                             </div>
                             <div>
                                 <label
@@ -67,11 +65,15 @@
                                     for="artist">Artysta
                                 </label>
                                 <livewire:artist-select name="artist" disabled="{{$spotifyId != null}}"/>
+                                <p class="text-red-500 text-sm p-1 font-semibold">@error('artist'){{ $message }}@enderror</p>
+
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="key">Klucz <span
                                         class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
                                 <livewire:select name="key" :options="$keys" placeholder="Wybierz klucz..."/>
+                                <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
+
                             </div>
                             <div class="col-span-full">
                                 <label for="text"
@@ -81,48 +83,89 @@
                                     wire:model="text"
                                     wire:ignore
                                     id="text"
-                                    x-data="{ resize: () => { $el.style.height = '15px'; $el.style.height = $el.scrollHeight + 'px' } }"
+                                    x-data="{ resize: () => { $el.style.height = '500px'; $el.style.height = $el.scrollHeight + 'px' } }"
                                     x-init="resize()"
                                     @input="resize()"
                                     class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300
                                 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
-                                focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
-                                font-mono resize-none overflow-hidden"
+                                focus:border-blue-500 dark:focus:border-blue-500
+                                focus:outline-none focus:ring font-mono resize-none overflow-hidden"
                                 ></textarea>
+                                <p class="text-red-500 text-sm p-1 font-semibold">@error('text'){{ $message }}@enderror</p>
                             </div>
-                            <div>
+                            <div x-data="{open = false}" @click.away="open = false">
                                 <label for="tags"
                                        class="text-gray-700 dark:text-gray-200">
                                     Tagi</label>
-                                <livewire:tags-select/>
+                                <input @click="open = true"
+                                       wire:model="tagTerm" id="tags" type="text" placeholder="Wpisz tagi..."
+                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
+                                       dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                       focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
+                                       disabled:bg-gray-100 disabled:dark:bg-gray-100"/>
+                                <div x-show="open">
+                                    @if($tagTerm)
+                                        @foreach($tagOptions as $tagOption)
+                                            <div wire:key="{{ $loop->index }}"
+                                                 wire:click="addTag('{{$tagOption}}')"
+                                                 class="block z-10 bg-white w-full rounded-t-none shadow-lg p dark:bg-gray-800">
+                                                <span
+                                                    class="flex items-center z-10 bg-white w-full rounded-t-none shadow-lg p-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif">
+                                                    <span class="ml-3 block truncate">
+                                                      #{{ $tagOption->name }}
+                                                    </span>
+                                                    <span class="ml-3 block truncate">
+                                                      {{ count($tagOption->songs) }}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            @if ($loop->index == 10)
+                                                @break
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </div>
+                                @foreach ($tags as $tag)
+                                    <div
+                                        wire:click="removeTag($tag)"
+                                        @click="{open = false}"
+                                        class="bg-gray-100 dark:bg-gray-600 inline-flex items-center text-sm rounded mt-2 mr-1">
+                                        <button
+                                            class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+                                            #{{ $tag['name'] }}
+                                        </button>
+                                    </div>
+                                @endforeach
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="deezerId">Link do Deezer<i
                                         class="fab fa-deezer p-1"></i></label>
-                                <input wire:model="deezerId" id="deezerId" type="text" placeholder="Wprowadź link..."
-                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                                @error('deezerId')
-                                <span class="invalid"> {{ $message }} </span>
-                                @enderror
+                                <livewire:input.deezer-input id="deezerId" type="text"/>
+                                <p class="text-red-500 text-sm p-1 font-semibold">@error('deezerId'){{ $message }}@enderror</p>
+
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="youtubeId">Link do YouTube<i
                                         class="fab fa-youtube p-1"></i></label>
-                                <input wire:model="youtubeId" id="youtubeId" type="text" placeholder="Wprowadź link..."
-                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                <input wire:model.debounce.500ms="youtubeId" id="youtubeId" type="text"
+                                       placeholder="Wprowadź link..."
+                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
+                                <p class="text-red-500 text-sm p-1 font-semibold">@error('youtubeId'){{ $message }}@enderror</p>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="soundcloudId">Link do SoundCloud<i
                                         class="fab fa-soundcloud p-1"></i></label>
-                                <input wire:model="soundcloudId" id="soundcloudId" type="text"
+                                <input wire:model.debounce.500ms="soundcloudId" id="soundcloudId" type="text"
                                        placeholder="Wprowadź link..."
                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                <p class="text-red-500 text-sm p-1 font-semibold">@error('soundcloudId'){{ $message }}@enderror</p>
                             </div>
                             <div>
                                 <x-jet-label for="isVerified">
                                     <div class="flex items-center">
-                                        <x-jet-checkbox name="isVerified" id="isVerified"/>
-                                        <div class="ml-2">
+                                        <x-jet-checkbox name="isVerified" id="isVerified" wire:model="isVerified"/>
+                                        <div class="ml-2 text-gray-700 dark:text-gray-200
+                                        ">
                                             Chcę zweryfikować tę piosenkę.
                                         </div>
                                     </div>
@@ -138,19 +181,20 @@
                     </form>
                     <div class="dark:text-white p-2">
                         <ul class="shadow-box space-y-2">
-                            @if($youtubeId)
+                            @if($youtubeId && !$errors->has('youtubeId'))
                                 <li class="relative dark:bg-gray-800 rounded-md">
-                                    <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md bg-gray-50 dark:bg-gray-900">
+                                    <button type="button"
+                                            class="w-full px-8 py-6 text-left shadow rounded-md bg-gray-50 dark:bg-gray-900">
                                         <div class="flex items-center justify-between">
                                             <span class="text-2xl">YouTube<i class="fab fa-youtube px-2"></i></span>
                                         </div>
                                     </button>
-                                    <div class="relative overflow-hidden transition-all max-h-0 duration-700"
-                                         style="max-height: 500px">
+
+                                    <div class="relative overflow-hidden transition-all h-full duration-700">
                                         <div class="p-6">
                                             <div class="aspect-w-16 aspect-h-9">
                                                 <iframe class=""
-                                                        src="https://www.youtube-nocookie.com/embed/{{ $youtubeId }}"
+                                                        src="https://www.youtube-nocookie.com/embed/{{ youtube_id_from_url($youtubeId) }}"
                                                         frameborder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                         allowfullscreen>
@@ -160,15 +204,17 @@
                                     </div>
                                 </li>
                             @endif
-                            @if($spotifyId)
+                            {{ $errors->has('spotifyId') }}
+                            {{ $errors }}
+                            @if($spotifyId && !$errors->has('spotifyId'))
                                 <li class="relative dark:bg-gray-800 rounded-md">
-                                    <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
+                                    <button type="button"
+                                            class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
                                         <div class="flex items-center justify-between">
                                             <span class="text-2xl">Spotify<i class="fab fa-spotify px-2"></i></span>
                                         </div>
                                     </button>
-                                    <div class="relative overflow-hidden transition-all max-h-0 duration-700"
-                                         style="max-height: 400px">
+                                    <div class="relative overflow-hidden transition-all h-full duration-700">
                                         <div class="p-6">
                                             <iframe class="w-full"
                                                     src="https://open.spotify.com/embed/track/{{ $spotifyId}}"
@@ -179,18 +225,16 @@
                                     </div>
                                 </li>
                             @endif
-                            @if($soundcloudId)
+                            @if($soundcloudId && !$errors->has('soundcloudId'))
                                 <li class="relative dark:bg-gray-800 rounded-md">
-                                    <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
+                                    <button type="button"
+                                            class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
                                         <div class="flex items-center justify-between">
                                             <span class="text-2xl">SoundCloud<i
                                                     class="fab fa-soundcloud px-2"></i></span>
                                         </div>
                                     </button>
-                                    <div class="relative overflow-hidden transition-all max-h-0 duration-700"
-                                         style=""
-                                         x-ref="container1"
-                                         x-bind:style="'max-height: ' + $refs.container1.scrollHeight + 'px'">
+                                    <div class="relative overflow-hidden transition-all h-full duration-700">
                                         <div class="p-6">
                                             <iframe class="embed-responsive m-0"
                                                     width="100%" height="300" scrolling="no"
@@ -201,17 +245,15 @@
                                     </div>
                                 </li>
                             @endif
-                            @if($deezerId)
+                            @if($deezerId && !$errors->has('deezerId'))
                                 <li class="relative dark:bg-gray-800 rounded-md">
-                                    <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
+                                    <button type="button"
+                                            class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
                                         <div class="flex items-center justify-between">
                                             <span class="text-2xl">Deezer<i class="fab fa-deezer px-2"></i></span>
                                         </div>
                                     </button>
-                                    <div class="relative overflow-hidden transition-all max-h-0 duration-700"
-                                         style=""
-                                         x-ref="container1"
-                                         x-bind:style="'max-height: ' + $refs.container1.scrollHeight + 'px'">
+                                    <div class="relative overflow-hidden transition-all h-full duration-700">
                                         <div class="p-6">
                                             <iframe class="embed-responsive m-0"
                                                     title="deezer-widget"

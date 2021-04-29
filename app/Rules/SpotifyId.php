@@ -28,14 +28,14 @@ class SpotifyId implements Rule
      */
     public function passes($attribute, $value)
     {
-        $url = "https://open.spotify.com/embed/track/" . $value;
-        $headers = get_headers($url);
-
-        if (!strpos($headers[0], '200')) {
-            return false;
+        if ($value) {
+            try {
+                Spotify::track($value)->get();
+            } catch (SpotifyApiException $e) {
+                return false;
+            }
         }
         return true;
-
     }
 
     /**

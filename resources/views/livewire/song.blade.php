@@ -83,7 +83,7 @@
                                 <div class="p-6">
                                     <div class="aspect-w-16 aspect-h-9">
                                         <iframe class=""
-                                                src="https://www.youtube-nocookie.com/embed/{{ $song->youtubeId }}"
+                                                src="https://www.youtube-nocookie.com/embed/{{ youtube_id_from_url($song->youtubeId) }}"
                                                 frameborder="0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                 allowfullscreen>

@@ -11,6 +11,7 @@
         "php": "^7.4|^8.0",
         "ext-curl": "*",
         "aerni/laravel-spotify": "^1.6",
+        "alaouy/youtube": "^2.2",
         "andcarpi/laravel-popper": "^0.9.4",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -21,7 +22,7 @@
         "laravel/sanctum": "^2.6",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.0",
+        "livewire/livewire": "^2.4",
         "socialiteproviders/zoho": "^4.1"
     },
     "require-dev": {
@@ -50,7 +51,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
