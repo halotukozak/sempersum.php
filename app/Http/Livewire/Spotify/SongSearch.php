@@ -12,7 +12,7 @@ class SongSearch extends Component
 
     public $name;
 
-    public $value = null;
+    public $value = '';
     public $optionsValues;
     public $allOptions;
 

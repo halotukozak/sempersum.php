@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Artist;
 use App\Models\Tag;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use App\Rules\DeezerId;
 use App\Rules\KeyOK;
@@ -15,18 +16,18 @@ use Spotify;
 
 class CreateSong extends Component
 {
-    public $title;
-    public $text;
+    public string $title = "";
+    public string $text = "";
     public $spotifyId;
-    public $deezerId;
-    public $youtubeId;
-    public $soundcloudId;
-    public $key;
+    public string $deezerId = "";
+    public string $youtubeId = "";
+    public string $soundcloudId = "";
+    public string $key = "";
     public $artist;
-    public $tags = [];
-    public $isVerified;
+    public Collection $tags;
+    public bool $isVerified = false;
 
-    public $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
+    public array $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
     public $tagTerm;
     public $tagOptions;
 
@@ -49,17 +50,6 @@ class CreateSong extends Component
     {
         $this->deezerId = $info;
         $this->updated('deezerId');
-    }
-
-    public function setTag($info)
-    {
-        $tags = collect();
-        $names = $info['tags'];
-        foreach ($names as $name) {
-            $tag = Tag::firstOrCreate(['name' => $name]);
-            $tags->push($tag);
-        }
-        $this->tags = $tags;
     }
 
     public function setKey($info)
@@ -95,16 +85,27 @@ class CreateSong extends Component
     public function updatedTagTerm()
     {
         $this->tagOptions = Tag::whereLike('name', $this->tagTerm)->get();
+        foreach ($this->tags as $tag) {
+            $this->tagOptions = $this->tagOptions->where('name', '!=', $tag['name']);
+        }
     }
 
     public function clearTagSearch()
     {
         $this->tagTerm = null;
+        $this->tagOptions = null;
     }
 
     public function addTag($tag)
     {
+        $tag = Tag::firstWhere('name', $tag);
+        $this->tags->push($tag);
+        $this->clearTagSearch();
+    }
 
+    public function removeTag($tag)
+    {
+        $this->tags = $this->tags->whereNotIn('id', $tag);
     }
 
     public function updated($field)
@@ -118,7 +119,7 @@ class CreateSong extends Component
             'youtubeId' => ['unique:songs,youtubeId', new YoutubeId],
             'deezerId' => ['unique:songs,deezerId', new DeezerId],
             'soundcloudId' => ['unique:songs,soundcloudId', new SoundcloudId],
-//            'tags.tag' => ['exists:tags,id', 'min:2'],
+            'tags.tag' => ['exists:tags,id', 'min:2'],
 //            'isVerified' => false,
             'key' => ['required', new KeyOK],
 //            'artistId' => ['exists:artists']
@@ -129,7 +130,7 @@ class CreateSong extends Component
 
     public function mount()
     {
-
+        $this->tags = collect();
     }
 
     public function prepare()

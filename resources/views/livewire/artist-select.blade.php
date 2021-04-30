@@ -91,7 +91,7 @@
                         @foreach($options as $option)
                             <div class="block z-10 bg-white w-full rounded-t-none shadow-lg p dark:bg-gray-800">
                                 <span
-                                    class="flex items-center z-10 bg-white w-full rounded-t-none shadow-lg p-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif"
+                                    class="flex items-center z-10 bg-white w-full rounded-t-none shadow-lg p-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 dark:text-gray-50 @if ($loop->last) rounded-b-md @endif"
                                     wire:click="selectOption({{$option->id}})"
                                     x-bind:class="{ 'bg-gray-200': selectedIndex === {{ $loop->index }}}"
                                     x-on:mouseover="selectedIndex = {{ $loop->index }}">
@@ -109,12 +109,12 @@
                         @endforeach
                     @elseif ($isSearching)
                         <div
-                            class="block z-10 bg-white w-full rounded-t-none shadow-lg p-4 dark:bg-gray-800 rounded-b-md">
+                            class="block z-10 bg-white w-full rounded-t-none shadow-lg p-4 dark:bg-gray-800 rounded-b-md dark:text-gray-50">
                             Przykro mi, ale nie wiem o co Ci chodzi...
                         </div>
                     @endif
                     <div wire:loading
-                         class="block z-10 bg-white w-full rounded-t-none shadow-lg p-4 dark:bg-gray-800 rounded-b-md">
+                         class="block z-10 bg-white w-full rounded-t-none shadow-lg p-4 dark:bg-gray-800 rounded-b-md dark:text-gray-50">
                         Szukam...
                     </div>
                 </div>
