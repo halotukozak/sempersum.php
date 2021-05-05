@@ -39,12 +39,15 @@ class SongSearch extends Component
         $this->play();
     }
 
-
-    public function mount($name)
+    public function mount($name, $spotifyId = null)
     {
         $this->name = $name;
         $this->allOptions = [];
         $this->options = $this->options();
+
+        if ($spotifyId) {
+            $this->selectOption($spotifyId);
+        }
     }
 
     public function updatedTerm()

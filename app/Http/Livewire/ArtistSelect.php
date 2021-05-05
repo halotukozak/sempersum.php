@@ -28,12 +28,13 @@ class ArtistSelect extends Component
 
     protected $listeners = ['artistBeforeTitle' => 'artistBeforeTitle'];
 
-    public function mount($name, $disabled = false)
+    public function mount($name, $disabled = false, $spotifyId = null)
     {
         $this->name = $name;
         $this->allOptions = Artist::all();
         $this->options = $this->options();
         $this->disabled = $disabled;
+        $this->artistBeforeTitle($spotifyId);
     }
 
     public function artistBeforeTitle($info)

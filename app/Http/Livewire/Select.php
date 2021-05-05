@@ -14,12 +14,16 @@ class Select extends Component
     public $disabled;
     public $placeholder;
 
-    public function mount($name, $options, $disabled = null, $placeholder = "Wybierz")
+    public function mount($name, $options, $disabled = null, $placeholder = "Wybierz...", $defualt = null)
     {
         $this->name = $name;
         $this->options = $options;
-        $this->disabled = $disabled;
         $this->placeholder = $placeholder;
+        $this->disabled = $disabled;
+        $this->selectOption($defualt);
+                if ($this->selectedOption == null) {
+            $this->selectedOption = $this->placeholder;
+        }
     }
 
     public function selectedOption($value)
@@ -62,9 +66,6 @@ class Select extends Component
 
     public function render()
     {
-        if ($this->selectedOption == null) {
-            $this->selectedOption = $this->placeholder;
-        }
         return view('livewire.select');
     }
 }

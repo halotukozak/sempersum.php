@@ -106,8 +106,8 @@
                                     @if ($option['preview_url'] != 0)
                                         <div>
                                             <button class="px-2.5"
-                                                    wire:mouseover="$emit('play', '{{ $option['id'] }}')"
-                                                    wire:mouseleave="$emit('stop')"
+                                                    wire:mouseover="$emitSelf('play', '{{ $option['id'] }}')"
+                                                    wire:mouseleave="$emitSelf('stop')"
                                             >
                                             <i class="fas fa-play"></i>
                                             </button>

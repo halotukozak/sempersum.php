@@ -36,42 +36,46 @@
                 </div>
             </div>
             <div class="flex justify-center md:justify-start space-x-2 my-1 px-1 md:px-6 md:py-2 flex-wrap">
-                <section class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
-                    <form wire:submit.prevent="addSong" autocomplete="off">
-                        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                            <div class="col-span-full">
-                                <label class="text-gray-700 dark:text-gray-200 text-xl text-semibold select-none">Łatwe
-                                    dodawanie
-                                    piosenek za
-                                    pomocą Spotify <i class="fab fa-spotify p-1"></i></label>
-                                <br/>
-                                <livewire:spotify.song-search name="spotifyId"/>
-                            </div>
-                            <div>
-                                <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł <span
-                                        class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
+                @if(!$choice)
+                    <section class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
+                        <form wire:submit.prevent="save" autocomplete="off">
+                            @csrf
+                            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                                <div class="col-span-full">
+                                    <label class="text-gray-700 dark:text-gray-200 text-xl text-semibold select-none">Łatwe
+                                        dodawanie
+                                        piosenek za
+                                        pomocą Spotify <i class="fab fa-spotify p-1"></i></label>
+                                    <br/>
+                                    <livewire:spotify.song-search name="spotifyId" :spotify-id="$spotifyId"/>
+                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
 
-                                <input wire:model="title" id="title" type="text" placeholder="Wpisz tytuł..."
-                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
+                                </div>
+                                <div>
+                                    <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł <span
+                                            class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
+
+                                    <input wire:model="title" id="title" type="text" placeholder="Wpisz tytuł..."
+                                           class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
                                        dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
                                        focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
                                        disabled:bg-gray-100 disabled:dark:bg-gray-100"
-                                       @if($spotifyId != null) disabled @endif>
-                                <p class="text-red-500 text-sm p-1 font-semibold">@error('title'){{ $message }}@enderror</p>
-                            </div>
-                            <div>
-                                <label
-                                    class="text-gray-700 dark:text-gray-200"
-                                    for="artist">Artysta
-                                </label>
-                                <livewire:artist-select name="artist" disabled="{{$spotifyId != null}}"/>
-                                <p class="text-red-500 text-sm p-1 font-semibold">@error('artist'){{ $message }}@enderror</p>
+                                           @if($spotifyId != null) disabled @endif>
+                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('title'){{ $message }}@enderror</p>
+                                </div>
+                                <div>
+                                    <label
+                                        class="text-gray-700 dark:text-gray-200"
+                                        for="artist">Artysta
+                                    </label>
+                                    <livewire:artist-select name="artist" :disabled="$spotifyId != null" :spotify-id="$spotifyId"/>
+                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('artist'){{ $message }}@enderror</p>
 
-                            </div>
-                            <div>
-                                <label class="text-gray-700 dark:text-gray-200" for="key">Klucz <span
+                                </div>
+                                <div>
+                                    <label class="text-gray-700 dark:text-gray-200" for="key">Klucz <span
                                         class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
-                                <livewire:select name="key" :options="$keys" placeholder="Wybierz klucz..."/>
+                                <livewire:select name="key" :options="$keys" :defualt="$key" placeholder="Wybierz klucz..."/>
                                 <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
 
                             </div>
@@ -146,7 +150,7 @@
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="deezerId">Link do Deezer<i
                                         class="fab fa-deezer p-1"></i></label>
-                                <livewire:input.deezer-input id="deezerId" type="text"/>
+                                <livewire:input.deezer-input id="deezerId" type="text" :input="$deezerId"/>
                                 <p class="text-red-500 text-sm p-1 font-semibold">@error('deezerId'){{ $message }}@enderror</p>
 
                             </div>
@@ -166,14 +170,12 @@
                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                                 <p class="text-red-500 text-sm p-1 font-semibold">@error('soundcloudId'){{ $message }}@enderror</p>
                             </div>
-                            @can('verify')
                             <div class="flex justify-end mt-6">
                                 <button
                                     class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
                                     {{__('Save') }}
                                 </button>
                             </div>
-                            @endcan
                         </div>
                     </form>
                     <div class="dark:text-white p-2">
@@ -260,10 +262,21 @@
                                         </div>
                                     </div>
                                 </li>
-                            @endif
+                                @endif
                         </ul>
                     </div>
-                </section>
+                    </section>
+                @else
+                    <section class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
+                        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                            <x-button-icon icon="fas fa-plus" wire:click="refresh()">Dodaj kolejną piosenkę
+                            </x-button-icon>
+                            <a href="{{ route('dashboard') }}">
+                                <x-button-icon icon="fas fa-plus">Wróć do panelu</x-button-icon>
+                            </a>
+                        </div>
+                    </section>
+                @endif
             </div>
         </div>
     </div>
