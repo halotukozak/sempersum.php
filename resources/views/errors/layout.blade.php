@@ -91,7 +91,6 @@
                     @case(503)
                     <x-illustrations.503></x-illustrations.503>
                     @break
-
                 @endswitch
             </div>
         </div>
