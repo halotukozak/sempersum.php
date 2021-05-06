@@ -23,11 +23,11 @@ class CreateSongsTable extends Migration
             $table->string('youtubeId')->nullable();
             $table->string('soundcloudId')->nullable();
             $table->boolean('isVerified')->default(false);
-            $table->boolean('isBanned')->default(false);
             $table->boolean('isOutOfDate')->default(false);
 
             $table->string('key');
             $table->timestamps();
+            $table->softDeletes();
 
 
             $table->foreignId('artist_id')

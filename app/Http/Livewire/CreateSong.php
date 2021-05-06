@@ -2,12 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use Alaouy\Youtube\Rules\ValidYoutubeVideo;
 use App\Models\Artist;
 use App\Models\Tag;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use App\Rules\DeezerId;
 use App\Rules\KeyOK;
@@ -15,6 +12,7 @@ use App\Rules\SoundcloudId;
 use App\Rules\SpotifyId;
 use App\Rules\YoutubeId;
 use Illuminate\Support\Str;
+use App\Models\Song as SongModel;
 use Spotify;
 
 class CreateSong extends Component
@@ -49,34 +47,33 @@ class CreateSong extends Component
         return [
             'title' => ['required', 'min:3', 'max:255'],
             'text' => ['required'],
-            'spotifyId' => ['unique:songs,spotifyId,' . $this->idSong, new SpotifyId],
-            'youtubeId' => ['unique:songs,youtubeId,' . $this->idSong, new YoutubeId],
-            'deezerId' => ['unique:songs,deezerId,' . $this->idSong, new DeezerId],
-            'soundcloudId' => ['unique:songs,soundcloudId,' . $this->idSong, new SoundcloudId],
-            'tags.tag' => ['exists:tags,id', 'min:2'],
+            'spotifyId' => ['nullable', 'unique:songs,spotifyId,' . $this->idSong, new SpotifyId],
+            'youtubeId' => ['nullable', 'unique:songs,youtubeId,' . $this->idSong, new YoutubeId],
+            'deezerId' => ['nullable', 'unique:songs,deezerId,' . $this->idSong, new DeezerId],
+            'soundcloudId' => ['nullable', 'unique:songs,soundcloudId,' . $this->idSong, new SoundcloudId],
+            'tags.tag' => ['nullable', 'exists:tags,id', 'min:2'],
             'key' => ['required', new KeyOK],
         ];
     }
 
     public function save()
     {
-abort(404);
         $this->validate($this->rules());
         if ($this->idSong) {
-            $this->add();
+            $this->update();
         } else {
-            $this->updateDb();
+            $this->add();
         }
         $this->choice = true;
     }
 
     public function add()
     {
-        if (!$this->artist) {
+            if (!$this->artist) {
             $this->artist = new Artist(['id' => null]);
         }
 
-        $newSong = \App\Models\Song::create([
+        $newSong = SongModel::create([
             'title' => $this->title,
             'slug' => Str::slug($this->title),
             'text' => $this->text,
@@ -93,9 +90,10 @@ abort(404);
         $newSong->tags()->attach($this->tags->pluck('id'));
     }
 
-    public function updateDb()
+    public function update()
     {
-        dd('wtf');
+        $old = SongModel::find($this->idSong)->withTags;
+        dd(($old));
     }
 
     public function refresh()
@@ -180,23 +178,14 @@ abort(404);
     public function updated($field)
     {
         $this->prepare();
-        $this->validateOnly($field, [
-            'title' => ['required', 'min:3', 'max:255'],
-            'text' => ['required'],
-            'spotifyId' => [Rule::unique('songs', 'spotifyId')->ignore($this->idSong, 'id'), new SpotifyId],
-            'youtubeId' => [Rule::unique('songs', 'youtubeId')->ignore($this->idSong, 'id'), new YoutubeId],
-            'deezerId' => [Rule::unique('songs', 'deezerId')->ignore($this->idSong, 'id'), new DeezerId],
-            'soundcloudId' => [Rule::unique('songs', 'soundcloudId')->ignore($this->idSong, 'id'), new SoundcloudId],
-            'tags.tag' => ['exists:tags,id', 'min:2'],
-            'key' => ['required', new KeyOK],
-        ]);
+        $this->validateOnly($field, $this->rules());
     }
 
     public function mount()
     {
         $song = request('song');
         if ($song) {
-            $song = \App\Models\Song::firstWhere('slug', $song);
+            $song = SongModel::firstWhere('slug', $song);
             $this->title = $song->title;
             $this->text = $song->text;
             $this->spotifyId = $song->spotifyId;

@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Artist;
 use App\Models\Song;
-use App\Models\User;
+use Spotify;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
@@ -74,16 +74,14 @@ Fm
 Przezroczysty świat
 
             ',
-            'spotifyId' => '7eHEO2L50fQXg48HA5f1ya',
+            'spotifyId' => Spotify::searchTracks($this->faker->word())->limit(1)->get('tracks')['items'][0]['id'],
             'deezerId' => '398369572',
             'youtubeId' => 'C0VmrEpcdHU',
             'soundcloudId' => '255455712',
-            'comments' => $this->faker->text(),
             'key' => $this->faker->randomElement([
                 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'Bb', 'B'
             ]),
             'isVerified' => $this->faker->boolean(),
-            'isBanned' => $this->faker->boolean(),
             'isOutOfDate' => $this->faker->boolean(),
         ];
     }

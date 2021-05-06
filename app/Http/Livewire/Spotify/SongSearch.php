@@ -121,6 +121,7 @@ class SongSearch extends Component
 
     public function render()
     {
+
         $this->isSearching = !empty($this->term);
         $this->emptyOptions = $this->isEmpty();
 
