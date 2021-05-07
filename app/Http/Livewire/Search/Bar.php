@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Search;
 
 use App\Models\Song;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class SearchingBar extends Component
+class Bar extends Component
 {
     use WithPagination;
 
@@ -54,12 +54,13 @@ class SearchingBar extends Component
 
     public function updatedTerm()
     {
-        $this->songs = Song::where('title', 'like', '%' . $this->term . '%')
+        $this->songs = Song::whereLike('title', $this->term)
+            ->where('isVerified', true)
             ->get();
     }
 
     public function render()
     {
-        return view('livewire.searching-bar');
+        return view('livewire.search.bar');
     }
 }

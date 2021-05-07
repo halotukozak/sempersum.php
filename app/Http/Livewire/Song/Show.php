@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Song;
 
 use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
 use App\Models\Song as Model;
 use Laravel\Socialite\Facades\Socialite;
 use Livewire\Component;
 
-class Song extends Component
+class Show extends Component
 {
     public $song;
     public $likes;
@@ -78,6 +78,6 @@ class Song extends Component
 
     public function render()
     {
-        return view('livewire.song');
+        return view('livewire.song.show');
     }
 }

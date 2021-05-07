@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Song;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,8 +25,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Builder::macro('whereLike', function(string $attribute, string $searchTerm) {
+        Builder::macro('whereLike', function (string $attribute, string $searchTerm) {
             return $this->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
+        });
+
+        Builder::macro('search', function (string $term) {
+            if ($term == null) {
+                return null;
+            }
+            $query = Song::withTrashed()->where('isVerified', true)->where(function ($query) use ($term) {
+                $query->whereLike('title', $term)
+                    ->whereLike('text', $term);
+            });
+            if(!current_user()->isModerator){
+                $query->withoutTrashed();
+            }
+            return $query->get();
         });
     }
 }

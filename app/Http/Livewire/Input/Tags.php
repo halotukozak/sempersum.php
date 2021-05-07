@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Input;
 
 use Livewire\Component;
 
-class TagsSelect extends Component
+class Tags extends Component
 {
     public function tagsUpdate($tags)
     {
@@ -13,6 +13,6 @@ class TagsSelect extends Component
 
     public function render()
     {
-        return view('livewire.tags-select');
+        return view('livewire.input.tags');
     }
 }

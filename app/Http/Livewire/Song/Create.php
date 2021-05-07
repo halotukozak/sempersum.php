@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Song;
 
 use App\Models\Artist;
 use App\Models\Tag;
@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 use App\Models\Song as SongModel;
 use Spotify;
 
-class CreateSong extends Component
+class Create extends Component
 {
     public bool $choice = false;
     public $idSong = null;
@@ -90,23 +90,6 @@ class CreateSong extends Component
 
         $newSong->save();
         $newSong->tags()->attach($this->tags->pluck('id'));
-    }
-
-    public function update()
-    {
-        $old = SongModel::find($this->idSong);
-        $old->title = $this->title;
-        $old->$this->text = "";
-        $this->spotifyId = null;
-        $this->deezerId = "";
-        $this->youtubeId = "";
-        $this->soundcloudId = "";
-        $this->key = "";
-        $this->artist = null;
-        $this->tags = collect();
-        $this->isVerified = false;
-        $this->tagTerm = '';
-        $this->tagOptions = '';
     }
 
     public function refresh()
@@ -222,6 +205,6 @@ class CreateSong extends Component
 
     public function render()
     {
-        return view('livewire.create-song');
+        return view('livewire.song.create');
     }
 }

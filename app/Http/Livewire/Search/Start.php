@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Search;
 
 use App\Models\Likable;
 use App\Models\Song;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Searching extends Component
+class Start extends Component
 {
     use Likable;
     use WithPagination;
@@ -29,7 +29,8 @@ class Searching extends Component
 
     public function updatedTerm()
     {
-        $this->songs = Song::where('title', 'like', '%' . $this->term . '%')
+        $this->songs = Song::whereLike('title', $this->term)
+            ->where('isVerified', true)
             ->withLikes()
             ->get()
             ->toArray();
@@ -38,8 +39,9 @@ class Searching extends Component
 
     public function render()
     {
-        return view('livewire.searching', [
-            'songs' => $this->songs = Song::where('title', 'like', '%' . $this->term . '%')
+        return view('livewire.search.start', [
+            'songs' => $this->songs = Song::where('isVerified', true)
+                ->where('title', 'LIKE'.  '%' . $this->term . '%')
                 ->withLikes()
                 ->get(),
         ]);

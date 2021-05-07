@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Input;
 
-use App\Models\Artist;
+use Spotify as Api;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-
-class ArtistSelect extends Component
+class Spotify extends Component
 {
     use WithPagination;
 
     public $name;
 
-    public $value;
+    public $value = '';
     public $optionsValues;
     public $allOptions;
 
@@ -24,27 +23,30 @@ class ArtistSelect extends Component
     public $isSearching;
     public $selectedOption;
 
-    public $disabled = false;
+    public $playingSong = null;
 
-    protected $listeners = ['artistBeforeTitle' => 'artistBeforeTitle'];
+    protected $listeners = [
+        'play' => 'play',
+        'stop' => 'stop',];
 
-    public function mount($name, $disabled = false, $spotifyId = null)
+    public function play($id = null)
     {
-        $this->name = $name;
-        $this->allOptions = Artist::all();
-        $this->options = $this->options();
-        $this->disabled = $disabled;
-        $this->artistBeforeTitle($spotifyId);
+        $this->playingSong = $id;
     }
 
-    public function artistBeforeTitle($info)
+    public function stop()
     {
-        if ($info) {
-            $this->selectOption($info);
-            $this->disabled = true;
-        } else {
-            $this->selectOption($info);
-            $this->disabled = false;
+        $this->play();
+    }
+
+    public function mount($name, $spotifyId = null)
+    {
+        $this->name = $name;
+        $this->allOptions = [];
+        $this->options = $this->options();
+
+        if ($spotifyId) {
+            $this->selectOption($spotifyId);
         }
     }
 
@@ -56,7 +58,7 @@ class ArtistSelect extends Component
     public function options($term = null)
     {
         if ($term) {
-            $options = Artist::whereLike('name', $term)->get();
+            $options = Api::searchTracks($term)->limit(10)->get('tracks')['items'];
             if ($options == []) {
                 return null;
             }
@@ -80,14 +82,9 @@ class ArtistSelect extends Component
 
     public function selectOption($optionId)
     {
-        if ($optionId) {
-            $option = Artist::find($optionId);
-            $this->selectedOption = $option;
-            $this->selectValue($option->id);
-        } else {
-            $this->selectedOption = null;
-            $this->selectValue(null);
-        }
+        $option = Api::track($optionId)->get();
+        $this->selectedOption = $option;
+        $this->selectValue($option['id']);
     }
 
     public function selectValue($value)
@@ -124,9 +121,11 @@ class ArtistSelect extends Component
 
     public function render()
     {
+
         $this->isSearching = !empty($this->term);
         $this->emptyOptions = $this->isEmpty();
 
-        return view('livewire.artist-select');
+        return view('livewire.input.spotify');
     }
+
 }

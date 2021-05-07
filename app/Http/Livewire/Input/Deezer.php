@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Input;
 
 use Livewire\Component;
 
-class DeezerInput extends Component
+class Deezer extends Component
 {
     public $input;
 
@@ -30,6 +30,6 @@ class DeezerInput extends Component
 
     public function render()
     {
-        return view('livewire.input.deezer-input');
+        return view('livewire.input.deezer');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Input;
 
 use Livewire\Component;
 
@@ -49,11 +49,11 @@ class Select extends Component
     {
         $this->value = $value;
         if ($this->value == null) {
-            $this->emit('livewire-select-focus-search', ['name' => $this->name]);
+            $this->emit('livewire.input.select-focus-search', ['name' => $this->name]);
         }
 
         if ($this->value != null) {
-            $this->emit('livewire-select-focus-selected', ['name' => $this->name]);
+            $this->emit('-focus-selected', ['name' => $this->name]);
         }
 
         $this->notifyValueChanged();
@@ -66,6 +66,6 @@ class Select extends Component
 
     public function render()
     {
-        return view('livewire.select');
+        return view('livewire.input.select');
     }
 }

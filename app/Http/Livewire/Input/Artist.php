@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Livewire\Spotify;
+namespace App\Http\Livewire\Input;
 
-use Spotify;
+use App\Models\Artist as ArtistModel;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class SongSearch extends Component
+
+class Artist extends Component
 {
     use WithPagination;
 
     public $name;
 
-    public $value = '';
+    public $value;
     public $optionsValues;
     public $allOptions;
 
@@ -23,30 +24,27 @@ class SongSearch extends Component
     public $isSearching;
     public $selectedOption;
 
-    public $playingSong = null;
+    public $disabled = false;
 
-    protected $listeners = [
-        'play' => 'play',
-        'stop' => 'stop',];
+    protected $listeners = ['artistBeforeTitle' => 'artistBeforeTitle'];
 
-    public function play($id = null)
-    {
-        $this->playingSong = $id;
-    }
-
-    public function stop()
-    {
-        $this->play();
-    }
-
-    public function mount($name, $spotifyId = null)
+    public function mount($name, $disabled = false, $spotifyId = null)
     {
         $this->name = $name;
-        $this->allOptions = [];
+        $this->allOptions = ArtistModel::all();
         $this->options = $this->options();
+        $this->disabled = $disabled;
+        $this->artistBeforeTitle($spotifyId);
+    }
 
-        if ($spotifyId) {
-            $this->selectOption($spotifyId);
+    public function artistBeforeTitle($info)
+    {
+        if ($info) {
+            $this->selectOption($info);
+            $this->disabled = true;
+        } else {
+            $this->selectOption($info);
+            $this->disabled = false;
         }
     }
 
@@ -58,7 +56,7 @@ class SongSearch extends Component
     public function options($term = null)
     {
         if ($term) {
-            $options = Spotify::searchTracks($term)->limit(10)->get('tracks')['items'];
+            $options = ArtistModel::whereLike('name', $term)->get();
             if ($options == []) {
                 return null;
             }
@@ -82,9 +80,14 @@ class SongSearch extends Component
 
     public function selectOption($optionId)
     {
-        $option = Spotify::track($optionId)->get();
-        $this->selectedOption = $option;
-        $this->selectValue($option['id']);
+        if ($optionId) {
+            $option = ArtistModel::find($optionId);
+            $this->selectedOption = $option;
+            $this->selectValue($option->id);
+        } else {
+            $this->selectedOption = null;
+            $this->selectValue(null);
+        }
     }
 
     public function selectValue($value)
@@ -121,11 +124,9 @@ class SongSearch extends Component
 
     public function render()
     {
-
         $this->isSearching = !empty($this->term);
         $this->emptyOptions = $this->isEmpty();
 
-        return view('livewire.spotify.song-search');
+        return view('livewire.input.artist');
     }
-
 }

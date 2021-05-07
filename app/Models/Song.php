@@ -30,7 +30,7 @@ class Song extends Model
     public function path($append = '')
     {
 
-        $path = route('song', $this->slug);
+        $path = route('showSong', $this->slug);
 
         return $append ? "{$path}/{$append}" : $path;
     }

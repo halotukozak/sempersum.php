@@ -47,7 +47,7 @@
                                         piosenek za
                                         pomocą Spotify <i class="fab fa-spotify p-1"></i></label>
                                     <br/>
-                                    <livewire:spotify.song-search name="spotifyId" :spotify-id="$spotifyId"/>
+                                    <livewire:input.spotify name="spotifyId" :spotify-id="$spotifyId"/>
                                     <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
 
                                 </div>
@@ -68,14 +68,14 @@
                                         class="text-gray-700 dark:text-gray-200"
                                         for="artist">Artysta
                                     </label>
-                                    <livewire:artist-select name="artist" :disabled="$spotifyId != null" :spotify-id="$spotifyId"/>
+                                    <livewire:input.artist name="artist" :disabled="$spotifyId != null" :spotify-id="$spotifyId"/>
                                     <p class="text-red-500 text-sm p-1 font-semibold">@error('artist'){{ $message }}@enderror</p>
 
                                 </div>
                                 <div>
                                     <label class="text-gray-700 dark:text-gray-200" for="key">Klucz <span
                                         class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
-                                <livewire:select name="key" :options="$keys" :defualt="$key" placeholder="Wybierz klucz..."/>
+                                <livewire:input.select name="key" :options="$keys" :defualt="$key" placeholder="Wybierz klucz..."/>
                                 <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
 
                             </div>
@@ -150,7 +150,7 @@
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="deezerId">Link do Deezer<i
                                         class="fab fa-deezer p-1"></i></label>
-                                <livewire:input.deezer-input id="deezerId" type="text" :input="$deezerId"/>
+                                <livewire:input.deezer id="deezerId" type="text" :input="$deezerId"/>
                                 <p class="text-red-500 text-sm p-1 font-semibold">@error('deezerId'){{ $message }}@enderror</p>
 
                             </div>
