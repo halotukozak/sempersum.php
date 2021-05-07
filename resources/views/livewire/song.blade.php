@@ -4,7 +4,7 @@
             <div
                 class="px-6 py-4 mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800 shadow-md mt-16 border-2 dark:border-blue-400 dark:border-opacity-75">
                 <div class="flex justify-center -mt-16 md:justify-end mb-3 ">
-                    @if($song->artist->avatar())
+                    @if($song->artist)
                         <a href="{{ $song->artist->path() }}">
                             <img
                                 class="object-cover w-32 h-32 rounded-full border-2 dark:border-blue-400 dark:border-opacity-75"
@@ -18,7 +18,7 @@
                     @endif
                 </div>
                 <button wire:click="like"
-                        class="inline-flex -mt-10 align-top"
+                        class="inline-flex -mt-10 align-top focus:outline-none"
                         type="submit">
                 <span class="text-2xl text-gray-700 inline-block p-2">
                     <i class="text-2xl text-red-800 hover:text-red-7600 {{ $liked ? 'fas' : "far" }} fa-heart"></i>
@@ -36,11 +36,13 @@
                 </p>
 
                 <div class="flex justify-end mt-4">
+                    @if($song->artist)
                     <object>
                         <a href="{{ $song->artist->path() }}"
                            class="text-xl font-medium text-indigo-500 dark:text-indigo-300">{{ $song->artist->name }}
                         </a>
                     </object>
+                    @endif
                 </div>
             </div>
             <div class="flex justify-center md:justify-start space-x-2 my-1 md:px-4 md:py-2 flex-wrap">

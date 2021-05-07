@@ -83,6 +83,8 @@ Przezroczysty świat
             ]),
             'isVerified' => $this->faker->boolean(),
             'isOutOfDate' => $this->faker->boolean(),
+            'idSong' => $this->faker->uuid(),
+
         ];
     }
 }

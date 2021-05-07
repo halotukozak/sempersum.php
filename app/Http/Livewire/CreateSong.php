@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Artist;
 use App\Models\Tag;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use App\Rules\DeezerId;
 use App\Rules\KeyOK;
@@ -47,7 +48,7 @@ class CreateSong extends Component
         return [
             'title' => ['required', 'min:3', 'max:255'],
             'text' => ['required'],
-            'spotifyId' => ['nullable', 'unique:songs,spotifyId,' . $this->idSong, new SpotifyId],
+            'spotifyId' => ['nullable', Rule::unique('songs', 'spotifyId')->ignore($this->idSong), new SpotifyId],
             'youtubeId' => ['nullable', 'unique:songs,youtubeId,' . $this->idSong, new YoutubeId],
             'deezerId' => ['nullable', 'unique:songs,deezerId,' . $this->idSong, new DeezerId],
             'soundcloudId' => ['nullable', 'unique:songs,soundcloudId,' . $this->idSong, new SoundcloudId],
@@ -59,21 +60,16 @@ class CreateSong extends Component
     public function save()
     {
         $this->validate($this->rules());
-        if ($this->idSong) {
-            $this->update();
-        } else {
             $this->add();
-        }
         $this->choice = true;
     }
 
     public function add()
     {
-            if (!$this->artist) {
+        if (!$this->artist) {
             $this->artist = new Artist(['id' => null]);
         }
-
-        $newSong = SongModel::create([
+        $newSong = new SongModel([
             'title' => $this->title,
             'slug' => Str::slug($this->title),
             'text' => $this->text,
@@ -84,16 +80,33 @@ class CreateSong extends Component
             'key' => $this->key,
             'artist_id' => $this->artist->id,
             'isVerified' => false,
-            'isBanned' => false,
             'isOutOfDate' => false,
         ]);
+
+        $newSong->idSong = $newSong->id;
+        if ($this->idSong) {
+            $newSong->idSong = $this->idSong;
+        }
+
+        $newSong->save();
         $newSong->tags()->attach($this->tags->pluck('id'));
     }
 
     public function update()
     {
-        $old = SongModel::find($this->idSong)->withTags;
-        dd(($old));
+        $old = SongModel::find($this->idSong);
+        $old->title = $this->title;
+        $old->$this->text = "";
+        $this->spotifyId = null;
+        $this->deezerId = "";
+        $this->youtubeId = "";
+        $this->soundcloudId = "";
+        $this->key = "";
+        $this->artist = null;
+        $this->tags = collect();
+        $this->isVerified = false;
+        $this->tagTerm = '';
+        $this->tagOptions = '';
     }
 
     public function refresh()
@@ -186,6 +199,9 @@ class CreateSong extends Component
         $song = request('song');
         if ($song) {
             $song = SongModel::firstWhere('slug', $song);
+            if (!$song) {
+                abort(404);
+            }
             $this->title = $song->title;
             $this->text = $song->text;
             $this->spotifyId = $song->spotifyId;
