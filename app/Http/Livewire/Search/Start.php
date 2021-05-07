@@ -40,8 +40,7 @@ class Start extends Component
     public function render()
     {
         return view('livewire.search.start', [
-            'songs' => $this->songs = Song::where('isVerified', true)
-                ->where('title', 'LIKE'.  '%' . $this->term . '%')
+            'songs' => $this->songs = Song::search($this->term)
                 ->withLikes()
                 ->get(),
         ]);

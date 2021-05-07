@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
             if(!current_user()->isModerator){
                 $query->withoutTrashed();
             }
-            return $query->get();
+            return $query;
         });
     }
 }

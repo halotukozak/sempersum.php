@@ -54,8 +54,7 @@ class Bar extends Component
 
     public function updatedTerm()
     {
-        $this->songs = Song::whereLike('title', $this->term)
-            ->where('isVerified', true)
+        $this->songs = Song::search($this->term)
             ->get();
     }
 
