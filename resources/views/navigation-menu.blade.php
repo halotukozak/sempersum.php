@@ -1,21 +1,22 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-900">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto fill-current dark:text-white"/>
-                    </a>
-                </div>
+<div>
+    <nav x-data="{ open: false }" class="bg-white dark:bg-gray-900">
+        <!-- Primary Navigation Menu -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="{{ route('start') }}">
+                            <x-jet-application-mark class="block h-9 w-auto fill-current dark:text-white"/>
+                        </a>
+                    </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link>
-                        <button id="switchTheme"
-                                class="h-12 w-12 flex justify-center items-center focus:outline-none text-black dark:text-gray-300 dark:hover:text-gray-100">
-                            <i class="fas fa-lightbulb" id="themeSwitcher"></i>
+                    <!-- Navigation Links -->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link>
+                            <button id="switchTheme"
+                                    class="h-12 w-12 flex justify-center items-center focus:outline-none text-black dark:text-gray-300 dark:hover:text-gray-100">
+                                <i class="fas fa-lightbulb" id="themeSwitcher"></i>
                         </button>
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('start') }}" :active="request()->routeIs('login')">
@@ -125,9 +126,7 @@
                 <livewire:search.bar />
             </x-jet-responsive-nav-link>
         </div>
-
         <!-- Responsive Settings Options -->
-        <div class="">
             @auth
                 <div class="flex items-center px-4">
                     @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -143,7 +142,6 @@
                         <div class="font-medium text-sm text-gray-500">{{ current_user()->email }}</div>
                     </div>
                 </div>
-            @endauth
                 <x-jet-responsive-nav-link>
                     <button id="switchTheme"
                             class="h-12 w-12 flex justify-center items-center focus:outline-none text-black dark:text-gray-300 dark:hover:text-gray-100">
@@ -174,10 +172,9 @@
                         {{ __('Log Out') }}
                     </x-jet-responsive-nav-link>
                 </form>
-
             </div>
-        </div>
+        @endauth
+    </nav>
+    <div class="w-full h-0.5 bg-gradient-to-l from-white to-gray-200 dark:from-blue-800 dark:to-blue-500">
     </div>
-</nav>
-<div class="w-full h-0.5 bg-gradient-to-l from-white to-gray-200 dark:from-blue-800 dark:to-blue-500">
 </div>

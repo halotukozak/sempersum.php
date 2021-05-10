@@ -184,4 +184,5 @@
                 $("pre").transpose();
             });
     </script>
+    @section('pageTitle', $song->title)
 </div>

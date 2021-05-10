@@ -12,11 +12,9 @@
             </label>
         </div>
         @if(!empty($term))
-            @if(count($songs))
-                @foreach($songs as $song)
-                    <livewire:song.search :song="$song" :key="$loop->index"/>
-                @endforeach
-            @else
+            @forelse($songs as $song)
+                <livewire:song.search :song="$song" :key="$loop->index"/>
+            @empty
                 <div wire:loading.class="hidden">
                     <div
                         class="px-6 py-4 mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800 shadow-md mt-16">
@@ -25,7 +23,7 @@
                         </h2>
                     </div>
                 </div>
-            @endif
+            @endforelse
         @endif
         <div wire:loading.grid
              class="animate-pulse px-6 py-4 mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800 shadow-md mt-16 cursor-not-allowed">

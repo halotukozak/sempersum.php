@@ -29,7 +29,7 @@ class Show extends Component
             $this->likes = $this->song->likes;
         }
 
-        $this->preferedPlayback();
+        $this->preferredPlayback();
 
     }
 
@@ -54,7 +54,7 @@ class Show extends Component
 
     }
 
-    protected function preferedPlayback()
+    protected function preferredPlayback()
     {
         if (current_user()) {
             switch (current_user()->preferred_playback) {

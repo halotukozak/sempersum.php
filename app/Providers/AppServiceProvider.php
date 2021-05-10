@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Song;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,14 +31,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Builder::macro('search', function (string $term) {
-            if ($term == null) {
-                return null;
-            }
             $query = Song::withTrashed()->where('isVerified', true)->where(function ($query) use ($term) {
                 $query->whereLike('title', $term)
                     ->whereLike('text', $term);
             });
-            if(!current_user()->isModerator){
+            if(current_user() && !current_user()->isModerator){
                 $query->withoutTrashed();
             }
             return $query;

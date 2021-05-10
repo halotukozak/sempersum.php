@@ -74,7 +74,7 @@ Fm
 Przezroczysty świat
 
             ',
-            'spotifyId' => Spotify::searchTracks($this->faker->word())->limit(1)->get('tracks')['items'][0]['id'],
+            'spotifyId' => Spotify::searchTracks($this->faker->randomLetter)->limit(1)->get('tracks')['items'][0]['id'],
             'deezerId' => '398369572',
             'youtubeId' => 'C0VmrEpcdHU',
             'soundcloudId' => '255455712',
@@ -83,7 +83,7 @@ Przezroczysty świat
             ]),
             'isVerified' => $this->faker->boolean(),
             'isOutOfDate' => $this->faker->boolean(),
-            'idSong' => $this->faker->uuid(),
+            'idSong' => $this->faker->randomNumber(),
 
         ];
     }

@@ -179,7 +179,6 @@ return [
         App\Providers\SocialstreamServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Alaouy\Youtube\YoutubeServiceProvider::class
-
     ],
 
     /*

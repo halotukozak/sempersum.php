@@ -13,7 +13,7 @@ class Start extends Component
     use WithPagination;
 
     public $term = "";
-    public $songs = [];
+    public $songs;
 
     public function mount()
     {
@@ -23,26 +23,20 @@ class Start extends Component
 
     public function resetBar()
     {
-        $this->songs = [];
+        $this->songs = null;
         $this->term = "";
     }
 
     public function updatedTerm()
     {
-        $this->songs = Song::whereLike('title', $this->term)
-            ->where('isVerified', true)
+        $this->songs = Song::search($this->term)
             ->withLikes()
-            ->get()
-            ->toArray();
+            ->get();
         $this->resetPage();
     }
 
     public function render()
     {
-        return view('livewire.search.start', [
-            'songs' => $this->songs = Song::search($this->term)
-                ->withLikes()
-                ->get(),
-        ]);
+        return view('livewire.search.start');
     }
 }
