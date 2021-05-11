@@ -48,22 +48,33 @@
                     </x-jet-secondary-button>
                 @endif
 
-                <x-jet-input-error for="photo" class="mt-2" />
+                <x-jet-input-error for="photo" class="mt-2"/>
             </div>
-        @endif
+    @endif
 
-        <!-- Name -->
+    <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Name') }}" />
-            <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" autocomplete="name" />
-            <x-jet-input-error for="name" class="mt-2" />
+            <x-jet-label for="name" value="{{ __('Name') }}"/>
+            <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name"
+                         autocomplete="name"/>
+            <x-jet-input-error for="name" class="mt-2"/>
         </div>
 
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="email" value="{{ __('Email') }}" />
-            <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
-            <x-jet-input-error for="email" class="mt-2" />
+            <x-jet-label for="email" value="{{ __('Email') }}"/>
+            <x-jet-input id="email" type="text"  class="mt-1 block w-full" wire:model.defer="state.email"/>
+            <x-jet-input-error for="email" class="mt-2"/>
+        </div>
+
+        <!-- Preferred streaming service -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="preferred_streaming_service" value="{{ __('Preferred streaming service') }}"/>
+<select wire:model.defer="state.preferred_streaming_service">
+    <option value="spotify">S</option>
+    <option value="d">d</option>
+</select>
+            <x-jet-input-error for="preferred_streaming_service" class="mt-2"/>
         </div>
     </x-slot>
 

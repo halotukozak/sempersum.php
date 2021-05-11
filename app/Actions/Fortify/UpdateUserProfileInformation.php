@@ -12,9 +12,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Validate and update the given user's profile information.
      *
-     * @param  mixed  $user
-     * @param  array  $input
+     * @param mixed $user
+     * @param array $input
      * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update($user, array $input)
     {
@@ -22,6 +23,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'preferred_streaming_service' => [Rule::in(['soundcloud', 'deezer', 'spotify', 'youtube']),]
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -35,6 +37,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'preferred_streaming_service' => $input['preferred_streaming_service'],
             ])->save();
         }
     }
@@ -51,6 +54,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         $user->forceFill([
             'name' => $input['name'],
             'email' => $input['email'],
+            'preferred_streaming_service' => $input['preferred_streaming_service'],
             'email_verified_at' => null,
         ])->save();
 
