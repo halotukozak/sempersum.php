@@ -45,6 +45,7 @@
                     @endif
                 </div>
             </div>
+            <div class="flex justify-center md:justify-start space-x-2 my-1 px-1 md:px-6 md:py-2 flex-wrap">
             <div class="flex justify-center md:justify-start space-x-2 my-1 md:px-4 md:py-2 flex-wrap">
                 @auth
                     <a href="{{ route('editSong', ['song' => $song] ) }}"><x-button-icon icon="fas fa-pen" class="flex-none">Edytuj</x-button-icon></a>
@@ -52,7 +53,7 @@
 
                 @can('verify', $song)
                     @if(!($song->isVerified))
-                        <x-jet-button class="flex-none">Zatwierdź</x-jet-button>
+                        <x-button-icon icon="fas fa-check" wire:click="verify">Zweryfikuj</x-button-icon>
                     @endif
                 @endcan
                 <x-button-icon icon="fas fa-volume-mute" id="hide" role="button">Ukryj&nbsp;akordy</x-button-icon>
@@ -70,10 +71,11 @@
                     </x-jet-dropdown>
                 </div>
             </div>
-
-            <pre wire:ignore data-key="{{ $song->key }}" class="m-3 whitespace-pre-wrap">{{ $song->text }}</pre>
-
-            <div class="dark:text-white p-2" x-data="{selected:{!! $preferred_playback !!}}">
+            <main class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
+                <pre wire:ignore data-key="{{ $song->key }}" class="m-3 whitespace-pre-wrap dark:text-white">{{ $song->text }}</pre>
+            </main>
+        </div>
+            <div class="dark:text-white p-2" x-data="{selected:{!! $preferred_streaming_service !!}}">
                 <ul class="shadow-box space-y-2">
                     @if($song->youtubeId)
                         <li class="relative dark:bg-gray-800 rounded-md">

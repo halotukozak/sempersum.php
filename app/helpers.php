@@ -77,3 +77,11 @@ function youtube_id_from_url($url)
     }
     return $url;
 }
+
+function verify(\App\Models\Song $newSong){
+    $old = \App\Models\Song::where('idSong',$newSong->idSong)->get()->except($newSong->id);
+    dd([
+        'new' => $newSong,
+        'old' => $old
+    ]);
+}

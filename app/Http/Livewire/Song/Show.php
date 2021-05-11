@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire\Song;
 
-use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
 use App\Models\Song as Model;
-use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Show extends Component
@@ -12,8 +11,8 @@ class Show extends Component
     public $song;
     public $likes;
     public $liked;
-    public $preferred_playback = null;
-    public $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
+    public int $preferred_streaming_service = 3;
+    public array $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
 
     public function mount($song)
     {
@@ -29,13 +28,13 @@ class Show extends Component
             $this->likes = $this->song->likes;
         }
 
-        $this->preferredPlayback();
+        $this->preferred_streaming_service();
 
     }
 
     public function like()
     {
-        if (current_user()) {
+        if (Auth::check()) {
             if ($this->song->isLikedBy(current_user())) {
                 $this->song->dislike();
                 $this->likes--;
@@ -54,25 +53,30 @@ class Show extends Component
 
     }
 
-    protected function preferredPlayback()
+    public function verify()
     {
-        if (current_user()) {
-            switch (current_user()->preferred_playback) {
+        $this->song->verify();
+    }
+
+    protected function preferred_streaming_service()
+    {
+        if (Auth::check()) {
+            switch (current_user()->preferred_streaming_service) {
                 case ('youtube'):
-                    $this->preferred_playback = 1;
+                    $this->preferred_streaming_service = 1;
                     break;
                 case ('spotify'):
-                    $this->preferred_playback = 2;
+                    $this->preferred_streaming_service = 2;
                     break;
                 case ('deezer'):
-                    $this->preferred_playback = 4;
+                    $this->preferred_streaming_service = 4;
                     break;
                 case ('soundcloud'):
                 default:
-                    $this->preferred_playback = 3;
+                    $this->preferred_streaming_service = 3;
                     break;
             }
-        } else $this->preferred_playback = 3;
+        } else $this->preferred_streaming_service = 3;
 
     }
 

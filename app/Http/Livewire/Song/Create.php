@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Song;
 
 use App\Models\Artist;
 use App\Models\Tag;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -19,22 +20,22 @@ use Spotify;
 class Create extends Component
 {
     public bool $choice = false;
-    public $idSong = null;
+    public ?int $idSong = null;
 
     public string $title = "";
     public string $text = "";
-    public $spotifyId;
-    public string $deezerId = "";
-    public string $youtubeId = "";
-    public string $soundcloudId = "";
-    public string $key = "";
-    public $artist;
+    public ?string $spotifyId;
+    public ?string $deezerId = "";
+    public ?string $youtubeId = "";
+    public ?string $soundcloudId = "";
+    public ?string $key = "";
+    public ?Artist $artist;
     public Collection $tags;
     public bool $isVerified = false;
 
     public array $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
-    public $tagTerm;
-    public $tagOptions;
+    public ?string $tagTerm;
+    public ?array $tagOptions;
 
     protected $listeners = ['artistUpdated' => 'setArtist',
         'spotifyIdUpdated' => 'setSpotifyId',
@@ -57,14 +58,19 @@ class Create extends Component
         ];
     }
 
-    public function save()
+    public function dashboard(): RedirectResponse
+    {
+        return redirect()->route('dashboard');
+    }
+
+    public function save(): void
     {
         $this->validate($this->rules());
-            $this->add();
+        $this->add();
         $this->choice = true;
     }
 
-    public function add()
+    public function add(): void
     {
         if (!$this->artist) {
             $this->artist = new Artist(['id' => null]);
@@ -92,7 +98,7 @@ class Create extends Component
         $newSong->tags()->attach($this->tags->pluck('id'));
     }
 
-    public function refresh()
+    public function refresh(): void
     {
         $this->choice = false;
         $this->title = "";
@@ -106,26 +112,26 @@ class Create extends Component
         $this->tags = collect();
         $this->isVerified = false;
         $this->tagTerm = '';
-        $this->tagOptions = '';
+        $this->tagOptions = [];
     }
 
-    public function setDeezerId($info)
+    public function setDeezerId($info): void
     {
         $this->deezerId = $info;
         $this->updated('deezerId');
     }
 
-    public function setKey($info)
+    public function setKey($info): void
     {
         $this->key = $info['value'];
     }
 
-    public function setArtist($info)
+    public function setArtist($info): void
     {
         $this->artist = Artist::find($info['value']);
     }
 
-    public function setSpotifyId($info)
+    public function setSpotifyId($info): void
     {
         $this->spotifyId = $info['value'];
         if ($info['value']) {
@@ -134,7 +140,7 @@ class Create extends Component
             $artistSpotify = $tempSpotify['artists'][0];
             $this->artist = Artist::where('spotifyId', $artistSpotify['id'])->firstOrCreate([
                 'name' => $artistSpotify['name'],
-                'slug' => Str::slug($artistSpotify['name'], '-'),
+                'slug' => Str::slug($artistSpotify['name']),
                 'spotifyId' => $artistSpotify['id']
             ]);
             $this->emit('artistBeforeTitle', $this->artist->id);
@@ -145,7 +151,7 @@ class Create extends Component
         $this->updated('spotifyId');
     }
 
-    public function updatedTagTerm()
+    public function updatedTagTerm(): void
     {
         $this->tagOptions = Tag::whereLike('name', $this->tagTerm)->get();
         foreach ($this->tags as $tag) {
@@ -153,25 +159,25 @@ class Create extends Component
         }
     }
 
-    public function clearTagSearch()
+    public function clearTagSearch(): void
     {
         $this->tagTerm = null;
         $this->tagOptions = null;
     }
 
-    public function addTag($tag)
+    public function addTag($tag): void
     {
         $tag = Tag::firstWhere('name', $tag);
         $this->tags->push($tag);
         $this->clearTagSearch();
     }
 
-    public function removeTag($tag)
+    public function removeTag($tag): void
     {
         $this->tags = $this->tags->whereNotIn('id', $tag);
     }
 
-    public function updated($field)
+    public function updated($field): void
     {
         $this->prepare();
         $this->validateOnly($field, $this->rules());
@@ -198,7 +204,7 @@ class Create extends Component
         } else $this->tags = collect();
     }
 
-    public function prepare()
+    public function prepare(): void
     {
         $this->title = ucfirst($this->title);
     }

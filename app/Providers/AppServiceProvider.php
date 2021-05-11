@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
                 $query->whereLike('title', $term)
                     ->whereLike('text', $term);
             });
-            if(current_user() && !current_user()->isModerator){
+            if (current_user() && !current_user()->isModerator) {
                 $query->withoutTrashed();
             }
             return $query;

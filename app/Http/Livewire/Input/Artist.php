@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Input;
 use App\Models\Artist as ArtistModel;
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use Spotify;
 
 class Artist extends Component
 {
@@ -15,7 +15,6 @@ class Artist extends Component
 
     public $value;
     public $optionsValues;
-    public $allOptions;
 
     public $term;
 
@@ -28,13 +27,16 @@ class Artist extends Component
 
     protected $listeners = ['artistBeforeTitle' => 'artistBeforeTitle'];
 
-    public function mount($name, $disabled = false, $spotifyId = null)
+    public function mount($name, $disabled = false, $spotifyId = null, $artist = null)
     {
         $this->name = $name;
-        $this->allOptions = ArtistModel::all();
         $this->options = $this->options();
         $this->disabled = $disabled;
-        $this->artistBeforeTitle($spotifyId);
+        if ($spotifyId) {
+            $this->artistBeforeTitle(Spotify::track($spotifyId)->get()['artists'][0]['id']);
+        } elseif ($artist) {
+            $this->selectOption($artist->id);
+        }
     }
 
     public function artistBeforeTitle($info)
@@ -82,6 +84,9 @@ class Artist extends Component
     {
         if ($optionId) {
             $option = ArtistModel::find($optionId);
+            if (!$option) {
+                $option = ArtistModel::firstWhere('spotifyId', $optionId);
+            }
             $this->selectedOption = $option;
             $this->selectValue($option->id);
         } else {

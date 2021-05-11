@@ -13,10 +13,12 @@ class Bar extends Component
     public $term = "";
     public $songs = [];
     public $highlightIndex = 0;
+    public $barId;
 
     public function mount()
     {
         $this->resetBar();
+        $this->barId = rand();
     }
 
     public function resetBar()

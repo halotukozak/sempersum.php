@@ -68,7 +68,7 @@
                                         class="text-gray-700 dark:text-gray-200"
                                         for="artist">Artysta
                                     </label>
-                                    <livewire:input.artist name="artist" :disabled="$spotifyId != null" :spotify-id="$spotifyId"/>
+                                    <livewire:input.artist name="artist" :disabled="$spotifyId != null" :spotify-id="$spotifyId" :artist="$artist"/>
                                     <p class="text-red-500 text-sm p-1 font-semibold">@error('artist'){{ $message }}@enderror</p>
 
                                 </div>
@@ -175,7 +175,6 @@
                                     class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
                                     {{__('Save') }}
                                 </button>
-                                {{ $errors }}
                             </div>
                         </div>
                     </form>
@@ -272,9 +271,8 @@
                         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                             <x-button-icon icon="fas fa-plus" wire:click="refresh()">Dodaj kolejną piosenkę
                             </x-button-icon>
-                            <a href="{{ route('dashboard') }}">
-                                <x-button-icon icon="fas fa-plus">Wróć do panelu</x-button-icon>
-                            </a>
+                            <x-button-icon wire:click="dashboard" icon="fas fa-plus" >Wróć do panelu
+                            </x-button-icon>
                         </div>
                     </section>
                 @endif

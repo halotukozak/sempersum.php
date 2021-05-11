@@ -29,10 +29,18 @@ class Song extends Model
 
     public function path($append = '')
     {
-
         $path = route('showSong', $this->slug);
-
         return $append ? "{$path}/{$append}" : $path;
+    }
+
+    public function verify()
+    {
+        $this->isVerified = true;
+    }
+
+    public function extinct()
+    {
+        $this->isOutOfDate = true;
     }
 
 }

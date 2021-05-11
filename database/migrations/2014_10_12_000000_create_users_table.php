@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
             $table->boolean('isModerator')->default(false);
-            $table->string('preferred_playback')->default('soundcloud');
+            $table->string('preferred_streaming_service')->default('soundcloud');
         });
     }
 
