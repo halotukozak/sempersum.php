@@ -191,9 +191,11 @@
     "Connect": "Połącz",
     "Remove Connected Account": "Usuń połączone konta",
     "Please confirm your removal of this account - this action cannot be undone.": "Potwierdź usunięcie konta - nie będzie można cofnąć tego działania",
-    "Or" : "lub",
-    "I agree to the :terms_of_service and :privacy_policy" : "Akceptuję :terms_of_service i :privacy_policy",
-    "Terms of Service" : "Regulamin serwisu",
-    "Privacy Policy" : "Politykę prywatności",
-    "Cancel" : "Anuluj"
+    "Or": "lub",
+    "I agree to the :terms_of_service and :privacy_policy": "Akceptuję :terms_of_service i :privacy_policy",
+    "Terms of Service": "Regulamin serwisu",
+    "Privacy Policy": "Politykę prywatności",
+    "Cancel": "Anuluj",
+    "Update your preferred streaming service.": "Wybierz swój ulubiony serwis streamingowy",
+    "Preferred streaming service": "Ulubiony serwis streamingowy"
 }

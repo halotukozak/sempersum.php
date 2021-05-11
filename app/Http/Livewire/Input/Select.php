@@ -14,13 +14,13 @@ class Select extends Component
     public $disabled;
     public $placeholder;
 
-    public function mount($name, $options, $disabled = null, $placeholder = "Wybierz...", $defualt = null)
+    public function mount($name, $options, $disabled = null, $placeholder = "Wybierz...", $default = null)
     {
         $this->name = $name;
         $this->options = $options;
         $this->placeholder = $placeholder;
         $this->disabled = $disabled;
-        $this->selectOption($defualt);
+        $this->selectOption($default);
                 if ($this->selectedOption == null) {
             $this->selectedOption = $this->placeholder;
         }

@@ -13,6 +13,9 @@
                 <x-jet-section-border />
             @endif
 
+            @livewire('profile.update-preferred-soundtrack')
+                <x-jet-section-border />
+
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()) && ! is_null($user->password))
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.update-password-form')
