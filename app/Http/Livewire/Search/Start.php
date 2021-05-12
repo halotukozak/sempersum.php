@@ -23,7 +23,7 @@ class Start extends Component
 
     public function resetBar()
     {
-        $this->songs = null;
+        $this->songs = collect();
         $this->term = "";
     }
 

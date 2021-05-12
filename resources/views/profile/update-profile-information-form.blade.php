@@ -70,16 +70,20 @@
         <!-- Preferred streaming service -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="preferred_streaming_service" value="{{ __('Preferred streaming service') }}"/>
-<select wire:model.defer="state.preferred_streaming_service">
-    <option value="spotify">S</option>
-    <option value="d">d</option>
-</select>
+            <select name="preferred_streaming_service" wire:model.defer="state.preferred_streaming_service"
+                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                <option value="spotify">Spotify</option>
+                <option value="deezer">Deezer</option>
+                <option value="soundcloud">Soundcloud</option>
+                <option value="youtube">Soundcloud</option>
+            </select>
+{{--            TODO: Design select--}}
             <x-jet-input-error for="preferred_streaming_service" class="mt-2"/>
         </div>
     </x-slot>
 
     <x-slot name="actions">
-        <x-jet-action-message class="mr-3 dark:text-white" on="saved">
+        <x-jet-action-message class="mr-3" on="saved">
             {{ __('Saved.') }}
         </x-jet-action-message>
 

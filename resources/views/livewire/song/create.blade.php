@@ -262,7 +262,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                @endif
+                            @endif
                         </ul>
                     </div>
                     </section>

@@ -74,7 +74,7 @@
             <main class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
                 <pre wire:ignore data-key="{{ $song->key }}" class="m-3 whitespace-pre-wrap dark:text-white">{{ $song->text }}</pre>
             </main>
-        </div>
+            </div>
             <div class="dark:text-white p-2" x-data="{selected:{!! $preferred_streaming_service !!}}">
                 <ul class="shadow-box space-y-2">
                     @if($song->youtubeId)
@@ -178,13 +178,16 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('js/jquery.js')}}"></script>
-    <script src="{{ asset('js/jquery-transposer.js') }}"></script>
-    <script src="{{ asset('js/chord-hider.js') }}"></script>
-    <script type="text/javascript">
+
+    @push('scripts')
+        <script src="{{ asset('js/jquery.js')}}"></script>
+        <script src="{{ asset('js/jquery-transposer.js') }}"></script>
+        <script src="{{ asset('js/chord-hider.js') }}"></script>
+        <script type="text/javascript">
             $(function () {
                 $("pre").transpose();
             });
-    </script>
+        </script>
+    @endpush
     @section('pageTitle', $song->title)
 </div>

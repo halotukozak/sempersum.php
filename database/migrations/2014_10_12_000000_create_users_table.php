@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->boolean('isModerator')->default(false);
             $table->string('preferred_streaming_service')->default('soundcloud');
         });
+        //TODO Liczba punktów, autor kontrybucji, system punktowy - nagradzanie
     }
 
     /**
