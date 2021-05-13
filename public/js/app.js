@@ -3802,24 +3802,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 
-document.getElementById('switchTheme').addEventListener('click', function () {
-  var htmlClasses = document.querySelector('html').classList;
-
-  if (localStorage.theme == 'dark') {
-    htmlClasses.remove('dark');
-    localStorage.removeItem('theme');
-  } else {
-    htmlClasses.add('dark');
-    localStorage.theme = 'dark';
-  }
-});
-
-if (localStorage.theme === 'dark' || !'theme' in localStorage && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.querySelector('html').classList.add('dark');
-} else if (localStorage.theme === 'dark') {
-  document.querySelector('html').classList.add('dark');
-}
-
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -21395,7 +21377,7 @@ process.umask = function() { return 0; };
 /******/ 					__webpack_require__.m[moduleId] = moreModules[moduleId];
 /******/ 				}
 /******/ 			}
-/******/ 			if(runtime) runtime(__webpack_require__);
+/******/ 			if(runtime) var result = runtime(__webpack_require__);
 /******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
 /******/ 			for(;i < chunkIds.length; i++) {
 /******/ 				chunkId = chunkIds[i];
@@ -21404,7 +21386,7 @@ process.umask = function() { return 0; };
 /******/ 				}
 /******/ 				installedChunks[chunkIds[i]] = 0;
 /******/ 			}
-/******/ 			__webpack_require__.O();
+/******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];

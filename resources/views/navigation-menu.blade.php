@@ -18,6 +18,7 @@
                                     class="h-12 w-12 flex justify-center items-center focus:outline-none text-black dark:text-gray-300 dark:hover:text-gray-100">
                                 <i class="fas fa-lightbulb" id="themeSwitcher"></i>
                             </button>
+                            <script src="{{ mix('js/theme-switcher.js') }}" ></script>
                         </x-jet-nav-link>
                         <x-jet-nav-link href="{{ route('start') }}" :active="request()->routeIs('login')">
                         {{ __('Start') }}

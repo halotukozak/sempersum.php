@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/theme-switcher.js": "/js/theme-switcher.js",
     "/js/chord-hider.js": "/js/chord-hider.js",
     "/css/app.css": "/css/app.css"
 }
