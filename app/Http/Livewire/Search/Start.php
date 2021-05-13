@@ -15,22 +15,42 @@ class Start extends Component
     public $term = "";
     public $songs;
 
+    public int $limit = 10;
+
+    public function loadMore()
+    {
+        $this->limit += 10;
+        $this->updatedTerm();
+    }
+
     public function mount()
     {
         $this->resetBar();
-        $this->term = request('search');
+        if ($this->term = request('search')) {
+            $this->term = request('search');
+            $this->updatedTerm();
+        }
     }
 
     public function resetBar()
     {
         $this->songs = collect();
         $this->term = "";
+        $this->limit = 10;
+
     }
 
     public function updatedTerm()
     {
+        $this->limit = 10;
+        $this->generateSongs();
+    }
+
+    public function generateSongs(): void
+    {
         $this->songs = Song::search($this->term)
             ->withLikes()
+            ->limit($this->limit)
             ->get();
         $this->resetPage();
     }
@@ -39,4 +59,5 @@ class Start extends Component
     {
         return view('livewire.search.start');
     }
+
 }

@@ -12,18 +12,34 @@
                 <i class="fas fa-search dark:text-white"></i>
             </label>
         </div>
-        <div wire:loading.remove>
+        <div wire:loading.remove wire:target="term">
             @if(!empty($term))
                 @forelse($songs as $song)
                     <livewire:song.search :song="$song" :key="$song->id"/>
                 @empty
                     <x-bootstrap.search.empty/>
                 @endforelse
+                <div
+                    x-data="{observe () {
+            let observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        @this.call('generateSongs')
+                    }
+                })
+            }, {
+                root: null
+            })
+
+            observer.observe(this.$el)
+        }
+    }"
+                    x-init="observe">
+                </div>
             @endif
         </div>
-{{--        TODO Infinity scroll to make it faster--}}
-        <x-bootstrap.search.loading1 />
-        <x-bootstrap.search.loading2 />
-        <x-bootstrap.search.loading3 />
+        <x-bootstrap.search.loading1/>
+        <x-bootstrap.search.loading2/>
+        <x-bootstrap.search.loading3/>
     </div>
 </div>

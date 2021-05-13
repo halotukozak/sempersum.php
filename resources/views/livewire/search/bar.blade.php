@@ -1,5 +1,5 @@
 <div
-    class="px-1 pt-3 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 md:hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300">
+    class="px-1 pt-3 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 dark:hover:text-gray-400 md:hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300">
     <div class="relative">
         <label for="{{$barId}}" class="absolute inset-y-0 left-0 flex items-center pl-2">
             <i class="fas fa-search p-1"></i>
