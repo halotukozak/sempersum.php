@@ -8,9 +8,9 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SongPolicy
 {
-    public function verify(User $user, Song $song)
+    public function verify(User $user, Song $song): bool
     {
-        return $user->artist->contains($song->artist);
+        return $user->artist->contains($song->artist) || $user->isModerator;
     }
 
 }

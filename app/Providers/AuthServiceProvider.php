@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Http\Livewire\Dashboard;
 use App\Models\ConnectedAccount;
 use App\Models\Song;
 use App\Policies\ConnectedAccountPolicy;
+use App\Policies\DashboardPolicy;
 use App\Policies\SongPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 

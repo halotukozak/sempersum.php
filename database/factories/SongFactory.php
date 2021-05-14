@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Artist;
 use App\Models\Song;
+use App\Models\User;
 use Spotify;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,7 +27,9 @@ class SongFactory extends Factory
     {
         return [
             'artist_id' => Artist::factory(),
-            'slug' => $this->faker->unique()->slug(),
+            'author_id' => User::factory(),
+
+            'slug' => $this->faker->unique(true)->slug(),
             'title' => $this->faker->sentence(4),
             'text' => '
 Bbm
@@ -83,8 +86,7 @@ Przezroczysty świat
             ]),
             'isVerified' => $this->faker->boolean(),
             'isOutOfDate' => $this->faker->boolean(),
-            'idSong' => $this->faker->unique()->randomNumber(),
-
+            'idSong' => $this->faker->unique(true)->randomNumber(),
         ];
     }
 }

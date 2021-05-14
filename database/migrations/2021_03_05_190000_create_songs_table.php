@@ -36,6 +36,12 @@ class CreateSongsTable extends Migration
                 ->references('id')
                 ->on('artists')
                 ->onDelete('cascade');
+
+            $table->foreignId('author_id')
+                ->nullable()
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
 
     }

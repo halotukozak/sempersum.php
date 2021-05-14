@@ -80,6 +80,7 @@
       <data directive="@overwrite" />
       <data directive="@parent" />
       <data directive="@php" injection="true" prefix="&lt;?php (" suffix="); ?&gt;" />
+      <data directive="@popper" injection="true" prefix="&lt;?php _bladeDirective(" suffix="); ?&gt;" />
       <data directive="@prepend" injection="true" prefix="&lt;?php $__env-&gt;startPrepend(" suffix="); ?&gt;" />
       <data directive="@production" />
       <data directive="@props" injection="true" prefix="&lt;?php $attributes = $attributes-&gt;exceptProps(" suffix="); ?&gt;" />

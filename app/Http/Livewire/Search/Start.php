@@ -26,7 +26,7 @@ class Start extends Component
     public function mount()
     {
         $this->resetBar();
-        if ($this->term = request('search')) {
+        if (request('search')) {
             $this->term = request('search');
             $this->updatedTerm();
         }

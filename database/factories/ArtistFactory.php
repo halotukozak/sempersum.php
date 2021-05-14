@@ -23,8 +23,8 @@ class ArtistFactory extends Factory
     public function definition()
     {
         return [
-            'slug' => $this->faker->unique()->slug(),
-            'name' => $this->faker->unique()->name(),
+            'slug' => $this->faker->unique(true)->slug(),
+            'name' => $this->faker->unique(true)->name(),
             'description' => $this->faker->text(),
             'website' => $this->faker->url(),
             'facebook' => $this->faker->url(),
