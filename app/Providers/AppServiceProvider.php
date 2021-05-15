@@ -31,7 +31,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Builder::macro('search', function (string $term) {
-            $query = Song::withTrashed()->where('isVerified', true)->where(function ($query) use ($term) {
+            $query = Song::withTrashed()
+                ->where('isOutOfDate', false)
+                ->where('isVerified', true)->where(function ($query) use ($term) {
                 $query->whereLike('title', $term)
                     ->whereLike('text', $term);
             });

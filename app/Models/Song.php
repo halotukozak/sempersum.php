@@ -36,11 +36,14 @@ class Song extends Model
     public function verify()
     {
         $this->isVerified = true;
+        $this->save();
+        Song::where('idSong', $this->idSong)->get()->except($this->id)->each->extinct();
     }
 
     public function extinct()
     {
-        $this->isOutOfDate = true;
+        $this->isOutOfDate = false;
+        $this->save();
     }
 
 }

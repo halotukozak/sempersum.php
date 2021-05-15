@@ -31,7 +31,7 @@
                             wire:click="show('add')"
                             class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
                                 class="fa fa-plus p-2"></i>Dodaj piosenkę</span>
-                        @if(current_user()->isModerator || !empty(current_user()->artist))
+                        @if(current_user()->isModerator)
                             <span
                                 wire:click="show('verify')"
                                 class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i

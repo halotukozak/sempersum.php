@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Dashboard;
 
+use App\Models\Song as Model;
 use Livewire\Component;
 
 class Song extends Component
 {
-    public $song;
+    public Model $song;
 
     public function render()
     {
