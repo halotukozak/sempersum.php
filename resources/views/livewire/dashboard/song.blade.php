@@ -1,5 +1,6 @@
 <div class="bg-white rounded-lg shadow-lg dark:bg-gray-800 relative"
-     x-data="{ {!! $song->id . 'tak' !!} : false}">
+     x-data="{show : false}"
+     x-init="show = false">
     <a href="{{ $song->path() }}">
         <div class="px-4 py-2">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white">{{ $song->title }}</h1>
@@ -14,14 +15,15 @@
     <div class="flex items-center justify-center px-4 py-2 bg-gray-900 absolute inset-x-0 bottom-0">
         <button
             wire:click="verify({{ $song->id }})"
-            @click="{!! $song->id . 'tak' !!} = true"
+            @click="show = true"
             class="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-200 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none">
             Zweryfikuj natychmiast<i class="fas fa-check-circle p-1"></i>
         </button>
     </div>
     <div
-        x-show="{!! $song->id . 'tak' !!} === true"
+        x-show="show"
         class="absolute left-0 top-0 rounded-lg w-full h-full bg-green-500 bg-opacity-40 text-center animate-pulse">
         <i class="fas fa-plus text-white text-2xl absolute top-1/2 left-1/2"></i>
     </div>
+{{--    TODO How to refresh showind green bg. WTFFFFFFFF--}}
 </div>
