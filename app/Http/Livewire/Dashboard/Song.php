@@ -9,6 +9,11 @@ class Song extends Component
 {
     public Model $song;
 
+    public function verify(): void
+    {
+        $this->song->verify();
+    }
+
     public function render()
     {
         return view('livewire.dashboard.song');

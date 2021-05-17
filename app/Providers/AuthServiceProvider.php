@@ -19,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         ConnectedAccount::class => ConnectedAccountPolicy::class,
-        Song::class => SongPolicy::class
+        Song::class => SongPolicy::class,
+        Dashboard::class => DashboardPolicy::class
     ];
 
     /**
@@ -30,7 +31,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
     }
 }

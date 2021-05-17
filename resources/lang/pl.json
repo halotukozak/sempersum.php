@@ -99,7 +99,7 @@
     "Please copy your new API token. For your security, it won't be shown again.": "Skopiuj nowy token API. Ze względów bezpieczeństwa nie zostanie ponownie wyświetlony.",
     "Please enter your password to confirm you would like to logout of your other browser sessions across all of your devices.": "Wprowadź hasło, aby potwierdzić, że chcesz wylogować się z innych sesji przeglądarek na wszystkich urządzeniach.",
     "Please provide the email address of the person you would like to add to this team. The email address must be associated with an existing account.": "Podaj adres email osoby, którą chcesz dodać do tego zespołu. Adres email musi być powiązany z istniejącym kontem.",
-    "Profile Information": "Informacje o Profilu",
+    "Profile Information": "Informacje o profilu",
     "Profile": "Profil",
     "Recovery Code": "Kod odzyskiwania",
     "Regards": "Z poważaniem",
@@ -197,5 +197,6 @@
     "Privacy Policy": "Politykę prywatności",
     "Cancel": "Anuluj",
     "Update your preferred streaming service.": "Wybierz swój ulubiony serwis streamingowy",
-    "Preferred streaming service": "Ulubiony serwis streamingowy"
+    "Preferred streaming service": "Ulubiony serwis streamingowy",
+    "Send.": "Wysłane."
 }

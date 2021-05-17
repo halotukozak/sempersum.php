@@ -11,16 +11,21 @@
         @endif
     </div>
     <button wire:click="like"
-            class="inline-flex -mt-10 align-top"
+            class="inline-flex -mt-10 align-top focus:outline-none"
             type="submit">
                 <span class="text-2xl text-gray-700 inline-block p-2">
                     <i class="text-2xl text-red-800 hover:text-red-7600 {{ $liked ? 'fas' : "far" }} fa-heart"></i>
-            {!! $likes == null ? '&nbsp;&nbsp;' : $likes !!}
+            {!! $likes == 0 ? '&nbsp;&nbsp;' : $likes !!}
             </span>
     </button>
     <a href="{{ $song->path() }}">
 
-        <h2 class="text-xl font-semibold text-gray-800 dark:text-white md:mt-0 md:text-3xl">{{ $song->title }}</h2>
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-white md:mt-0 md:text-3xl">
+            @if ($song->deleted_at)
+                <i class="fas fa-ban"></i>
+            @endif
+            {{ $song->title }}
+        </h2>
 
         <p class="mt-6 text-gray-600 dark:text-gray-200">
             @foreach($song->tags as $tag)

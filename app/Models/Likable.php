@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
 trait Likable
 {
 
-    public function scopeWithLikes(Builder $guery)
+    public function scopeWithLikes(Builder $query)
     {
-        $guery->leftJoinSub(
+        $query->leftJoinSub(
             'select song_id, sum(liked) likes from likes group by song_id',
             'likes',
             'likes.song_id',
@@ -42,7 +42,7 @@ trait Likable
             ]);
     }
 
-    public function isLikedBy(User $user = null)
+    public function isLikedBy(User $user = null) :bool
     {
         if (!$user) return false;
         return (bool)$user->likes

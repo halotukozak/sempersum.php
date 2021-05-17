@@ -48,7 +48,7 @@
                                         pomocą Spotify <i class="fab fa-spotify p-1"></i></label>
                                     <br/>
                                     <livewire:input.spotify name="spotifyId" :spotify-id="$spotifyId"/>
-                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
+                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('spotifyId'){{ $message }}@enderror</p>
 
                                 </div>
                                 <div>
@@ -75,7 +75,7 @@
                                 <div>
                                     <label class="text-gray-700 dark:text-gray-200" for="key">Klucz <span
                                         class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
-                                <livewire:input.select name="key" :options="$keys" :defualt="$key" placeholder="Wybierz klucz..."/>
+                                <livewire:input.select name="key" :options="$keys" :default="$key" placeholder="Wybierz klucz..."/>
                                 <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
 
                             </div>

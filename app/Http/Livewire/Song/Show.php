@@ -4,27 +4,31 @@ namespace App\Http\Livewire\Song;
 
 use App\Models\Song as Model;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Jetstream\ConfirmsPasswords;
 use Livewire\Component;
 
 class Show extends Component
 {
     public $song;
-    public $likes;
-    public $liked;
+    public int $likes = 0;
+    public bool $liked;
     public int $preferred_streaming_service = 3;
     public array $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
 
+    use ConfirmsPasswords;
+
     public function mount($song)
     {
-        $this->song = Model::where('slug', $song)->withLikes()->first();
-
-        abort_if($this->song == null, 404);
+        if (current_user()->isModerator) {
+            $this->song = Model::withTrashed()->withLikes()->firstWhere('slug', $song);
+        } else {
+            $this->song = Model::withLikes()->firstWhere('slug', $song);
+        }
+        abort_if($this->song === null, 404);
 
         $this->liked = $this->song->isLikedBy(current_user());
 
-        if ($this->song->likes == null || $this->song->likes == 0) {
-            $this->likes = null;
-        } else {
+        if ($this->song->likes) {
             $this->likes = $this->song->likes;
         }
 
@@ -34,13 +38,10 @@ class Show extends Component
 
     public function like()
     {
-        if (Auth::check()) {
-            if ($this->song->isLikedBy(current_user())) {
+        if (current_user()) {
+            if ($this->liked) {
                 $this->song->dislike();
                 $this->likes--;
-                if ($this->likes == 0) {
-                    $this->likes = null;
-                }
                 $this->liked = false;
             } else {
                 $this->song->like();
@@ -50,12 +51,24 @@ class Show extends Component
         } else {
             $this->redirect(route('login'));
         }
-
     }
 
-    public function verify()
+    public function verify(): void
     {
         $this->song->verify();
+    }
+
+    public function delete(): void
+    {
+        $this->ensurePasswordIsConfirmed();
+        $this->song->delete();
+        $this->redirectRoute('dashboard');
+    }
+
+    public function restore(): void
+    {
+        $this->ensurePasswordIsConfirmed();
+        $this->song->restore();
     }
 
     protected function preferred_streaming_service()

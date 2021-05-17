@@ -46,36 +46,52 @@
                 </div>
             </div>
             <div class="flex justify-center md:justify-start space-x-2 my-1 px-1 md:px-6 md:py-2 flex-wrap">
-            <div class="flex justify-center md:justify-start space-x-2 my-1 md:px-4 md:py-2 flex-wrap">
-                @auth
-                    <a href="{{ route('editSong', ['song' => $song] ) }}"><x-button-icon icon="fas fa-pen" class="flex-none">Edytuj</x-button-icon></a>
-                @endauth
+                <div class="flex justify-center md:justify-start space-x-2 my-1 md:px-4 md:py-2 flex-wrap">
+                    <x-button-icon icon="fas fa-volume-mute" id="hide" role="button">Ukryj&nbsp;akordy</x-button-icon>
 
-                @can('verify', $song)
-                    @if(!($song->isVerified))
-                        <x-button-icon icon="fas fa-check" wire:click="verify">Zweryfikuj</x-button-icon>
-                    @endif
-                @endcan
-                <x-button-icon icon="fas fa-volume-mute" id="hide" role="button">Ukryj&nbsp;akordy</x-button-icon>
-
-                <div class="inline-flex">
-                    <x-jet-dropdown align="left">
-                        <x-slot name="trigger">
-                            <x-button-icon icon="fas fa-sliders-h">Transponuj</x-button-icon>
-                        </x-slot>
-                        <x-slot name="content">
-                            @foreach ($keys as $key)
-                                <x-jet-dropdown-link class="key">{{ $key }}</x-jet-dropdown-link>
-                            @endforeach
-                        </x-slot>
-                    </x-jet-dropdown>
+                    <div class="inline-flex">
+                        <x-jet-dropdown align="left">
+                            <x-slot name="trigger">
+                                <x-button-icon icon="fas fa-sliders-h">Transponuj</x-button-icon>
+                            </x-slot>
+                            <x-slot name="content">
+                                @foreach ($keys as $key)
+                                    <x-jet-dropdown-link class="key">{{ $key }}</x-jet-dropdown-link>
+                                @endforeach
+                            </x-slot>
+                        </x-jet-dropdown>
+                    </div>
+                    @auth
+                        <a href="{{ route('editSong', ['song' => $song] ) }}">
+                            <x-button-icon icon="fas fa-pen" class="flex-none">Edytuj</x-button-icon>
+                        </a>
+                    @endauth
+                    @can('verify', $song)
+                        @if(!($song->isVerified))
+                            <x-button-icon-green icon="fas fa-check" wire:click="verify">Zweryfikuj
+                            </x-button-icon-green>
+                        @endif
+                        @if(!($song->deleted_at))
+                            <x-jet-confirms-password wire:then="delete">
+                                <x-button-icon-red icon="fas fa-trash" wire:loading.attr="disabled">
+                                    Usuń
+                                </x-button-icon-red>
+                            </x-jet-confirms-password>
+                        @else
+                                <x-jet-confirms-password wire:then="restore">
+                                    <x-button-icon-red icon="fas fa-trash-restore" wire:loading.attr="disabled">
+                                        Przywróć
+                                    </x-button-icon-red>
+                                </x-jet-confirms-password>
+                        @endif
+                    @endcan
                 </div>
+                <main class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
+                    <pre wire:ignore data-key="{{ $song->key }}"
+                         class="m-3 whitespace-pre-wrap dark:text-white">{{ $song->text }}</pre>
+                </main>
             </div>
-            <main class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
-                <pre wire:ignore data-key="{{ $song->key }}" class="m-3 whitespace-pre-wrap dark:text-white">{{ $song->text }}</pre>
-            </main>
-            </div>
-            <div class="dark:text-white p-2" x-data="{selected:{!! $preferred_streaming_service !!}}">
+            <div class="dark:text-white p-2" x-data="{selected: {!! $preferred_streaming_service; !!} }">
                 <ul class="shadow-box space-y-2">
                     @if($song->youtubeId)
                         <li class="relative dark:bg-gray-800 rounded-md">

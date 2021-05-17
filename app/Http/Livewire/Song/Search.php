@@ -7,19 +7,16 @@ use Livewire\Component;
 
 class Search extends Component
 {
-    public $song;
-    public $likes;
-    public $liked;
+    public Song $song;
+    public int $likes = 0;
+    public bool $liked;
 
     public function like()
     {
         if (current_user()) {
-            if ($this->song->isLikedBy(current_user())) {
+            if ($this->liked) {
                 $this->song->dislike();
                 $this->likes--;
-                if ($this->likes == 0) {
-                    $this->likes = null;
-                }
                 $this->liked = false;
             } else {
                 $this->song->like();
@@ -39,9 +36,7 @@ class Search extends Component
 
         $this->liked = $song->isLikedBy(current_user());
 
-        if ($song->likes == null || $song->likes == 0) {
-            $this->likes = null;
-        } else {
+        if ($song->likes) {
             $this->likes = $song->likes;
         }
     }

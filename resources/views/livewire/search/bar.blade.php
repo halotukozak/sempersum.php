@@ -21,7 +21,9 @@
                class="relative block z-10 bg-white w-full rounded-t-none shadow-lg p-4 {{ $highlightIndex === $i ? "bg-gray-200" : "" }} hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif">
                 <div
                     class="no-underline">
-                    <span class="dark:text-gray-300">{{ $song->title }}</span>
+                    <span class="dark:text-gray-300">@if ($song->deleted_at)
+                            <i class="fas fa-ban"></i>
+                        @endif{{ $song->title }}</span>
                     </div>
                 </a>
                 @if($loop->iteration == 10)

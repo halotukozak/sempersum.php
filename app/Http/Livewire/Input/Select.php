@@ -7,21 +7,21 @@ use Livewire\Component;
 class Select extends Component
 {
 
-    public $name;
+    public string $name;
     public $value;
-    public $options;
+    public array $options;
     public $selectedOption;
-    public $disabled;
-    public $placeholder;
+    public bool $disabled;
+    public string $placeholder;
 
-    public function mount($name, $options, $disabled = null, $placeholder = "Wybierz...", $default = null)
+    public function mount($name, $options, $disabled = false, $placeholder = "Wybierz...", $default = null)
     {
         $this->name = $name;
         $this->options = $options;
         $this->placeholder = $placeholder;
         $this->disabled = $disabled;
         $this->selectOption($default);
-                if ($this->selectedOption == null) {
+        if ($this->selectedOption == null) {
             $this->selectedOption = $this->placeholder;
         }
     }

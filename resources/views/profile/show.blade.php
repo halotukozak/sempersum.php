@@ -34,6 +34,11 @@
 
                 <x-jet-section-border />
             @endif
+                <div class="mt-10 sm:mt-0">
+                    @livewire('profile.artist-form')
+                </div>
+
+                <x-jet-section-border />
 
             @if (JoelButcher\Socialstream\Socialstream::show())
                 <div class="mt-10 sm:mt-0">
