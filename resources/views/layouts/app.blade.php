@@ -36,6 +36,7 @@
     </main>
 </div>
 
+<x-banner></x-banner>
 
 <x-footer></x-footer>
 

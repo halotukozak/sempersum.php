@@ -19,7 +19,7 @@ class Show extends Component
 
     public function mount($song)
     {
-        if (current_user()->isModerator) {
+        if (current_user() && current_user()->isModerator) {
             $this->song = Model::withTrashed()->withLikes()->firstWhere('slug', $song);
         } else {
             $this->song = Model::withLikes()->firstWhere('slug', $song);
@@ -73,7 +73,7 @@ class Show extends Component
 
     protected function preferred_streaming_service()
     {
-        if (Auth::check()) {
+        if (current_user()) {
             switch (current_user()->preferred_streaming_service) {
                 case ('youtube'):
                     $this->preferred_streaming_service = 1;
