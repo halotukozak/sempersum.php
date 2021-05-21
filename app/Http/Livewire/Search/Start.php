@@ -25,8 +25,6 @@ class Start extends Component
 
     public function mount()
     {
-        current_user()->sendEmailVerificationNotification();
-
         $this->resetBar();
         if (request('search')) {
             $this->term = (string)request('search');
