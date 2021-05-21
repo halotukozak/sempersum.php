@@ -37,7 +37,7 @@
                                 class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
                                     class="fa fa-check p-2"></i>Weryfikuj piosenki</span>
                         @endcan
-                        @if (current_user()->id === 51)
+                        @if (current_user()->id === 1)
                             <span
                                 wire:click="$set('page', 'reports')"
                                 class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i

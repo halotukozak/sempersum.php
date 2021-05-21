@@ -109,7 +109,7 @@
                                        focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
                                        disabled:bg-gray-100 disabled:dark:bg-gray-100"/>
                                 <div x-show="open && $wire.tagTerm">
-                                    @if($tagTerm)
+                                    @if($tagTerm)<div>
                                         @foreach($tagOptions as $tagOption)
                                             <div wire:key="{{ $loop->index }}"
                                                  @click="open = false"
@@ -130,13 +130,14 @@
                                                 @break
                                             @endif
                                         @endforeach
+                                </div>
                                     @endif
                                 </div>
                                 @if(!empty($tags))
                                     <div>
                                         @foreach ($tags as $tag)
                                             <div
-                                                wire:click="removeTag('{{$tag['id']}}')"
+                                                wire:click="removeTag('{{$tag['id']}}')" wire:key="{{$tag['id']}}"
                                                 class="bg-gray-100 dark:bg-gray-600 inline-flex items-center text-sm rounded mt-2 mr-1">
                                                 <span
                                                     class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">

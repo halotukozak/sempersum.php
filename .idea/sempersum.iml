@@ -99,6 +99,11 @@
       <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/ca" />
       <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/ed" />
       <excludeFolder url="file://$MODULE_DIR$/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/1c" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/45" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/71" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/d2" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
