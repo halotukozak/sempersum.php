@@ -47,10 +47,6 @@
             @endif
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
                 <x-jet-button class="ml-4">
                     {{ __('Register') }}
                 </x-jet-button>
@@ -58,7 +54,14 @@
         </form>
 
         @if (JoelButcher\Socialstream\Socialstream::show())
-            <x-socialstream-providers />
+            <x-socialstream-providers/>
         @endif
+
+        <form action="{{ route('login') }}" class="py-4">
+            <input
+                class="cursor-pointer w-full px-4 py-2 font-medium tracking-wide text-white transition-colors duration-200 transform bg-blue-600 rounded-md dark:bg-gray-800 hover:bg-blue-500 dark:hover:bg-gray-700 focus:outline-none focus:bg-blue-500 dark:focus:bg-gray-700"
+                value="{{ __('Login') }} "
+                type="submit"/>
+        </form>
     </x-jet-authentication-card>
 </x-guest-layout>

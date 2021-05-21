@@ -9,7 +9,7 @@ class SongPolicy
 {
     public function verify(User $user, Song $song): bool
     {
-        return $user->artist->contains($song->artist) || $user->isModerator;
+        return ($user->artist && $user->artist->contains($song->artist)) || $user->isModerator;
     }
 
 }

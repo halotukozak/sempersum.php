@@ -114,7 +114,7 @@
                                             <div wire:key="{{ $loop->index }}"
                                                  @click="open = false"
                                                  wire:click="addTag('{{$tagOption->name}}')"
-                                                 class="block z-10 bg-white w-full rounded-t-none shadow-lg p dark:bg-gray-800">
+                                                 class="block z-10 bg-white w-full rounded-t-none shadow-lg cursor-pointer dark:bg-gray-800">
                                                     <span
                                                         class="flex items-center z-10 bg-white w-full rounded-t-none shadow-lg p-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif">
                                                         <span class="ml-3 block truncate dark:text-gray-50">
@@ -138,10 +138,10 @@
                                             <div
                                                 wire:click="removeTag('{{$tag['id']}}')"
                                                 class="bg-gray-100 dark:bg-gray-600 inline-flex items-center text-sm rounded mt-2 mr-1">
-                                                <button
+                                                <span
                                                     class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
                                                     #{{ $tag['name'] }}
-                                                </button>
+                                                </span>
                                             </div>
                                         @endforeach
                                     </div>

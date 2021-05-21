@@ -75,9 +75,8 @@
                 <option value="spotify">Spotify</option>
                 <option value="deezer">Deezer</option>
                 <option value="soundcloud">Soundcloud</option>
-                <option value="youtube">Soundcloud</option>
+                <option value="youtube">YouTube</option>
             </select>
-{{--            TODO: Design select--}}
             <x-jet-input-error for="preferred_streaming_service" class="mt-2"/>
         </div>
     </x-slot>

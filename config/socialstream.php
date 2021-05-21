@@ -31,7 +31,7 @@ return [
 
     'providers' => [
         Providers::facebook(),
-        Providers::google(),
+        Providers::google()
     ],
 
     /*

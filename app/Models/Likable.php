@@ -45,6 +45,7 @@ trait Likable
     public function isLikedBy(User $user = null) :bool
     {
         if (!$user) return false;
+        if(!$user->likes) return false;
         return (bool)$user->likes
             ->where('song_id', $this->id)
             ->where('liked', true)

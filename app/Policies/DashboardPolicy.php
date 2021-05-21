@@ -9,6 +9,9 @@ class DashboardPolicy
 {
     public function verify(User $user): bool
     {
-        return (bool) $user->artist->count() || $user->isModerator;
+        if ($user->isModerator) return true;
+        if ($user->artist && $user->artist->count())
+            return true;
+        return false;
     }
 }

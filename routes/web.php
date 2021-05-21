@@ -17,5 +17,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 Route::get('/song/{song}', Show::class)->name('showSong');
 Route::get('/artist/{artist}', function () {
-    echo 'wait';
+    echo 'W przyszłości...';
 })->name('artist');

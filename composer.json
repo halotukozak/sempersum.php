@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^7.4.10",
         "ext-curl": "*",
         "aerni/laravel-spotify": "^1.6",
         "alaouy/youtube": "^2.2",
@@ -17,13 +17,14 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "joelbutcher/socialstream": "^3.0",
-        "laravel/framework": "^8.12",
+        "laravel/framework": "^8.41.0",
         "laravel/jetstream": "~2.2",
         "laravel/sanctum": "^2.6",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.4",
-        "socialiteproviders/zoho": "^4.1"
+        "socialiteproviders/zoho": "^4.1",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
@@ -58,14 +59,6 @@
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
-        ],
-        "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta"
         ]
     },
     "extra": {

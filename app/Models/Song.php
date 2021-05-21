@@ -42,7 +42,7 @@ class Song extends Model
 
     public function extinct()
     {
-        $this->isOutOfDate = false;
+        $this->isOutOfDate = true;
         $this->save();
     }
 

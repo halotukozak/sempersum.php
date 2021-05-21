@@ -22,6 +22,7 @@ class VerificationSection extends Component
         return view('livewire.verification-section',
             ['songs' => $this->songs = Song::limit(10)
                 ->where('isVerified', false)
+                ->where('isOutOfDate', false)
                 ->where(function ($query) {
                     if (!current_user()->isModerator) {
                         $query->whereIn('artist_id', current_user()->artist->pluck('id')->toArray());

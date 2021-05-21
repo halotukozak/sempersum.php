@@ -20,7 +20,7 @@ class Show extends Component
     public function mount($song)
     {
         if (current_user() && current_user()->isModerator) {
-            $this->song = Model::withTrashed()->withLikes()->firstWhere('slug', $song);
+            $this->song = Model::withTrashed()->withLikes()->where('slug', $song)->where('isOutOfDate', false)->first();
         } else {
             $this->song = Model::withLikes()->firstWhere('slug', $song);
         }

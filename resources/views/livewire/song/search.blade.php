@@ -29,7 +29,7 @@
 
         <p class="mt-6 text-gray-600 dark:text-gray-200">
             @foreach($song->tags as $tag)
-                {{--            <a href="{{ route('search', ['tag' => $tag->name]) }}"/> TODO: Wyszukiwanie po tagach--}}
+                            <a href="{{ route('start', ['tag' => $tag->name]) }}"/>
                 <x-jet-secondary-button class="my-1 font-semibold">{{ $tag->name }}</x-jet-secondary-button>
             @endforeach
         </p>

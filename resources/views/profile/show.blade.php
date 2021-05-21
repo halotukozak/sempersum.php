@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}
         </h2>
     </x-slot>
@@ -34,11 +34,6 @@
 
                 <x-jet-section-border />
             @endif
-                <div class="mt-10 sm:mt-0">
-                    @livewire('profile.artist-form')
-                </div>
-
-                <x-jet-section-border />
 
             @if (JoelButcher\Socialstream\Socialstream::show())
                 <div class="mt-10 sm:mt-0">
@@ -46,6 +41,14 @@
                 </div>
             @endif
 
+
+            @if ( ! is_null($user->password))
+                <x-jet-section-border />
+
+                <div class="mt-10 sm:mt-0">
+                    @livewire('profile.logout-other-browser-sessions-form')
+                </div>
+            @endif
 
             @if (! is_null($user->password))
                 <x-jet-section-border />

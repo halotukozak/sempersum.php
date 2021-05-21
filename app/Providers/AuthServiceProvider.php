@@ -2,12 +2,8 @@
 
 namespace App\Providers;
 
-use App\Http\Livewire\Dashboard;
 use App\Models\ConnectedAccount;
-use App\Models\Song;
 use App\Policies\ConnectedAccountPolicy;
-use App\Policies\DashboardPolicy;
-use App\Policies\SongPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -19,8 +15,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         ConnectedAccount::class => ConnectedAccountPolicy::class,
-        Song::class => SongPolicy::class,
-        Dashboard::class => DashboardPolicy::class
     ];
 
     /**
@@ -31,5 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        //
     }
 }

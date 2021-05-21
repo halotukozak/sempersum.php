@@ -198,5 +198,8 @@
     "Cancel": "Anuluj",
     "Update your preferred streaming service.": "Wybierz swój ulubiony serwis streamingowy",
     "Preferred streaming service": "Ulubiony serwis streamingowy",
-    "Send.": "Wysłane."
+    "Send.": "Wysłane.",
+    "Log Out Other Browser Sessions": "Wyloguj się z pozostałych sesji przeglądarki",
+    "Manage and log out your active sessions on other browsers and devices.": "Zarządzaj i wyloguj się się z aktywnych sesji w innych przeglądarkach i urządzeniach.",
+    "If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.": "Jeśli to konieczne, możesz wylogować się ze wszystkich innych przeglądarek i urządzeń. Niektóre z Twoich poprzednich sesji są tutaj przedstawione, jednak nie jest to kompletna lista. Jeśli czujesz, że Twoje konto jest zagrożone, należy zaktualizować hasło."
 }

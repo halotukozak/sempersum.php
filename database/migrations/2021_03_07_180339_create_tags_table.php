@@ -31,6 +31,7 @@ class CreateTagsTable extends Migration
                 ->references('id')
                 ->on('songs')
                 ->onDelete('cascade');
+
             $table->foreign('tag_id')
                 ->references('id')
                 ->on('tags')

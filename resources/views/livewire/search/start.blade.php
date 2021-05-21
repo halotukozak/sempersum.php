@@ -13,14 +13,13 @@
             </label>
         </div>
         <div wire:loading.remove wire:target="term">
-            @if(!empty($term))
+            @if(!empty($term) || !empty($tagTerm))
                 @forelse($songs as $song)
                     <livewire:song.search :song="$song" :key="$song->id"/>
                 @empty
                     <x-bootstrap.search.empty/>
                 @endforelse
-                <div
-                    x-data="{observe () {
+                <div x-data="{observe () {
             let observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -34,7 +33,7 @@
             observer.observe(this.$el)
         }
     }"
-                    x-init="observe">
+                     x-init="observe">
                 </div>
             @endif
         </div>

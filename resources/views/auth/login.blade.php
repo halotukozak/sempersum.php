@@ -28,14 +28,10 @@
             </div>
 
             <div class="block mt-4">
-                <x-jet-label for="remember_me">
-                    <div class="flex items-center">
-                        <x-jet-checkbox name="remember_me" id="remember_me"/>
-                        <div class="ml-2">
-                            {{ __('Remember me') }}
-                        </div>
-                    </div>
-                </x-jet-label>
+                <label for="remember_me" class="flex items-center">
+                    <x-jet-checkbox name="remember_me" id="remember_me"/>
+                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                </label>
             </div>
 
             <div class="flex items-center justify-end mt-4">
@@ -56,10 +52,11 @@
             <x-socialstream-providers/>
         @endif
 
-        <a href="{{route('register')}}">
-            <x-jet-secondary-button>
-                {{ __('Register') }}
-            </x-jet-secondary-button>
-        </a>
+        <form action="{{ route('register') }}" class="py-4">
+            <input
+                class="cursor-pointer w-full px-4 py-2 font-medium tracking-wide text-white transition-colors duration-200 transform bg-blue-600 rounded-md dark:bg-gray-800 hover:bg-blue-500 dark:hover:bg-gray-700 focus:outline-none focus:bg-blue-500 dark:focus:bg-gray-700"
+                value="{{ __('Register') }} "
+                type="submit"/>
+        </form>
     </x-jet-authentication-card>
 </x-guest-layout>

@@ -34,8 +34,8 @@ class Create extends Component
     public bool $isVerified = false;
 
     public array $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
-    public ?string $tagTerm;
-    public ?array $tagOptions;
+    public ?string $tagTerm = "";
+    public $tagOptions;
 
     protected $listeners = ['artistUpdated' => 'setArtist',
         'spotifyIdUpdated' => 'setSpotifyId',
@@ -49,10 +49,10 @@ class Create extends Component
         return [
             'title' => ['required', 'min:3', 'max:255'],
             'text' => ['required'],
-            'spotifyId' => ['nullable', Rule::unique('songs', 'spotifyId')->ignore($this->idSong), new SpotifyId],
-            'youtubeId' => ['nullable', 'unique:songs,youtubeId,' . $this->idSong, new YoutubeId],
-            'deezerId' => ['nullable', 'unique:songs,deezerId,' . $this->idSong, new DeezerId],
-            'soundcloudId' => ['nullable', 'unique:songs,soundcloudId,' . $this->idSong, new SoundcloudId],
+            'spotifyId' => ['nullable', Rule::unique('songs', 'spotifyId')->ignore($this->idSong, 'idSong'), new SpotifyId],
+            'youtubeId' => ['nullable', Rule::unique('songs', 'youtubeId')->ignore($this->idSong, 'idSong'), new YoutubeId],
+            'deezerId' => ['nullable', Rule::unique('songs', 'deezerId')->ignore($this->idSong, 'idSong'), new DeezerId],
+            'soundcloudId' => ['nullable', Rule::unique('songs', 'soundcloudId')->ignore($this->idSong, 'idSong'), new SoundcloudId],
             'tags.tag' => ['nullable', 'exists:tags,id', 'min:2'],
             'key' => ['required', new KeyOK],
         ];
@@ -89,9 +89,10 @@ class Create extends Component
             'isOutOfDate' => false,
         ]);
 
-        $newSong->idSong = $newSong->id;
         if ($this->idSong) {
             $newSong->idSong = $this->idSong;
+        } else {
+            $newSong->idSong = $newSong->id;
         }
 
         $newSong->save();
@@ -112,7 +113,7 @@ class Create extends Component
         $this->tags = collect();
         $this->isVerified = false;
         $this->tagTerm = '';
-        $this->tagOptions = [];
+        $this->tagOptions = collect();
     }
 
     public function setDeezerId($info): void
@@ -200,13 +201,14 @@ class Create extends Component
             $this->key = $song->key;
             $this->artist = $song->artist;
             $this->tags = $song->tags;
-            $this->idSong = $song->id;
+            $this->idSong = $song->idSong;
         } else $this->tags = collect();
     }
 
     public function prepare(): void
     {
         $this->title = ucfirst($this->title);
+
     }
 
     public function render()
