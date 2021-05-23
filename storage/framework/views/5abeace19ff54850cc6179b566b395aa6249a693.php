@@ -163,9 +163,10 @@
 
         <form action="<?php echo e(route('register')); ?>" class="py-4">
             <input
-                class="cursor-pointer w-full px-4 py-2 font-medium tracking-wide text-white transition-colors duration-200 transform bg-blue-600 rounded-md dark:bg-gray-800 hover:bg-blue-500 dark:hover:bg-gray-700 focus:outline-none focus:bg-blue-500 dark:focus:bg-gray-700"
+                class="cursor-pointer w-full px-4 py-2 font-medium tracking-wide text-white transition-colors duration-200 transform bg-blue-600 rounded-md dark:bg-gray-800 hover:bg-blue-500 dark:hover:bg-gray-700 focus:outline-none focus:bg-blue-500 dark:focus:bg-gray-700 disabled:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 value="<?php echo e(__('Register')); ?> "
-                type="submit"/>
+                type="submit"
+            disabled/>
         </form>
      <?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
 <?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>

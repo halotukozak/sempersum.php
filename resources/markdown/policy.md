@@ -1,4 +1,4 @@
-# Polityka prywatności serwisu sempersum.pl
+﻿# Polityka prywatności serwisu sempersum.pl
 Korzystając z naszego serwisu, wyrażają Państwo zgodę na naszą politykę prywatności oraz zasady przetwarzania Państwa danych osobowych.
 ## Administrator danych osobowych
 Administratorem Państwa danych osobowych jest Bartłomiej Kozak. Kontakt z nim jest możliwy pod adresem: kontakt@sempersum.pl.
@@ -6,7 +6,7 @@ Administratorem Państwa danych osobowych jest Bartłomiej Kozak. Kontakt z nim 
 Dane uzyskujemy podczas zakładania konta oraz edycji konta.
 ## Sposób korzystania z zapisanych informacji
 Przetwarzamy informacje dotyczące Państwa tylko w minimalnym zakresie, w jakim jest to niezbędne do prowadzenia serwisu i wykorzystujemy je tylko i wyłącznie w tym celu. Nasza strona internetowa automatycznie zbiera niektóre dane użytkowników, w tym: adres IP, typ przeglądarki. Dane te są zbierane w celu zapewnienia najwyższego poziomu bezpieczeństwa serwisu, a tym samym osób z niego korzystających. Podanie przez Państwa swoich danych osobowych jest dobrowolne.
-## Okres przechowywania danych osobowych?
+## Okres przechowywania danych osobowych
 Przechowujemy Twoje dane osobowe przez czas aktywności Państwa konta, a także po jego dezaktywacji w celach:
 + wykonania obowiązków wynikających z przepisów prawa, zapobiegania nadużyciom i oszustwom,
 + statystycznych i archiwizacyjnych,

@@ -40,9 +40,14 @@
                     <section class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
                         <form wire:submit.prevent="save" autocomplete="off">
                             @csrf
-                            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 text-gray-700 dark:text-gray-200">
                                 <div class="col-span-full">
-                                    <label class="text-gray-700 dark:text-gray-200 text-xl text-semibold select-none">Łatwe
+                                    <i class="fas fa-question-circle text-xl" {{ Popper::pop(tip('info', 'To pole służy do wyszukiwania piosenek w serwisie <span style="color: #1DB954">Spotify <i class="fab fa-spotify"></i></span>. Po pokazaniu się wyników, możesz odsłuchać trzydziestosekundowego fragmentu. Dodając piosenkę w ten sposób, pole <strong>tytuł</strong> i <strong>artysta</strong> zostaną uzupełnione automatycznie.', 'Łatwe
+                                            dodawanie
+                                            piosenek za
+                                            pomocą Spotify')) }}></i>
+                                    <label class="text-gray-700 dark:text-gray-200 text-xl text-semibold select-none">
+                                        Łatwe
                                         dodawanie
                                         piosenek za
                                         pomocą Spotify <i class="fab fa-spotify p-1"></i></label>
@@ -52,6 +57,9 @@
 
                                 </div>
                                 <div>
+                                    <i
+                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', 'W tym polu podajemy jedynie tytuł utworu w oryginalnej pisowni.', "Tytuł")) }}></i>
+
                                     <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł <span
                                             class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
 
@@ -64,57 +72,80 @@
                                     <p class="text-red-500 text-sm p-1 font-semibold">@error('title'){{ $message }}@enderror</p>
                                 </div>
                                 <div>
+                                    <i class="fas fa-question-circle" {{ Popper::interactive()->pop(tip('info', 'To pole służy przypisaniu piosenki do artysty. Jeśli nie ma go w naszej bazie, należy zgłosić to nam.<a href="mailto:kontakt@sempersum.pl"
+           class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300"
+           aria-label="mail" target="_blank"><i class="fas fa-envelope"></i></a>', "Artysta")) }}></i>
                                     <label
                                         class="text-gray-700 dark:text-gray-200"
-                                        for="artist">Artysta
+                                        for="artist">
+                                        Artysta
                                     </label>
-                                    <livewire:input.artist name="artist" :disabled="$spotifyId != null" :spotify-id="$spotifyId" :artist="$artist"/>
+                                    <livewire:input.artist name="artist" :disabled="$spotifyId != null"
+                                                           :spotify-id="$spotifyId" :artist="$artist"/>
                                     <p class="text-red-500 text-sm p-1 font-semibold">@error('artist'){{ $message }}@enderror</p>
 
                                 </div>
                                 <div>
-                                    <label class="text-gray-700 dark:text-gray-200" for="key">Klucz <span
-                                        class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
-                                <livewire:input.select name="key" :options="$keys" :default="$key" placeholder="Wybierz klucz..."/>
-                                <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
+                                    <i
+                                        class="fas fa-question-circle" {{ Popper::interactive()->pop(tip('info', 'Podanie oryginalnej tonacji (bez rozróżnienia na molowe, durowe etc.) ułatwia transpozycję. Jeśli nie potrafisz samodzielnie ustalić tonacji, skorzystaj np. z <a href="https://chordify.net"><strong>chordify</strong></a>.  ', "Tonacja")) }}></i>
 
-                            </div>
-                            <div class="col-span-full">
-                                <label for="text"
-                                       class="text-gray-700 dark:text-gray-200">
-                                    Tekst piosenki <span class="text-red-700" {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
-                                <textarea
-                                    wire:model="text"
-                                    wire:ignore
-                                    id="text"
-                                    x-data="{ resize: () => { $el.style.height = '500px'; $el.style.height = $el.scrollHeight + 'px' } }"
-                                    x-init="resize()"
-                                    @input="resize()"
-                                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300
+                                    <label class="text-gray-700 dark:text-gray-200" for="key">Tonacja <span
+                                            class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
+                                    <livewire:input.select name="key" :options="$keys" :default="$key"
+                                                           placeholder="Wybierz tonację..."/>
+                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
+
+                                </div>
+                                <div class="col-span-full ">
+                                    <i
+                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', '  Zamieszczając opracowanie w serwisie należy przestrzegać poniższych reguł:
+                                    <ul class="list-disc text-gray-600 dark:text-gray-200 px-1">
+                                        <li>Używanie angielskiej notacji (C, D, E, F, G, A, B, C)</li>
+                                        <li>Oznaczanie akordów molowych poprzez dodanie „m”, (np. Dm), septymowych jako „7”, (np. A7).</li>
+                                        <li>Stosowanie bemoli jako „b” i&nbsp;krzyżyków jako „#” w celu poprawnego działania systemu transpozycji.</li>
+                                        <li>Zapisywanie akordy nad tekstem oraz powtarzanie ich przy każdej zwrotce.</li>
+                                        <li>Pusty wers pomiędzy zwrotkami, refrenami, bridgami etc.</li>
+                                        <li>Repetycja (np. /x2) odnosi się do fragmentu tekstu od jednej pustej linii do drugiej.</li>
+                                    </ul>', "Tekst")) }}></i>
+
+                                    <label for="text"
+                                           class="text-gray-700 dark:text-gray-200">
+                                        Tekst piosenki <span class="text-red-700" {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
+                                    <textarea
+                                        wire:model="text"
+                                        wire:ignore
+                                        id="text"
+                                        x-data="{ resize: () => { $el.style.height = '500px'; $el.style.height = $el.scrollHeight + 'px' } }"
+                                        x-init="resize()"
+                                        @input="resize()"
+                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300
                                 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
                                 focus:border-blue-500 dark:focus:border-blue-500
                                 focus:outline-none focus:ring font-mono resize-none overflow-hidden"
-                                ></textarea>
-                                <p class="text-red-500 text-sm p-1 font-semibold">@error('text'){{ $message }}@enderror</p>
-                            </div>
-                            <div x-data="{ open : false }" @click.away="open = false">
-                                <label for="tags"
-                                       class="text-gray-700 dark:text-gray-200">
-                                    Tagi</label>
-                                <input @click="open = true"
-                                       wire:model.debounce.500ms="tagTerm"
-                                       id="tags" type="text" placeholder="Wpisz tagi..."
-                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
+                                    ></textarea>
+                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('text'){{ $message }}@enderror</p>
+                                </div>
+                                <div x-data="{ open : false }" @click.away="open = false">
+                                    <i
+                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', 'Wpisanie kilku tagów pomaga w wyszukiwaniu piosenek. Liczba obok nazwy pokazuje popularność danego tagu.', "Tagi")) }}></i>
+                                    <label for="tags"
+                                           class="text-gray-700 dark:text-gray-200">
+                                        Tagi</label>
+                                    <input @click="open = true"
+                                           wire:model.debounce.500ms="tagTerm"
+                                           id="tags" type="text" placeholder="Wpisz tagi..."
+                                           class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
                                        dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
                                        focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
                                        disabled:bg-gray-100 disabled:dark:bg-gray-100"/>
-                                <div x-show="open && $wire.tagTerm">
-                                    @if($tagTerm)<div>
-                                        @foreach($tagOptions as $tagOption)
-                                            <div wire:key="{{ $loop->index }}"
-                                                 @click="open = false"
-                                                 wire:click="addTag('{{$tagOption->name}}')"
-                                                 class="block z-10 bg-white w-full rounded-t-none shadow-lg cursor-pointer dark:bg-gray-800">
+                                    <div x-show="open && $wire.tagTerm">
+                                        @if($tagTerm)
+                                            <div>
+                                                @foreach($tagOptions as $tagOption)
+                                                    <div wire:key="{{ $loop->index }}"
+                                                         @click="open = false"
+                                                         wire:click="addTag('{{$tagOption->name}}')"
+                                                         class="block z-10 bg-white w-full rounded-t-none shadow-lg cursor-pointer dark:bg-gray-800">
                                                     <span
                                                         class="flex items-center z-10 bg-white w-full rounded-t-none shadow-lg p-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 @if ($loop->last) rounded-b-md @endif">
                                                         <span class="ml-3 block truncate dark:text-gray-50">
@@ -146,19 +177,23 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                @endif
-                            </div>
-                            <div>
-                                <label class="text-gray-700 dark:text-gray-200" for="deezerId">Link do Deezer<i
-                                        class="fab fa-deezer p-1"></i></label>
-                                <livewire:input.deezer id="deezerId" type="text" :input="$deezerId"/>
-                                <p class="text-red-500 text-sm p-1 font-semibold">@error('deezerId'){{ $message }}@enderror</p>
+                                    @endif
+                                </div>
+                                <div>
+                                    <i
+                                        class="fas fa-question-circle" {{ Popper::interactive()->pop(tip('info', 'Link do deezer powinien mieć format https://www.deezer.com/pl/track/*. Niestety format https://deezer.page.link/* nie działa. <a href="'. route('deezer') . '"><strong>Instrukcja generowania odpowiedniego formatu</strong></a>', "Link do Deezer")) }}></i>
+                                    <label class="text-gray-700 dark:text-gray-200" for="deezerId">Link do Deezer<i
+                                            class="fab fa-deezer p-1"></i></label>
+                                    <livewire:input.deezer id="deezerId" type="text" :input="$deezerId"/>
+                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('deezerId'){{ $message }}@enderror</p>
 
-                            </div>
-                            <div>
-                                <label class="text-gray-700 dark:text-gray-200" for="youtubeId">Link do YouTube<i
-                                        class="fab fa-youtube p-1"></i></label>
-                                <input wire:model.debounce.500ms="youtubeId" id="youtubeId" type="text"
+                                </div>
+                                <div>
+                                    <i
+                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', 'Zalecane jest podanie linku do teledysku.', "Link do YouTube")) }}></i>
+                                    <label class="text-gray-700 dark:text-gray-200" for="youtubeId">Link do YouTube<i
+                                            class="fab fa-youtube p-1"></i></label>
+                                    <input wire:model.debounce.500ms="youtubeId" id="youtubeId" type="text"
                                        placeholder="Wprowadź link..."
                                        class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
                                 <p class="text-red-500 text-sm p-1 font-semibold">@error('youtubeId'){{ $message }}@enderror</p>

@@ -27,10 +27,9 @@
                 <div class="flex-1 md:flex md:items-center md:justify-between"
                      x-show="open">
                     <div class="flex flex-col -mx-4 md:flex-row md:items-center md:mx-8">
-                        <span
-                            wire:click="$set('page', 'create')"
-                            class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
-                                class="fa fa-plus p-2"></i>Dodaj piosenkę</span>
+                            <a href="{{ route('dashboard') }}"
+                                class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
+                                    class="fa fa-plus p-2"></i>Dodaj piosenkę</a>
                         @can('verify', \App\Http\Livewire\Dashboard::class)
                             <span
                                 wire:click="$set('page','verify')"
@@ -53,21 +52,18 @@
              class="z-20 absolute left-0 top-0 rounded-lg w-full h-full text-blue-500 text-center">
             <i class="fas fa-spinner animate-spin text-2xl absolute top-1/2 left-1/2"></i>
         </div>
-
         <div wire:loading.remove>
             @switch($page)
                 @case('verify')
                 <livewire:dashboard.verification-section/>
                 @break
 
-                @case('create')
-                <livewire:song.create/>
-                @break
-
                 @case('reports')
                 <livewire:dashboard.reports-section/>
                 @break
                 @default
+                <livewire:song.create/>
+
             @endswitch
         </div>
     </div>

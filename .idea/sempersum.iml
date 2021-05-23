@@ -104,6 +104,16 @@
       <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/45" />
       <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/71" />
       <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/d2" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/5c" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/10" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/12" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/32" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/55" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/96" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/ba" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/be" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/de" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/f5" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

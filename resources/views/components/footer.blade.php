@@ -26,5 +26,10 @@
            aria-label="Spotify" target="_blank">
             <i class="fab fa-spotify"></i>
         </a>
+        <a href="mailto:kontakt@sempersum.pl"
+           class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300"
+           aria-label="mail" target="_blank">
+            <i class="fas fa-envelope"></i>
+        </a>
     </div>
 </footer>

@@ -18,21 +18,24 @@
                     @livewire('profile.update-password-form')
                 </div>
 
-                <x-jet-section-border />
+                <x-jet-section-border/>
             @else
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.set-password-form')
                 </div>
 
-                <x-jet-section-border />
+                <x-jet-section-border/>
             @endif
+
+            <livewire:profile.artist-form/>
+            <x-jet-section-border/>
 
             @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication() && ! is_null($user->password))
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.two-factor-authentication-form')
                 </div>
 
-                <x-jet-section-border />
+                <x-jet-section-border/>
             @endif
 
             @if (JoelButcher\Socialstream\Socialstream::show())

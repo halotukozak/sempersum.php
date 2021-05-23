@@ -80,7 +80,7 @@ return [
         'trigger' => [
             'mouseenter' => true,
             'focus' => true,
-            'click' => false,
+            'click' => true,
         ],
 
         /*

@@ -51,13 +51,22 @@ function tip($category, $text, $header = null): string
             }
             break;
     }
-    return htmlentities("<div class='flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800'><div class='flex items-center justify-center w-12 bg-" . $colour . "'>" . $icon . "</div><div class='px-4 py-2 -mx-3'><div class='mx-3'><span class='font-semibold text-" . $colour . " dark:text-" . $darkColour . "'>" . $header . "</span><p class='text-sm text-gray-600 dark:text-gray-200'>" . $text . "</p></div></div></div>");
+    return htmlentities("
+            <div class='flex w-full mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800'>
+                <div class='flex items-center p-4 justify-center w-12 bg-" . $colour . "'>" . $icon . "</div>
+                <div class='px-4 py-2 -mx-3'>
+                    <div class='mx-3 p-0.5'>
+                        <span class='font-semibold text-" . $colour . " dark:text-" . $darkColour . "'>" . $header . "</span>
+                        <p class='text-sm text-gray-600 dark:text-gray-200'>" . $text . "</p>
+                    </div>
+                </div>
+            </div>");
 }
 
 function youtube_id_from_url($url)
 {
     $pattern =
-        '%^# Match any youtube URL
+        '%^             # Match any youtube URL
         (?:https?://)?  # Optional scheme. Either http or https
         (?:www\.)?      # Optional www subdomain
         (?:             # Group host alternatives
@@ -76,12 +85,4 @@ function youtube_id_from_url($url)
         return $matches[1];
     }
     return $url;
-}
-
-function verify(\App\Models\Song $newSong){
-    $old = \App\Models\Song::where('idSong',$newSong->idSong)->get()->except($newSong->id);
-    dd([
-        'new' => $newSong,
-        'old' => $old
-    ]);
 }
