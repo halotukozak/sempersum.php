@@ -14,6 +14,6 @@ class SongSeeder extends Seeder
      */
     public function run()
     {
-        Song::factory()->count(50)->hasTags(5)->create();
+        Song::factory()->count(15)->hasTags(5)->create();
     }
 }

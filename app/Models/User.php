@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
+    use Likable;
 
     /**
      * The attributes that are mass assignable.
@@ -30,7 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'preferred_streaming_service'
     ];
 
     /**
@@ -75,5 +76,15 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $this->getPhotoUrl();
+    }
+
+    public function artist()
+    {
+        return $this->belongsToMany(Artist::class);
+    }
+
+    public function songbooks()
+    {
+        return $this->belongsToMany(Songbook::class);
     }
 }

@@ -4,12 +4,12 @@ namespace App\Http\Livewire\Song;
 
 use App\Models\Artist;
 use App\Models\Tag;
+use App\Rules\Key;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use App\Rules\DeezerId;
-use App\Rules\KeyOK;
 use App\Rules\SoundcloudId;
 use App\Rules\SpotifyId;
 use App\Rules\YoutubeId;
@@ -19,17 +19,19 @@ use Spotify;
 
 class Create extends Component
 {
+    public $likes;
+
     public bool $choice = false;
     public ?int $idSong = null;
 
     public string $title = "";
     public string $text = "";
-    public ?string $spotifyId;
+    public $spotifyId;
     public ?string $deezerId = "";
     public ?string $youtubeId = "";
     public ?string $soundcloudId = "";
     public ?string $key = "";
-    public ?Artist $artist;
+    public $artist;
     public Collection $tags;
     public bool $isVerified = false;
 
@@ -53,12 +55,12 @@ class Create extends Component
             'youtubeId' => ['nullable', Rule::unique('songs', 'youtubeId')->ignore($this->idSong, 'idSong'), new YoutubeId],
             'deezerId' => ['nullable', Rule::unique('songs', 'deezerId')->ignore($this->idSong, 'idSong'), new DeezerId],
             'soundcloudId' => ['nullable', Rule::unique('songs', 'soundcloudId')->ignore($this->idSong, 'idSong'), new SoundcloudId],
-            'tags.tag' => ['nullable', 'exists:tags,id', 'min:2'],
-            'key' => ['required', new KeyOK],
+            'tags.tag' => ['nullable', 'exists:tags,id'],
+            'key' => ['required', new Key],
         ];
     }
 
-    public function dashboard(): RedirectResponse
+    public function dashboard()
     {
         return redirect()->route('dashboard');
     }
@@ -72,10 +74,8 @@ class Create extends Component
 
     public function add(): void
     {
-        if (!$this->artist) {
-            $this->artist = new Artist(['id' => null]);
-        }
-        $newSong = new SongModel([
+        $this->validate($this->rules());
+        $newSong = SongModel::create([
             'title' => $this->title,
             'slug' => Str::slug($this->title),
             'text' => $this->text,
@@ -84,18 +84,17 @@ class Create extends Component
             'deezerId' => $this->deezerId,
             'soundCloudId' => $this->soundcloudId,
             'key' => $this->key,
-            'artist_id' => $this->artist->id,
+            'artist_id' => $this->artist ? $this->artist->id : null,
             'isVerified' => false,
             'isOutOfDate' => false,
+            'author_id' => current_user()->id
         ]);
 
-        if ($this->idSong) {
-            $newSong->idSong = $this->idSong;
-        } else {
-            $newSong->idSong = $newSong->id;
+        if (!$this->idSong) {
+            $this->idSong = $newSong->id;
         }
+        $newSong->update(['idSong' => $this->idSong]);
 
-        $newSong->save();
         $newSong->tags()->attach($this->tags->pluck('id'));
     }
 
@@ -139,10 +138,10 @@ class Create extends Component
             $tempSpotify = Spotify::track($this->spotifyId)->get();
             $this->title = $tempSpotify['name'];
             $artistSpotify = $tempSpotify['artists'][0];
-            $this->artist = Artist::where('spotifyId', $artistSpotify['id'])->firstOrCreate([
+            $this->artist = Artist::where('spotify', $artistSpotify['id'])->firstOrCreate([
                 'name' => $artistSpotify['name'],
                 'slug' => Str::slug($artistSpotify['name']),
-                'spotifyId' => $artistSpotify['id']
+                'spotify' => $artistSpotify['id']
             ]);
             $this->emit('artistBeforeTitle', $this->artist->id);
         } else {
@@ -180,6 +179,7 @@ class Create extends Component
 
     public function updated($field): void
     {
+        $this->emit('updateText');
         $this->prepare();
         $this->validateOnly($field, $this->rules());
     }
@@ -188,7 +188,7 @@ class Create extends Component
     {
         $song = request('song');
         if ($song) {
-            $song = SongModel::firstWhere('slug', $song);
+            $song = SongModel::withLikes()->where('isOutOfDate', false)->where('slug', $song)->firstOrFail();
             if (!$song) {
                 abort(404);
             }
@@ -202,6 +202,7 @@ class Create extends Component
             $this->artist = $song->artist;
             $this->tags = $song->tags;
             $this->idSong = $song->idSong;
+            $this->likes = $song->likes;
         } else $this->tags = collect();
     }
 
@@ -209,6 +210,11 @@ class Create extends Component
     {
         $this->title = ucfirst($this->title);
 
+    }
+
+    public function r()
+    {
+        $this->redirectRoute('createSong');
     }
 
     public function render()

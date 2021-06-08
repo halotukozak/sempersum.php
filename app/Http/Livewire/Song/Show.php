@@ -20,19 +20,17 @@ class Show extends Component
     public function mount($song)
     {
         if (current_user() && current_user()->isModerator) {
-            $this->song = Model::withTrashed()->withLikes()->where('slug', $song)->where('isOutOfDate', false)->first();
+            $this->song = Model::withTrashed()->withLikes()->where('slug', $song)->where('isOutOfDate', false)->latest()->firstOrFail();
         } else {
-            $this->song = Model::withLikes()->firstWhere('slug', $song);
+            $this->song = Model::withLikes()->where('slug', $song)->firstOrFail();
         }
-        abort_if($this->song === null, 404);
-
         $this->liked = $this->song->isLikedBy(current_user());
 
         if ($this->song->likes) {
             $this->likes = $this->song->likes;
         }
 
-        $this->preferred_streaming_service();
+        $this->set_preferred_streaming_service();
 
     }
 
@@ -71,7 +69,7 @@ class Show extends Component
         $this->song->restore();
     }
 
-    protected function preferred_streaming_service()
+    protected function set_preferred_streaming_service()
     {
         if (current_user()) {
             switch (current_user()->preferred_streaming_service) {

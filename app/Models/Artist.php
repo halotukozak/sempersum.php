@@ -27,11 +27,21 @@ class Artist extends Model
         return 'slug';
     }
 
-    public function avatar()
+    public function avatar($size = 'sm')
     {
-        $id = $this->spotifyId;
-        if ($id) {
-            return Spotify::artist($this->spotifyId)->get()['images'][1]['url'];
+        if ($this->spotify) {
+            switch ($size) {
+                case 'sm':
+                    $size = 2;
+                    break;
+                case 'md':
+                    $size = 1;
+                    break;
+                case 'lg':
+                    $size = 0;
+                    break;
+            }
+            return Spotify::artist($this->spotify)->get()['images'][$size]['url'];
         }
         return null;
     }
@@ -45,9 +55,11 @@ class Artist extends Model
 
     public function spotify($attribute = 'name')
     {
-        $id = $this->spotifyId;
-        if ($id) {
-            return Spotify::artist($id)->get()[$attribute];
+        if ($this->spotify) {
+            if ($attribute = 'url') {
+                return Spotify::artist($this->spotify)->get()['external_urls']['spotify'];
+            }
+            return Spotify::artist($this->spotify)->get()[$attribute];
         }
         return null;
     }

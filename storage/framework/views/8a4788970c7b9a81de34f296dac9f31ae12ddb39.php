@@ -48,7 +48,7 @@ echo $html;
             let observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        window.livewire.find('<?php echo e($_instance->id); ?>').call('generateSongs')
+                        window.livewire.find('<?php echo e($_instance->id); ?>').call('loadMore')
                     }
                 })
             }, {

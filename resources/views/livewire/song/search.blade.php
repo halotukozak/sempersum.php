@@ -4,7 +4,7 @@
             <a href="{{ $song->artist->path() }}">
                 <img class="object-cover w-20 h-20 rounded-full"
                      alt="Artist's avatar."
-                     src="{{ $song->artist->avatar() }}">
+                     src="{{ $song->artist->avatar('md') }}">
             </a>
         @else
             <div class="object-cover w-20 h-20 rounded-full"></div>

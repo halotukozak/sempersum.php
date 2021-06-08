@@ -9,7 +9,7 @@
                             <img
                                 class="object-cover w-32 h-32 rounded-full border-2 dark:border-blue-400 dark:border-opacity-75"
                                 alt="Artist's avatar."
-                                src="{{ $song->artist->avatar() }}">
+                                src="{{ $song->artist->avatar('md') }}">
                         </a>
                     @else
                         <div
@@ -17,14 +17,16 @@
                         ></div>
                     @endif
                 </div>
-                <button wire:click="like"
-                        class="inline-flex -mt-10 align-top focus:outline-none"
+                @if($song->isVerified)
+                    <button wire:click="like"
+                            class="inline-flex -mt-10 align-top focus:outline-none"
                         type="submit">
                 <span class="text-2xl text-gray-700 inline-block p-2">
                     <i class="text-2xl text-red-800 hover:text-red-7600 {{ $liked ? 'fas' : "far" }} fa-heart"></i>
             {!! $likes == null ? '&nbsp;&nbsp;' : $likes !!}
             </span>
                 </button>
+                @endif
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-white md:mt-0 md:text-3xl">{{ $song->title }}</h2>
 
                 <p class="mt-6 text-gray-600 dark:text-gray-200">

@@ -18,13 +18,14 @@ class CreateArtistsTable extends Migration
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('photo')->nullable();
             $table->string('website')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
-            $table->string('mail')->nullable();
-            $table->string('spotifyId')->nullable();
-            $table->string('youtubeId')->nullable();
+            $table->string('spotify')->nullable();
+            $table->string('youtube')->nullable();
+            $table->string('soundcloud')->nullable();
+            $table->string('deezer')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
 

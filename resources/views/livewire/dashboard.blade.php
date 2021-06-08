@@ -27,14 +27,20 @@
                 <div class="flex-1 md:flex md:items-center md:justify-between"
                      x-show="open">
                     <div class="flex flex-col -mx-4 md:flex-row md:items-center md:mx-8">
-                            <a href="{{ route('dashboard') }}"
-                                class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
-                                    class="fa fa-plus p-2"></i>Dodaj piosenkę</a>
+                        <a href="{{ route('createSong') }}"
+                           class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
+                                class="fa fa-plus p-2"></i>Dodaj piosenkę</a>
                         @can('verify', \App\Http\Livewire\Dashboard::class)
                             <span
                                 wire:click="$set('page','verify')"
                                 class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
                                     class="fa fa-check p-2"></i>Weryfikuj piosenki</span>
+                        @endcan
+                        @can('manageArtist', \App\Http\Livewire\Dashboard::class)
+                            <span
+                                wire:click="$set('page','artist')"
+                                class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
+                                    class="fa fa-user p-2"></i>Zarządzaj profilem artysty</span>
                         @endcan
                         @if (current_user()->id === 1)
                             <span
@@ -42,6 +48,10 @@
                                 class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
                                     class="fa fa-toilet-paper p-2"></i>Wnioski</span>
                         @endif
+                        <span
+                            wire:click="$set('page', 'songbooks')"
+                            class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
+                                class="fa fa-list-ul p-2"></i>Śpiewniki</span>
                     </div>
                 </div>
             </div>
@@ -58,9 +68,20 @@
                 <livewire:dashboard.verification-section/>
                 @break
 
+                @case('artist')
+                @foreach(current_user()->artist as $artist)
+                    <livewire:dashboard.artist-panel wire:key="$loop->index" :artist-id="$artist->id"/>
+                @endforeach
+                @break
+
                 @case('reports')
                 <livewire:dashboard.reports-section/>
                 @break
+
+                @case('songbooks')
+                <livewire:dashboard.songbooks-section/>
+                @break
+
                 @default
                 <livewire:song.create/>
 

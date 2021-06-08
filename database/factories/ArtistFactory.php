@@ -29,9 +29,9 @@ class ArtistFactory extends Factory
             'website' => $this->faker->url(),
             'facebook' => $this->faker->url(),
             'instagram' => $this->faker->url(),
-            'mail' => $this->faker->email(),
-            'spotifyId' => $this->faker->randomElement(['3k4IXngEeRFfKiBNiUn4qV', '53l3yjX8ITilPIlCRsVKEB', '4X5vA3EzcDxZQxAcECzGqH']),
-            'youtubeId' => $this->faker->randomElement(['3k4IXngEeRFfKiBNiUn4qV', '53l3yjX8ITilPIlCRsVKEB', '4X5vA3EzcDxZQxAcECzGqH'])
+            'email' => $this->faker->email(),
+            'spotify' => $this->faker->randomElement(['3k4IXngEeRFfKiBNiUn4qV', '53l3yjX8ITilPIlCRsVKEB', '4X5vA3EzcDxZQxAcECzGqH']),
+            'youtube' => $this->faker->randomElement(['3k4IXngEeRFfKiBNiUn4qV', '53l3yjX8ITilPIlCRsVKEB', '4X5vA3EzcDxZQxAcECzGqH'])
         ];
     }
 }

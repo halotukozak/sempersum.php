@@ -23,7 +23,7 @@
             let observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        @this.call('generateSongs')
+                        @this.call('loadMore')
                     }
                 })
             }, {

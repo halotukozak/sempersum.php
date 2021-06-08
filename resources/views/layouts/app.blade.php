@@ -45,7 +45,7 @@
 @livewireScripts
 @stack('scripts')
 
-@include('popper::assets')
 
+@include('popper::assets')
 </body>
 </html>

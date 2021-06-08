@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spotify;
 
 class Song extends Model
 {
@@ -22,6 +23,11 @@ class Song extends Model
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
+    public function songbooks()
+    {
+        return $this->belongsToMany(Songbook::class)->withTimestamps();
+    }
+
     public function getRouteKeyName() : string
     {
         return 'slug';
@@ -33,17 +39,27 @@ class Song extends Model
         return $append ? "{$path}/{$append}" : $path;
     }
 
-    public function verify()
+    public function verify() :void
     {
-        $this->isVerified = true;
-        $this->save();
-        Song::where('idSong', $this->idSong)->get()->except($this->id)->each->extinct();
+        $this->update(['isVerified' => true]);
+        $olds = Song::where('idSong', $this->idSong)->get()->except($this->id);
+        $olds->each->extinct();
+        $ids = $olds->pluck('id');
+        Like::whereIn('song_id', $ids)->update(['song_id' => $this->id]);
+    }
+
+    public function cover()
+    {
+        if ($this->spotifyId) {
+            return Spotify::track($this->spotifyId)->get('album')['images'][1]['url'];
+        } else {
+            return null;
+        }
     }
 
     public function extinct()
     {
-        $this->isOutOfDate = true;
-        $this->save();
+        $this->update(['isOutOfDate' => true]);
     }
 
 }

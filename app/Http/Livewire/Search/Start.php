@@ -20,7 +20,7 @@ class Start extends Component
     public function loadMore()
     {
         $this->limit += 10;
-        $this->updatedTerm();
+        $this->generateSongs();
     }
 
     public function mount()
@@ -56,9 +56,10 @@ class Start extends Component
     public function generateSongs(): void
     {
         if ($this->tagTerm) {
-            $this->songs = Song::withLikes()->whereHas('tags', function ($q) {
+            $this->songs = Song::where('isOutOfDate', false)->where('isVerified', true)->withLikes()->whereHas('tags', function ($q) {
                 $q->where('name', $this->tagTerm);
-            })->get();
+            })->limit($this->limit)
+                ->get();
         } else {
             $this->songs = Song::search($this->term)
                 ->withLikes()

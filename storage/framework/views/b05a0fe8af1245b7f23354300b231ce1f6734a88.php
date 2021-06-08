@@ -5,15 +5,15 @@
     <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('search.start', [])->html();
-} elseif ($_instance->childHasBeenRendered('gNOg8NH')) {
-    $componentId = $_instance->getRenderedChildComponentId('gNOg8NH');
-    $componentTag = $_instance->getRenderedChildComponentTagName('gNOg8NH');
+} elseif ($_instance->childHasBeenRendered('9RLcwtT')) {
+    $componentId = $_instance->getRenderedChildComponentId('9RLcwtT');
+    $componentTag = $_instance->getRenderedChildComponentTagName('9RLcwtT');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('gNOg8NH');
+    $_instance->preserveRenderedChild('9RLcwtT');
 } else {
     $response = \Livewire\Livewire::mount('search.start', []);
     $html = $response->html();
-    $_instance->logRenderedChild('gNOg8NH', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('9RLcwtT', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

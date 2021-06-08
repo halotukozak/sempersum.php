@@ -85,10 +85,10 @@ class Artist extends Component
         if ($optionId) {
             $option = ArtistModel::find($optionId);
             if (!$option) {
-                $option = ArtistModel::firstWhere('spotifyId', $optionId);
+                $option = ArtistModel::where('spotify', $optionId)->first();
             }
             $this->selectedOption = $option;
-            $this->selectValue($option->id);
+            if ($option) $this->selectValue($option->id);
         } else {
             $this->selectedOption = null;
             $this->selectValue(null);

@@ -3,14 +3,15 @@
      hover : false}"
      x-show="show">
     <a href="{{ $song->path() }}">
-        <div class="px-4 py-2">
+        <div class="p-4">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white">{{ $song->title }}</h1>
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ $song->created_at->diffForHumans() }}</p>
         </div>
         @if ($song->artist)
             <img class="object-cover w-full h-48 mt-2"
-                 src="{{ $song->artist->avatar() }}"
+                 src="{{ $song->artist->avatar('lg') }}"
                  alt="{{ $song->artist->name }}"/>
+        @else <div class="h-48"></div>
         @endif
     </a>
     <div class="flex items-center justify-center px-4 py-2 bg-white dark:bg-gray-900 absolute inset-x-0 bottom-0">

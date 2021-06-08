@@ -4,11 +4,11 @@
             <div
                 class="px-6 py-4 mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800 shadow-md mt-16 border-2 dark:border-blue-400 dark:border-opacity-75">
                 <div class="flex justify-center -mt-16 md:justify-end mb-3 ">
-                    @if(isset($artist) && ($artist->avatar() != null))
+                    @if($artist && $artist->avatar('md'))
                         <img
                             class="object-cover w-32 h-32 rounded-full border-2 dark:border-blue-400 dark:border-opacity-75"
                             alt="Artist's avatar."
-                            src="{{ $artist->avatar() }}">
+                            src="{{ $artist->avatar('md') }}">
                     @else
                         <div
                             class="bg-blue-400 rounded-full w-32 h-32 border-2 dark:border-blue-400 dark:border-opacity-75">
@@ -111,6 +111,7 @@
                                     <label for="text"
                                            class="text-gray-700 dark:text-gray-200">
                                         Tekst piosenki <span class="text-red-700" {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
+
                                     <textarea
                                         wire:model="text"
                                         wire:ignore
@@ -123,6 +124,70 @@
                                 focus:border-blue-500 dark:focus:border-blue-500
                                 focus:outline-none focus:ring font-mono resize-none overflow-hidden"
                                     ></textarea>
+                                    @push('scripts')
+                                        <script>
+                                            HTMLTextAreaElement.prototype.getCaretPosition = function () { //return the caret position of the textarea
+                                                return this.selectionStart;
+                                            };
+                                            HTMLTextAreaElement.prototype.setCaretPosition = function (position) { //change the caret position of the textarea
+                                                this.selectionStart = position;
+                                                this.selectionEnd = position;
+                                                this.focus();
+                                            };
+                                            HTMLTextAreaElement.prototype.hasSelection = function () { //if the textarea has selection then return true
+                                                if (this.selectionStart == this.selectionEnd) {
+                                                    return false;
+                                                } else {
+                                                    return true;
+                                                }
+                                            };
+                                            HTMLTextAreaElement.prototype.getSelectedText = function () { //return the selection text
+                                                return this.value.substring(this.selectionStart, this.selectionEnd);
+                                            };
+                                            HTMLTextAreaElement.prototype.setSelection = function (start, end) { //change the selection area of the textarea
+                                                this.selectionStart = start;
+                                                this.selectionEnd = end;
+                                                this.focus();
+                                            };
+
+                                            var textarea = document.getElementsByTagName('textarea')[0];
+
+                                            textarea.onkeydown = function (event) {
+
+                                                //support tab on textarea
+                                                if (event.keyCode == 9) { //tab was pressed
+                                                    var newCaretPosition;
+                                                    newCaretPosition = textarea.getCaretPosition() + "    ".length;
+                                                    textarea.value = textarea.value.substring(0, textarea.getCaretPosition()) + "    " + textarea.value.substring(textarea.getCaretPosition(), textarea.value.length);
+                                                    textarea.setCaretPosition(newCaretPosition);
+                                                    return false;
+                                                }
+                                                if (event.keyCode == 8) { //backspace
+                                                    if (textarea.value.substring(textarea.getCaretPosition() - 4, textarea.getCaretPosition()) == "    ") { //it's a tab space
+                                                        var newCaretPosition;
+                                                        newCaretPosition = textarea.getCaretPosition() - 3;
+                                                        textarea.value = textarea.value.substring(0, textarea.getCaretPosition() - 3) + textarea.value.substring(textarea.getCaretPosition(), textarea.value.length);
+                                                        textarea.setCaretPosition(newCaretPosition);
+                                                    }
+                                                }
+                                                if (event.keyCode == 37) { //left arrow
+                                                    var newCaretPosition;
+                                                    if (textarea.value.substring(textarea.getCaretPosition() - 4, textarea.getCaretPosition()) == "    ") { //it's a tab space
+                                                        newCaretPosition = textarea.getCaretPosition() - 3;
+                                                        textarea.setCaretPosition(newCaretPosition);
+                                                    }
+                                                }
+                                                if (event.keyCode == 39) { //right arrow
+                                                    var newCaretPosition;
+                                                    if (textarea.value.substring(textarea.getCaretPosition() + 4, textarea.getCaretPosition()) == "    ") { //it's a tab space
+                                                        newCaretPosition = textarea.getCaretPosition() + 3;
+                                                        textarea.setCaretPosition(newCaretPosition);
+                                                    }
+                                                }
+                                            }
+                                        </script>
+                                    @endpush
+
                                     <p class="text-red-500 text-sm p-1 font-semibold">@error('text'){{ $message }}@enderror</p>
                                 </div>
                                 <div x-data="{ open : false }" @click.away="open = false">
@@ -152,36 +217,34 @@
                                                             #{{ $tagOption->name }}
                                                         </span>
                                                             <span
-                                                                class="ml-3 text-gray-50">
-                                                                {{ count($tagOption->songs) }}
+                                                                class="ml-3 dark:text-gray-50">
+                                                                {{ count($tagOption->songs->where('isVerified', 1)->where('isOutOfDate', false)) }}
                                                             </span>
                                                     </span>
+                                                    </div>
+                                                    @if ($loop->index == 10)
+                                                        @break
+                                                    @endif
+                                                @endforeach
                                             </div>
-                                            @if ($loop->index == 10)
-                                                @break
-                                            @endif
-                                        @endforeach
-                                </div>
-                                    @endif
-                                </div>
-                                @if(!empty($tags))
-                                    <div>
-                                        @foreach ($tags as $tag)
-                                            <div
-                                                wire:click="removeTag('{{$tag['id']}}')" wire:key="{{$tag['id']}}"
-                                                class="bg-gray-100 dark:bg-gray-600 inline-flex items-center text-sm rounded mt-2 mr-1">
+                                        @endif
+                                    </div>
+                                    @if(!empty($tags))
+                                        <div>
+                                            @foreach ($tags as $tag)
+                                                <div
+                                                    wire:click="removeTag('{{$tag['id']}}')" wire:key="{{$tag['id']}}"
+                                                    class="bg-gray-100 dark:bg-gray-600 inline-flex items-center text-sm rounded mt-2 mr-1 cursor-pointer">
                                                 <span
                                                     class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
                                                     #{{ $tag['name'] }}
                                                 </span>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     @endif
                                 </div>
                                 <div>
-                                    <i
-                                        class="fas fa-question-circle" {{ Popper::interactive()->pop(tip('info', 'Link do deezer powinien mieć format https://www.deezer.com/pl/track/*. Niestety format https://deezer.page.link/* nie działa. <a href="'. route('deezer') . '"><strong>Instrukcja generowania odpowiedniego formatu</strong></a>', "Link do Deezer")) }}></i>
                                     <label class="text-gray-700 dark:text-gray-200" for="deezerId">Link do Deezer<i
                                             class="fab fa-deezer p-1"></i></label>
                                     <livewire:input.deezer id="deezerId" type="text" :input="$deezerId"/>
@@ -190,124 +253,125 @@
                                 </div>
                                 <div>
                                     <i
-                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', 'Zalecane jest podanie linku do teledysku.', "Link do YouTube")) }}></i>
+                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', 'Warto podać link do teledysku.', "Link do YouTube")) }}></i>
                                     <label class="text-gray-700 dark:text-gray-200" for="youtubeId">Link do YouTube<i
                                             class="fab fa-youtube p-1"></i></label>
                                     <input wire:model.debounce.500ms="youtubeId" id="youtubeId" type="text"
-                                       placeholder="Wprowadź link..."
-                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
-                                <p class="text-red-500 text-sm p-1 font-semibold">@error('youtubeId'){{ $message }}@enderror</p>
-                            </div>
-                            <div>
-                                <label class="text-gray-700 dark:text-gray-200" for="soundcloudId">Link do SoundCloud<i
-                                        class="fab fa-soundcloud p-1"></i></label>
-                                <input wire:model.debounce.500ms="soundcloudId" id="soundcloudId" type="text"
-                                       placeholder="Wprowadź link..."
-                                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                                <p class="text-red-500 text-sm p-1 font-semibold">@error('soundcloudId'){{ $message }}@enderror</p>
-                            </div>
-                            <div class="flex justify-end mt-6">
-                                <button
-                                    class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-                                    {{__('Save') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="dark:text-white p-2">
-                        <ul class="shadow-box space-y-2">
-                            @if($youtubeId && !$errors->has('youtubeId'))
-                                <li class="relative dark:bg-gray-800 rounded-md">
-                                    <button type="button"
-                                            class="w-full px-8 py-6 text-left shadow rounded-md bg-gray-50 dark:bg-gray-900">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-2xl">YouTube<i class="fab fa-youtube px-2"></i></span>
-                                        </div>
+                                           placeholder="Wprowadź link..."
+                                           class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
+                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('youtubeId'){{ $message }}@enderror</p>
+                                </div>
+                                <div>
+                                    <label class="text-gray-700 dark:text-gray-200" for="soundcloudId">Link do
+                                        SoundCloud<i
+                                            class="fab fa-soundcloud p-1"></i></label>
+                                    <input wire:model.debounce.500ms="soundcloudId" id="soundcloudId" type="text"
+                                           placeholder="Wprowadź link..."
+                                           class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <p class="text-red-500 text-sm p-1 font-semibold">@error('soundcloudId'){{ $message }}@enderror</p>
+                                </div>
+                                <div class="flex justify-end mt-6">
+                                    <button
+                                        class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+                                        {{__('Save') }}
                                     </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="dark:text-white p-2">
+                            <ul class="shadow-box space-y-2">
+                                @if($youtubeId && !$errors->has('youtubeId'))
+                                    <li class="relative dark:bg-gray-800 rounded-md">
+                                        <div
+                                            class="w-full px-8 py-6 text-left shadow rounded-md bg-gray-50 dark:bg-gray-900">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-2xl">YouTube<i class="fab fa-youtube px-2"></i></span>
+                                            </div>
+                                        </div>
 
-                                    <div class="relative overflow-hidden transition-all h-full duration-700">
-                                        <div class="p-6">
-                                            <div class="aspect-w-16 aspect-h-9">
-                                                <iframe class=""
-                                                        src="https://www.youtube-nocookie.com/embed/{{ youtube_id_from_url($youtubeId) }}"
-                                                        frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowfullscreen>
+                                        <div class="relative overflow-hidden transition-all h-full duration-700">
+                                            <div class="p-6">
+                                                <div class="aspect-w-16 aspect-h-9">
+                                                    <iframe class=""
+                                                            src="https://www.youtube-nocookie.com/embed/{{ youtube_id_from_url($youtubeId) }}"
+                                                            frameborder="0"
+                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                            allowfullscreen>
+                                                    </iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endif
+                                @if($spotifyId && !$errors->has('spotifyId'))
+                                    <li class="relative dark:bg-gray-800 rounded-md">
+                                        <div
+                                            class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-2xl">Spotify<i class="fab fa-spotify px-2"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="relative overflow-hidden transition-all h-full duration-700">
+                                            <div class="p-6">
+                                                <iframe class="w-full"
+                                                        src="https://open.spotify.com/embed/track/{{ $spotifyId}}"
+                                                        width="auto" height="380" allowtransparency="true"
+                                                        allow="encrypted-media">
                                                 </iframe>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                            @endif
-                            @if($spotifyId && !$errors->has('spotifyId'))
-                                <li class="relative dark:bg-gray-800 rounded-md">
-                                    <button type="button"
+                                    </li>
+                                @endif
+                                @if($soundcloudId && !$errors->has('soundcloudId'))
+                                    <li class="relative dark:bg-gray-800 rounded-md">
+                                        <div
                                             class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-2xl">Spotify<i class="fab fa-spotify px-2"></i></span>
-                                        </div>
-                                    </button>
-                                    <div class="relative overflow-hidden transition-all h-full duration-700">
-                                        <div class="p-6">
-                                            <iframe class="w-full"
-                                                    src="https://open.spotify.com/embed/track/{{ $spotifyId}}"
-                                                    width="auto" height="380" allowtransparency="true"
-                                                    allow="encrypted-media">
-                                            </iframe>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endif
-                            @if($soundcloudId && !$errors->has('soundcloudId'))
-                                <li class="relative dark:bg-gray-800 rounded-md">
-                                    <button type="button"
-                                            class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
-                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center justify-between">
                                             <span class="text-2xl">SoundCloud<i
                                                     class="fab fa-soundcloud px-2"></i></span>
+                                            </div>
                                         </div>
-                                    </button>
-                                    <div class="relative overflow-hidden transition-all h-full duration-700">
-                                        <div class="p-6">
-                                            <iframe class="embed-responsive m-0"
-                                                    width="100%" height="300" scrolling="no"
-                                                    frameborder="no" allow="autoplay"
-                                                    src="https://w.soundcloud.com/player/?url={{ $soundcloudId }}&color=%23b0acac&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true">
-                                            </iframe>
+                                        <div class="relative overflow-hidden transition-all h-full duration-700">
+                                            <div class="p-6">
+                                                <iframe class="embed-responsive m-0"
+                                                        width="100%" height="300" scrolling="no"
+                                                        frameborder="no" allow="autoplay"
+                                                        src="https://w.soundcloud.com/player/?url={{ $soundcloudId }}&color=%23b0acac&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                                                </iframe>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            @endif
-                            @if($deezerId && !$errors->has('deezerId'))
-                                <li class="relative dark:bg-gray-800 rounded-md">
-                                    <button type="button"
+                                    </li>
+                                @endif
+                                @if($deezerId && !$errors->has('deezerId'))
+                                    <li class="relative dark:bg-gray-800 rounded-md">
+                                        <div
                                             class="w-full px-8 py-6 text-left shadow rounded-md  bg-gray-50 dark:bg-gray-900">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-2xl">Deezer<i class="fab fa-deezer px-2"></i></span>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-2xl">Deezer<i class="fab fa-deezer px-2"></i></span>
+                                            </div>
                                         </div>
-                                    </button>
-                                    <div class="relative overflow-hidden transition-all h-full duration-700">
-                                        <div class="p-6">
-                                            <iframe class="embed-responsive m-0"
-                                                    title="deezer-widget"
-                                                    src="https://widget.deezer.com/widget/auto/track/{{ $deezerId }}"
-                                                    width="100%"
-                                                    height="300" frameborder="0" allowtransparency="true"
-                                                    allow="encrypted-media">
-                                            </iframe>
+                                        <div class="relative overflow-hidden transition-all h-full duration-700">
+                                            <div class="p-6">
+                                                <iframe class="embed-responsive m-0"
+                                                        title="deezer-widget"
+                                                        src="https://widget.deezer.com/widget/auto/track/{{ $deezerId }}"
+                                                        width="100%"
+                                                        height="300" frameborder="0" allowtransparency="true"
+                                                        allow="encrypted-media">
+                                                </iframe>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
                     </section>
                 @else
                     <section class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
                         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                            <x-button-icon icon="fas fa-plus" wire:click="refresh()">Dodaj kolejną piosenkę
+                            <x-button-icon icon="fas fa-undo-alt" wire:click="r">Dodaj kolejną piosenkę
                             </x-button-icon>
-                            <x-button-icon wire:click="dashboard" icon="fas fa-plus" >Wróć do panelu
+                            <x-button-icon wire:click="dashboard" icon="fas fa-home">Wróć do panelu
                             </x-button-icon>
                         </div>
                     </section>
