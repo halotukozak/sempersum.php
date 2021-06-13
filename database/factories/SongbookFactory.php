@@ -22,7 +22,8 @@ class SongbookFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->title()
+            'name' => $this->faker->sentence(),
+            'password' => $this->faker->unique()->randomNumber(8, true)
         ];
     }
 }

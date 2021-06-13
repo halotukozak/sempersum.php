@@ -6,11 +6,6 @@ use Illuminate\Contracts\Validation\Rule;
 
 class DeezerId implements Rule
 {
-    public function __construct()
-    {
-        //
-    }
-
     public function passes($attribute, $value)
     {
         $headers = get_headers('https://api.deezer.com/oembed?url=https://www.deezer.com/pl/track/' . $value);

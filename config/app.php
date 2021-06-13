@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'sempersum.pl'),
+    'url' => env('APP_URL', 'https://sempersum.pl'),
 
     'asset_url' => env('ASSET_URL', null),
 

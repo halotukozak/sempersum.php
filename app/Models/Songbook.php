@@ -9,6 +9,8 @@ class Songbook extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function songs()
     {
         return $this->belongsToMany(Song::class);

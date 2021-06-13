@@ -83,7 +83,9 @@
                 @break
 
                 @default
-                <livewire:song.create/>
+                <livewire:dashboard.songbooks-section/>
+
+{{--                <livewire:song.create/>--}}
 
             @endswitch
         </div>

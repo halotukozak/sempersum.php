@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://sempersum.pl</loc>
+        <lastmod>2021-06-10T18:41:49+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://sempersum.pl/</loc>
+        <lastmod>2021-06-10T18:41:49+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://sempersum.pl/dashboard</loc>
+        <lastmod>2021-06-10T18:41:49+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://sempersum.pl/forgot-password</loc>
+        <lastmod>2021-06-10T18:41:50+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://sempersum.pl/login</loc>
+        <lastmod>2021-06-10T18:41:50+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://sempersum.pl/oauth/facebook</loc>
+        <lastmod>2021-06-10T18:41:50+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://sempersum.pl/oauth/google</loc>
+        <lastmod>2021-06-10T18:41:50+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+</urlset>
