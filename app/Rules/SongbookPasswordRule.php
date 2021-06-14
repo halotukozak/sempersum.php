@@ -20,7 +20,7 @@ class SongbookPasswordRule implements Rule
      */
     public function passes($attribute, $value) :bool
     {
-        return current_user()->songbooks->where('password', $value)->count() !== 0;
+        return empty(current_user()->songbooks->where('password', $value)->count());
     }
 
     /**

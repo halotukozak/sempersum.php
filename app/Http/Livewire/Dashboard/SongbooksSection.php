@@ -9,6 +9,14 @@ use Livewire\Component;
 class SongbooksSection extends Component
 {
     public string $password = "";
+    public $songbooks;
+
+    protected function rules(): array
+    {
+        return [
+            'password' => ['integer', 'required', 'digits:8', 'exists:songbooks', new SongbookPasswordRule()]
+        ];
+    }
 
     public function messages(): array
     {
@@ -20,23 +28,29 @@ class SongbooksSection extends Component
         ];
     }
 
-    public function rules(): array
-    {
-        return [
-            'password' => ['integer', 'required', 'digits:8', 'exists:songbooks']
-        ];
-    }
-
     public function updatedPassword()
     {
         $this->validate($this->rules());
+        $this->songbooks = current_user()->songbooks->sortByDesc('updated_at');
+
+    }
+
+    protected function r()
+    {
+        $this->songbooks = current_user()->songbooks->sortByDesc('updated_at');
+        $this->password = '';
     }
 
     public function add()
     {
         $this->validate($this->rules());
-
         current_user()->songbooks()->attach(Songbook::where('password', $this->password)->first('id')->id);
+
+    }
+
+    public function mount()
+    {
+        $this->r();
     }
 
     public function render()

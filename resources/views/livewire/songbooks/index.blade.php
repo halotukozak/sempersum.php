@@ -1,23 +1,20 @@
 <div class="max-w-2xl px-8 py-4 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between"
+         x-data="{open : false}">
         <span
             class="text-sm font-light text-gray-600 dark:text-gray-400">{{ $songbook->updated_at->diffForHumans() }}</span>
         <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500">przycisk</a>
+        <span
+            class="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md sm:mx-2 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">{{ $songbook->password }}</span>
 
-        <x-button-icon x-data="new Clipboard($el)"
-                       icon="fa fa-share" id="share" data-clipboard-action="copy"
-                       x-text="textOnShareButton"
-                       data-clipboard-text="{{ $songbook->password }}"
-                       x-on:click="textOnShareButton = '{{__('Copied.')}}'">
+        <x-button-icon
+            icon="fa fa-share"
+            onclick="copyTextToClipboard({{$songbook->password }})"
+            @click="open = true"
+            x-text="open ? 'Skopiowano do schowka.' : null">
             Udostępnij hasło
         </x-button-icon>
     </div>
-    @push('scripts')
-        <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
-        <script>
-            new Clipboard();
-        </script>
-    @endpush
     <div class="mt-2">
         <a href="#"
            class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline">{{ $songbook->name }}</a>

@@ -16,7 +16,8 @@
                     <input
                         class="border-transparent px-6 py-3 text-gray-600 placeholder-gray-500 bg-white outline-none dark:bg-gray-800 dark:placeholder-gray-400 focus:placeholder-transparent dark:focus:placeholder-transparent focus:outline-none"
                         wire:model="password"
-                        type="text" placeholder="Wpisz hasło do śpiewnika...">
+                        type="text" placeholder="Wpisz hasło do śpiewnika..."
+                        aria-label="Wpisz hasło do śpiewnika..." />
                     <button
                         class="px-4 py-3 text-sm font-medium tracking-widest text-gray-100 uppercase transition-colors duration-200 transform bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none">
                         Dołącz
@@ -27,7 +28,32 @@
         </div>
     </section>
 
-    @foreach(current_user()->songbooks as $songbook)
-        <livewire:songbooks.index :songbook="$songbook" wire:key="$loop->iteration"/>
+    @foreach($songbooks as $songbook)
+        <livewire:songbooks.index :songbook="$songbook" :key="$loop->iteration"/>
     @endforeach
+
+    @push('scripts')
+        <script>
+            function copyTextToClipboard(text) {
+                let textArea = document.createElement("textarea");
+                textArea.style.position = 'fixed';
+                textArea.style.top = '0';
+                textArea.style.left = '0';
+                textArea.style.width = '2em';
+                textArea.style.height = '2em';
+                textArea.style.padding = '0';
+                textArea.style.border = 'none';
+                textArea.style.outline = 'none';
+                textArea.style.boxShadow = 'none';
+                textArea.style.background = 'transparent';
+                textArea.value = text;
+
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+        </script>
+    @endpush
 </div>
