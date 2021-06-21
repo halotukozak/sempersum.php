@@ -2,8 +2,7 @@
     <div class="flex items-center justify-between"
          x-data="{open : false}">
         <span
-            class="text-sm font-light text-gray-600 dark:text-gray-400">{{ $songbook->updated_at->diffForHumans() }}</span>
-        <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500">przycisk</a>
+            class="text-sm font-light text-gray-600 dark:text-gray-400">Utworzony {{ $songbook->updated_at->diffForHumans() }}</span>
         <span
             class="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md sm:mx-2 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">{{ $songbook->password }}</span>
 

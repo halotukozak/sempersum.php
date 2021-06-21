@@ -29,19 +29,42 @@
                 @endif
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-white md:mt-0 md:text-3xl">{{ $song->title }}</h2>
 
-                <x-jet-dropdown align="left">
-                    <x-slot name="trigger">
-                        <x-button-icon icon="fa fa-list-ul">Dodaj do śpiewnika</x-button-icon>
-                    </x-slot>
-                    <x-slot name="content">
+                @auth
+                    <x-jet-dropdown align="left">
+                        <x-slot name="trigger">
+                            <x-button-icon icon="fa fa-list-ul">Dodaj do śpiewnika</x-button-icon>
+                        </x-slot>
+                        <x-slot name="content">
 
-                        @foreach(current_user()->songbooks as $songbook)
-                            <x-jet-dropdown-link>{{ $songbook->title }}</x-jet-dropdown-link>
-                        @endforeach
-                            <x-jet-dropdown-link>Stwórz nowy śpiewnik</x-jet-dropdown-link>
+                            @foreach($songbooks as $songbook)
+                                <x-jet-dropdown-link wire:click="toggleSongToSongbook({{$songbook->id}})">
 
-                    </x-slot>
-                </x-jet-dropdown>
+                                    <span class="
+                                        @if ($songbook->songs->contains($song))
+                                        text-green-500
+                                        @endif
+                                        ">
+                                        {{ $songbook->name }}
+                                    </span>
+                                </x-jet-dropdown-link>
+                                @if ($loop->iteration === 3)
+                                    <x-jet-dropdown-link wire:click="loadMoreSongbooks">Starsze...</x-jet-dropdown-link>
+                                    @break
+                                @endif
+                            @endforeach
+                            <div class="border-t border-gray-100 dark:border-gray-600"></div>
+                            <x-jet-dropdown-link class="font-bold">Stwórz nowy śpiewnik</x-jet-dropdown-link>
+
+                        </x-slot>
+                    </x-jet-dropdown>
+                @elseguest
+                    <form action="{{ route('login') }}">
+                        <x-button-icon icon="fa fa-list-ul" type="submit">
+                            Dodaj do śpiewnika
+                        </x-button-icon>
+                    </form>
+                @endauth
+
                 <p class="mt-6 text-gray-600 dark:text-gray-200">
                     @foreach($song->tags as $tag)
                         <a href="{{ route('start', ['tag' => $tag->name]) }}">
