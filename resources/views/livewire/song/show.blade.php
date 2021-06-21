@@ -20,30 +20,44 @@
                 @if($song->isVerified)
                     <button wire:click="like"
                             class="inline-flex -mt-10 align-top focus:outline-none"
-                        type="submit">
+                            type="submit">
                 <span class="text-2xl text-gray-700 inline-block p-2">
                     <i class="text-2xl text-red-800 hover:text-red-7600 {{ $liked ? 'fas' : "far" }} fa-heart"></i>
             {!! $likes == null ? '&nbsp;&nbsp;' : $likes !!}
             </span>
-                </button>
+                    </button>
                 @endif
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-white md:mt-0 md:text-3xl">{{ $song->title }}</h2>
 
+                <x-jet-dropdown align="left">
+                    <x-slot name="trigger">
+                        <x-button-icon icon="fa fa-list-ul">Dodaj do śpiewnika</x-button-icon>
+                    </x-slot>
+                    <x-slot name="content">
+
+                        @foreach(current_user()->songbooks as $songbook)
+                            <x-jet-dropdown-link>{{ $songbook->title }}</x-jet-dropdown-link>
+                        @endforeach
+                            <x-jet-dropdown-link>Stwórz nowy śpiewnik</x-jet-dropdown-link>
+
+                    </x-slot>
+                </x-jet-dropdown>
                 <p class="mt-6 text-gray-600 dark:text-gray-200">
                     @foreach($song->tags as $tag)
                         <a href="{{ route('start', ['tag' => $tag->name]) }}">
-                            <x-jet-secondary-button class="my-1 font-semibold">#{{ $tag->name }}</x-jet-secondary-button>
+                            <x-jet-secondary-button class="my-1 font-semibold">
+                                #{{ $tag->name }}</x-jet-secondary-button>
                         </a>
                     @endforeach
                 </p>
 
                 <div class="flex justify-end mt-4">
                     @if($song->artist)
-                    <object>
-                        <a href="{{ $song->artist->path() }}"
-                           class="text-xl font-medium text-indigo-500 dark:text-indigo-300">{{ $song->artist->name }}
-                        </a>
-                    </object>
+                        <object>
+                            <a href="{{ $song->artist->path() }}"
+                               class="text-xl font-medium text-indigo-500 dark:text-indigo-300">{{ $song->artist->name }}
+                            </a>
+                        </object>
                     @endif
                 </div>
             </div>
@@ -99,7 +113,7 @@
                         <li class="relative dark:bg-gray-800 rounded-md">
                             <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md"
                                     @click="selected !== 1 ? selected = 1 : selected = null"
-                                    x-bind:class="selected == 2 ? 'bg-gray-50 dark:bg-gray-900' : ''">
+                                    x-bind:class="selected === 2 ? 'bg-gray-50 dark:bg-gray-900' : ''">
                                 <div class="flex items-center justify-between">
                                     <span class="text-2xl">YouTube<i class="fab fa-youtube px-2"></i></span>
                                 </div>
@@ -107,7 +121,7 @@
                             <div class="relative overflow-hidden transition-all max-h-0 duration-700"
                                  style=""
                                  x-ref="container1"
-                                 x-bind:style="selected == 1 ? 'max-height: 500px' : ''">
+                                 x-bind:style="selected === 1 ? 'max-height: 500px' : ''">
                                 <div class="p-6">
                                     <div class="aspect-w-16 aspect-h-9">
                                         <iframe class=""
@@ -125,7 +139,7 @@
                         <li class="relative dark:bg-gray-800 rounded-md">
                             <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md"
                                     @click="selected !== 2 ? selected = 2 : selected = null"
-                                    x-bind:class="selected == 2 ? 'bg-gray-50 dark:bg-gray-900' : ''">
+                                    x-bind:class="selected === 2 ? 'bg-gray-50 dark:bg-gray-900' : ''">
                                 <div class="flex items-center justify-between">
                                     <span class="text-2xl">Spotify<i class="fab fa-spotify px-2"></i></span>
                                 </div>
@@ -133,7 +147,7 @@
                             <div class="relative overflow-hidden transition-all max-h-0 duration-700"
                                  style=""
                                  x-ref="container1"
-                                 x-bind:style="selected == 2 ? 'max-height: 400px' : ''">
+                                 x-bind:style="selected === 2 ? 'max-height: 400px' : ''">
                                 <div class="p-6">
                                     <iframe class="w-full"
                                             src="https://open.spotify.com/embed/track/{{ $song->spotifyId}}"
@@ -148,7 +162,7 @@
                         <li class="relative dark:bg-gray-800 rounded-md">
                             <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md"
                                     @click="selected !== 3 ? selected = 3 : selected = null"
-                                    x-bind:class="selected == 3 ? 'bg-gray-50 dark:bg-gray-900' : ''">
+                                    x-bind:class="selected === 3 ? 'bg-gray-50 dark:bg-gray-900' : ''">
                                 <div class="flex items-center justify-between">
                                     <span class="text-2xl">SoundCloud<i class="fab fa-soundcloud px-2"></i></span>
                                 </div>
@@ -156,7 +170,7 @@
                             <div class="relative overflow-hidden transition-all max-h-0 duration-700"
                                  style=""
                                  x-ref="container1"
-                                 x-bind:style="selected == 3 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
+                                 x-bind:style="selected === 3 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
                                 <div class="p-6">
                                     <iframe class="embed-responsive m-0"
                                             width="100%" height="300" scrolling="no"
@@ -171,7 +185,7 @@
                         <li class="relative dark:bg-gray-800 rounded-md">
                             <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md"
                                     @click="selected !== 4 ? selected = 4 : selected = null"
-                                    x-bind:class="selected == 4 ? 'bg-gray-50 dark:bg-gray-900' : ''">
+                                    x-bind:class="selected === 4 ? 'bg-gray-50 dark:bg-gray-900' : ''">
                                 <div class="flex items-center justify-between">
                                     <span class="text-2xl">Deezer<i class="fab fa-deezer px-2"></i></span>
                                 </div>
@@ -179,7 +193,7 @@
                             <div class="relative overflow-hidden transition-all max-h-0 duration-700"
                                  style=""
                                  x-ref="container1"
-                                 x-bind:style="selected == 4 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
+                                 x-bind:style="selected === 4 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
                                 <div class="p-6">
                                     <iframe class="embed-responsive m-0"
                                             title="deezer-widget"

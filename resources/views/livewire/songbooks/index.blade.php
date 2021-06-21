@@ -11,7 +11,7 @@
             icon="fa fa-share"
             onclick="copyTextToClipboard({{$songbook->password }})"
             @click="open = true"
-            x-text="open ? 'Skopiowano do schowka.' : null">
+            x-text="open ? 'Skopiowano do schowka.' : $el.text() ">
             Udostępnij hasło
         </x-button-icon>
     </div>

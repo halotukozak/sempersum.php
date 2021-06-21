@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Song;
 
 use App\Models\Song as Model;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Jetstream\ConfirmsPasswords;
 use Livewire\Component;
 

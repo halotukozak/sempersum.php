@@ -11,6 +11,10 @@ class SongbooksSection extends Component
     public string $password = "";
     public $songbooks;
 
+    protected $listeners = [
+        'ref' => '$refresh'
+    ];
+
     protected function rules(): array
     {
         return [
@@ -31,26 +35,26 @@ class SongbooksSection extends Component
     public function updatedPassword()
     {
         $this->validate($this->rules());
-        $this->songbooks = current_user()->songbooks->sortByDesc('updated_at');
-
     }
 
-    protected function r()
+    public function loadSongbooks(): void
     {
-        $this->songbooks = current_user()->songbooks->sortByDesc('updated_at');
-        $this->password = '';
+
+        $this->songbooks = current_user()->songbooks;
+
     }
 
     public function add()
     {
         $this->validate($this->rules());
         current_user()->songbooks()->attach(Songbook::where('password', $this->password)->first('id')->id);
-
+        $this->songbooks->push(Songbook::where('password', $this->password)->first());
+        $this->password = "";
     }
 
     public function mount()
     {
-        $this->r();
+        $this->loadSongbooks();
     }
 
     public function render()

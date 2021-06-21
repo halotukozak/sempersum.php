@@ -114,6 +114,7 @@
       <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/be" />
       <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/de" />
       <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/f5" />
+      <excludeFolder url="file://$MODULE_DIR$/storage" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
