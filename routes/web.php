@@ -5,13 +5,21 @@ use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Song\Create;
 use App\Http\Livewire\Song\Show;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Songbook\Manage;
 
 Route::get('/', function () {
     return view('start');
 })->name('start');
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/songbook', function (){
+        $songbook = \App\Models\Songbook::create();
+        return redirect()->route('songbook', ['songbook', $songbook]);
+    } )->name('createSongbook');
+    Route::get('/songbook/{songbook}', Manage::class)->name('songbook');
+});
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/song/create', Create::class)->name('createSong');
     Route::get('/song/{song}/edit', Create::class)->name('editSong');
 });

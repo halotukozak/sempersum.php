@@ -85,7 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function songbooks()
     {
-        return $this->belongsToMany(Songbook::class);
+        return $this->belongsToMany(Songbook::class)->withTimestamps();
     }
 
 }

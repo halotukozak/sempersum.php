@@ -9,11 +9,7 @@ use Livewire\Component;
 class SongbooksSection extends Component
 {
     public string $password = "";
-    public $songbooks;
-
-    protected $listeners = [
-        'ref' => '$refresh'
-    ];
+//    public $songbooks;
 
     protected function rules(): array
     {
@@ -40,7 +36,7 @@ class SongbooksSection extends Component
     public function loadSongbooks(): void
     {
 
-        $this->songbooks = current_user()->songbooks;
+//        $this->songbooks = ;
 
     }
 
@@ -48,8 +44,8 @@ class SongbooksSection extends Component
     {
         $this->validate($this->rules());
         current_user()->songbooks()->attach(Songbook::where('password', $this->password)->first('id')->id);
-        $this->songbooks->push(Songbook::where('password', $this->password)->first());
         $this->password = "";
+        $this->loadSongbooks();
     }
 
     public function mount()
@@ -59,6 +55,6 @@ class SongbooksSection extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.songbooks-section');
+        return view('livewire.dashboard.songbooks-section')->with('songbooks', current_user()->songbooks);
     }
 }

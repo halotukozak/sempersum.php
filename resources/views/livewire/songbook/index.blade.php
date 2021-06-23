@@ -15,7 +15,7 @@
         </x-button-icon>
     </div>
     <div class="mt-2">
-        <a href="#"
+        <a href="{{ $songbook->path() }}"
            class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline">{{ $songbook->name }}</a>
         <p class="mt-2 text-gray-600 dark:text-gray-300">
             @foreach($songbook->songs as $song)
@@ -29,7 +29,7 @@
     </div>
 
     <div class="flex items-center justify-between mt-4">
-        <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Read more</a>
+        <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Drukuj</a>
         @if ($songbook->users->count() > 1)
             <p class="text-gray-600 dark:text-gray-300"> Współtwórcy:</p>
             @foreach($songbook->users->except(current_user()->id) as $user)

@@ -11,14 +11,25 @@ class Songbook extends Model
 
     protected $guarded = [];
 
+    public function getRouteKeyName(): string
+    {
+        return 'password';
+    }
+
+    public function path($append = '')
+    {
+        $path = route('songbook', $this->password);
+        return $append ? "{$path}/{$append}" : $path;
+    }
+
     public function songs()
     {
-        return $this->belongsToMany(Song::class)->withTimestamps();;
+        return $this->belongsToMany(Song::class)->withTimestamps();
     }
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();;
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     public function toggleSong(Song $song)

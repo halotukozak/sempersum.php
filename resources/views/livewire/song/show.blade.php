@@ -47,11 +47,9 @@
                                         {{ $songbook->name }}
                                     </span>
                                 </x-jet-dropdown-link>
-                                @if ($loop->iteration === 3)
-                                    <x-jet-dropdown-link wire:click="loadMoreSongbooks">Starsze...</x-jet-dropdown-link>
-                                    @break
-                                @endif
                             @endforeach
+
+                            <div @click.stop="open = true">{{ $songbooks->links() }}</div>
                             <div class="border-t border-gray-100 dark:border-gray-600"></div>
                             <x-jet-dropdown-link class="font-bold">Stwórz nowy śpiewnik</x-jet-dropdown-link>
 
