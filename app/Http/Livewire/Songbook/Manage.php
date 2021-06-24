@@ -2,9 +2,14 @@
 
 namespace App\Http\Livewire\Songbook;
 
+use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\Songbook;
+use App\Models\User;
 use Faker\Core\Number;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Jetstream\Jetstream;
 use Livewire\Component;
 
 class Manage extends Component

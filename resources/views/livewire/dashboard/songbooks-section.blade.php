@@ -22,6 +22,11 @@
                 <div class="flex flex-col overflow-hidden lg:flex-row rounded-lg border-2 border-gray-700">
                     <input
                         class="border-transparent px-6 py-3 text-gray-600 placeholder-gray-500 bg-white outline-none dark:bg-gray-800 dark:placeholder-gray-400 focus:placeholder-transparent dark:focus:placeholder-transparent focus:outline-none"
+                        wire:model="code"
+                        type="text" placeholder="Wpisz kod śpiewnika..."
+                        aria-label="Wpisz kod śpiewnika..."/>
+                    <input
+                        class="border-transparent px-6 py-3 text-gray-600 placeholder-gray-500 bg-white outline-none dark:bg-gray-800 dark:placeholder-gray-400 focus:placeholder-transparent dark:focus:placeholder-transparent focus:outline-none"
                         wire:model="password"
                         type="text" placeholder="Wpisz hasło do śpiewnika..."
                         aria-label="Wpisz hasło do śpiewnika..."/>
@@ -30,6 +35,7 @@
                         Dołącz
                     </button>
                 </div>
+                <x-jet-input-error for="code"></x-jet-input-error>
                 <x-jet-input-error for="password"></x-jet-input-error>
             </form>
         </div>

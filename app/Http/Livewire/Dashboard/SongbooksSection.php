@@ -3,19 +3,21 @@
 namespace App\Http\Livewire\Dashboard;
 
 use App\Models\Songbook;
-use App\Rules\SongbookPasswordRule;
+use App\Rules\SongbookCodeRule;
+use Laravel\Fortify\Rules\Password;
 use Livewire\Component;
 
 class SongbooksSection extends Component
 {
     public string $password = "";
-//    public $songbooks;
+    public string $code = "";
 
     protected function rules(): array
     {
         return [
-            'password' => ['integer', 'required', 'digits:8', 'exists:songbooks', new SongbookPasswordRule()]
-        ];
+            'code' => ['uuid', 'required', 'exists:songbooks', new SongbookCodeRule()],
+            'password' => ['required', 'string', new Password]
+        ,];
     }
 
     public function messages(): array
@@ -28,28 +30,18 @@ class SongbooksSection extends Component
         ];
     }
 
-    public function updatedPassword()
+    public function updated($field)
     {
-        $this->validate($this->rules());
+        $this->validateOnly($field, $this->rules());
     }
 
-    public function loadSongbooks(): void
-    {
-
-//        $this->songbooks = ;
-
-    }
 
     public function add()
     {
         $this->validate($this->rules());
-        current_user()->songbooks()->attach(Songbook::where('password', $this->password)->first('id')->id);
+        current_user()->songbooks()->attach(Songbook::where('code', $this->code)->first('id')->id);
         $this->password = "";
-        $this->loadSongbooks();
-    }
-
-    public function mount()
-    {
+        $this->code = "";
         $this->loadSongbooks();
     }
 

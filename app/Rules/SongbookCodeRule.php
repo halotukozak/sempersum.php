@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class SongbookPasswordRule implements Rule
+class SongbookCodeRule implements Rule
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ class SongbookPasswordRule implements Rule
      */
     public function passes($attribute, $value) :bool
     {
-        return empty(current_user()->songbooks->where('password', $value)->count());
+        return empty(current_user()->songbooks->where('code', $value)->count());
     }
 
     /**
