@@ -26,8 +26,8 @@ class SongFactory extends Factory
     public function definition()
     {
         return [
-            'artist_id' => Artist::factory(),
-            'author_id' => User::factory(),
+            'artist_id' => Artist::inRandomOrder()->first(),
+            'author_id' => User::inRandomOrder()->first(),
 
             'slug' => $this->faker->unique(true)->slug(),
             'title' => $this->faker->sentence(4),

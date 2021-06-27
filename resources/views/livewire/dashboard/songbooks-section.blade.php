@@ -10,7 +10,7 @@
                     przygotowywać śpiewnik z przyjaciółmi.</p>
                 <br/>
                 <span class="text-white">lub
-                <a href="{{ route('songbook', ['songbook' =>'new']) }}"
+                <a href="{{ route('createSongbook') }}"
                    class="text-blue-400 p-4 tracking-wider hover:text-blue-500 font-bold">stwórz nowy śpiewnik</a>
                 </span>
             </div>
@@ -22,11 +22,6 @@
                 <div class="flex flex-col overflow-hidden lg:flex-row rounded-lg border-2 border-gray-700">
                     <input
                         class="border-transparent px-6 py-3 text-gray-600 placeholder-gray-500 bg-white outline-none dark:bg-gray-800 dark:placeholder-gray-400 focus:placeholder-transparent dark:focus:placeholder-transparent focus:outline-none"
-                        wire:model="code"
-                        type="text" placeholder="Wpisz kod śpiewnika..."
-                        aria-label="Wpisz kod śpiewnika..."/>
-                    <input
-                        class="border-transparent px-6 py-3 text-gray-600 placeholder-gray-500 bg-white outline-none dark:bg-gray-800 dark:placeholder-gray-400 focus:placeholder-transparent dark:focus:placeholder-transparent focus:outline-none"
                         wire:model="password"
                         type="text" placeholder="Wpisz hasło do śpiewnika..."
                         aria-label="Wpisz hasło do śpiewnika..."/>
@@ -35,7 +30,6 @@
                         Dołącz
                     </button>
                 </div>
-                <x-jet-input-error for="code"></x-jet-input-error>
                 <x-jet-input-error for="password"></x-jet-input-error>
             </form>
         </div>
@@ -43,28 +37,4 @@
     @foreach($songbooks as $songbook)
         <livewire:songbook.index :songbook="$songbook" :key="$loop->index"/>
     @endforeach
-    @push('scripts')
-        <script>
-            function copyTextToClipboard(text) {
-                let textArea = document.createElement("textarea");
-                textArea.style.position = 'fixed';
-                textArea.style.top = '0';
-                textArea.style.left = '0';
-                textArea.style.width = '2em';
-                textArea.style.height = '2em';
-                textArea.style.padding = '0';
-                textArea.style.border = 'none';
-                textArea.style.outline = 'none';
-                textArea.style.boxShadow = 'none';
-                textArea.style.background = 'transparent';
-                textArea.value = text;
-
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-            }
-        </script>
-    @endpush
 </div>

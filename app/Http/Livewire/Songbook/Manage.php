@@ -4,12 +4,6 @@ namespace App\Http\Livewire\Songbook;
 
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\Songbook;
-use App\Models\User;
-use Faker\Core\Number;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Laravel\Jetstream\Jetstream;
 use Livewire\Component;
 
 class Manage extends Component
@@ -17,11 +11,14 @@ class Manage extends Component
     public Songbook $songbook;
 
     public string $name = '';
-    public int $password;
+    public string $password = '';
     public array $users = [];
     public array $songs = [];
 
-    public function mount($songbook)
+    use PasswordValidationRules;
+
+
+    public function mount($songbook = null) : void
     {
 
     }
@@ -30,8 +27,14 @@ class Manage extends Component
     {
         $this->validate([
             'name' => 'required|string|min:3|max:256',
+            'password' => ['required', $this->passwordRules()]
         ]);
 
+    }
+
+    public function submit()
+    {
+        dd('git');
     }
 
     public function render()

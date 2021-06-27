@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class SongbookCodeRule implements Rule
+class SongbookPasswordRule implements Rule
 {
     public function __construct()
     {

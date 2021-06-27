@@ -16,8 +16,11 @@ class CreateSongbooksTable extends Migration
         Schema::create('songbooks', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->uuid('code');
             $table->string('password');
+            $table->foreignId('owner')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
 

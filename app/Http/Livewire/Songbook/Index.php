@@ -9,11 +9,6 @@ class Index extends Component
 {
     public Songbook $songbook;
 
-    public function mount(Songbook $songbook)
-    {
-
-    }
-
     public function render()
     {
         return view('livewire.songbook.index');

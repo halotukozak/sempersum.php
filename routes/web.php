@@ -13,10 +13,7 @@ Route::get('/', function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
-    Route::get('/songbook', function (){
-        $songbook = \App\Models\Songbook::create();
-        return redirect()->route('songbook', ['songbook', $songbook]);
-    } )->name('createSongbook');
+    Route::get('/songbook', Manage::class)->name('createSongbook');
     Route::get('/songbook/{songbook}', Manage::class)->name('songbook');
 });
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
