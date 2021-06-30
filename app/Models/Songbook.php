@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Str;
+use Spatie\MediaLibrary\HasMedia;
 
 /**
  * App\Models\Songbook
@@ -29,7 +29,7 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Songbook whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Songbook extends Model
+class Songbook extends Model implements HasMedia
 {
     use HasFactory;
 
@@ -38,11 +38,6 @@ class Songbook extends Model
     protected $hidden = [
         'password',
     ];
-
-    public function getRouteKeyName(): string
-    {
-        return 'password';
-    }
 
     public function path($append = '')
     {
