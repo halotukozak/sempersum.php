@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
 
 /**
  * App\Models\Songbook
@@ -29,7 +28,7 @@ use Spatie\MediaLibrary\HasMedia;
  * @method static \Illuminate\Database\Eloquent\Builder|Songbook whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Songbook extends Model implements HasMedia
+class Songbook extends Model
 {
     use HasFactory;
 

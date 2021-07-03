@@ -15,6 +15,13 @@
             <x-jet-input-error for="name">{{ $message }}</x-jet-input-error>
             @enderror
 
+{{--            <input id="photoUpload" type="file" wire:model="photo" class="hidden">--}}
+{{--            <label for="photoUpload">Wybierz obrazek</label>--}}
+{{--            @if ($photo)--}}
+{{--                <img src="{{ $photo->temporaryUrl() }}">--}}
+{{--            @endif--}}
+{{--            @error('photo') <span class="error">{{ $message }}</span> @enderror--}}
+
             <label
                 class="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">{{ __('Password') }}</label>
 
@@ -32,9 +39,8 @@
             <x-jet-input-error for="password">{{ $message }}</x-jet-input-error>
             @enderror
 
-            <img src="{{ $songbook->getProfilePhotoUrlAttribute() }}" alt="Image associated with songbook.">
             <div class="w-full mt-4">
-                <label class="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Message</label>
+                <label class="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Komentarz</label>
 
                 <textarea
                     class="block w-full h-40 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>

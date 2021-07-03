@@ -2,15 +2,17 @@
 
 namespace App\Http\Livewire\Songbook;
 
-use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\Songbook;
 use Laravel\Fortify\Rules\Password;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Manage extends Component
 {
+//    use WithFileUploads;
+//
+//    public $photo;
     public Songbook $songbook;
-
     public string $name = '';
     public string $password = '';
     public string $password_confirmation = '';
@@ -21,7 +23,8 @@ class Manage extends Component
     {
         return [
             'name' => 'required|string|min:3|max:256',
-            'password' => ['required', 'string', new Password, 'confirmed']
+            'password' => ['required', 'string', new Password, 'confirmed'],
+//            'photo' => 'image|max:2048'
         ];
     }
 
@@ -30,16 +33,17 @@ class Manage extends Component
 
     }
 
-    public function updated()
+    public function updated($field)
     {
-        $this->validate($this->rules());
-
+        $this->validateOnly($field, $this->rules());
+//        if ($field == 'photo') {
+//            $this->photo->storeAs('songbookImages', $this->songbook->id);
+//        }
     }
 
     public function submit()
     {
         $this->validate($this->rules());
-        dd('git');
     }
 
     public function render()
