@@ -1,6 +1,6 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="shadow bg-white dark:bg-gray-600 rounded-lg mx-3 md:m-auto">
+        <div class="shadow bg-white dark:bg-gray-600 rounded-lg md:m-auto">
             <div
                 class="px-6 py-4 mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800 shadow-md mt-16 border-2 dark:border-blue-400 dark:border-opacity-75">
                 <div class="flex justify-center -mt-16 md:justify-end mb-3 ">
@@ -82,7 +82,7 @@
                     @endif
                 </div>
             </div>
-            <div class="flex justify-center md:justify-start space-x-2 my-1 px-1 md:px-6 md:py-2 flex-wrap">
+            <div class="flex justify-center md:justify-start my-1 px-1 md:px-6 md:py-2 flex-wrap">
                 <div class="flex justify-center md:justify-start space-x-2 my-1 md:px-4 md:py-2 flex-wrap">
                     <x-button-icon icon="fas fa-volume-mute" id="hide" role="button">Ukryj&nbsp;akordy</x-button-icon>
 
@@ -123,7 +123,7 @@
                         @endif
                     @endcan
                 </div>
-                <main class="w-full p-6 bg-white rounded-md shadow-md dark:bg-gray-800">
+                <main class="w-full bg-white rounded-md shadow-md dark:bg-gray-800">
                     <pre wire:ignore data-key="{{ $song->key }}"
                          class="m-3 whitespace-pre-wrap dark:text-white">{{ $song->text }}</pre>
                 </main>
@@ -147,7 +147,6 @@
                                     <div class="aspect-w-16 aspect-h-9">
                                         <iframe class=""
                                                 src="https://www.youtube-nocookie.com/embed/{{ youtube_id_from_url($song->youtubeId) }}"
-                                                frameborder="0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                 allowfullscreen>
                                         </iframe>
@@ -194,8 +193,8 @@
                                  x-bind:style="selected === 3 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
                                 <div class="p-6">
                                     <iframe class="embed-responsive m-0"
-                                            width="100%" height="300" scrolling="no"
-                                            frameborder="no" allow="autoplay"
+                                            width="100%" height="300"
+                                            allow="autoplay"
                                             src="https://w.soundcloud.com/player/?url={{ $song->soundcloudId }}&color=%23b0acac&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true">
                                     </iframe>
                                 </div>
@@ -220,13 +219,14 @@
                                             title="deezer-widget"
                                             src="https://widget.deezer.com/widget/auto/track/{{ $song->deezerId }}"
                                             width="100%"
-                                            height="300" frameborder="0" allowtransparency="true"
+                                            height="300"
+                                            allowtransparency="true"
                                             allow="encrypted-media">
                                     </iframe>
                                 </div>
                             </div>
                         </li>
-                    @endif
+                        @endif
                 </ul>
             </div>
         </div>

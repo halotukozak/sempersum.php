@@ -29,21 +29,62 @@
                 wire:model="password"
                 class="block w-full px-4 py-2 my-3  text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 type="password" name="password" aria-label="password">
-            <label
-                class="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">{{ __('Confirm Password') }}</label>
-            <input
-                wire:model="password_confirmation"
-                class="block w-full px-4 py-2 my-3  text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                type="password" name="password_confirmation" aria-label="password_confirmation">
             @error('password')
             <x-jet-input-error for="password">{{ $message }}</x-jet-input-error>
             @enderror
 
             <div class="w-full mt-4">
-                <label class="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Komentarz</label>
-
+                <label class="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
+                       for="comment">Komentarz</label>
                 <textarea
+                    wire:model="comment"
+                    name="comment"
+                    id="comment"
                     class="block w-full h-40 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+                @error('comment')
+                <x-jet-input-error for="comment">{{ $message }}</x-jet-input-error>
+                @enderror
+            </div>
+
+            <div class="md:col-span-2 mx-auto w-full overflow-hidden bg- rounded-lg shadow-lg">
+                @foreach ($songs as $song)
+                    <a href="{{ $song->path() }}" wire:key="$song->id" class="p-1">
+                        <div
+                            class="flex max-w-lg mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                            @if($song->cover())
+                                <img class="w-1/3" src="{{$song->cover()}}" alt="{{ $song->title }}'s cover">
+                            @else
+                                <div class="w-1/3"></div>
+                            @endif
+                            <div class="w-2/3 p-4 md:p-4">
+                                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">{{ $song->title }}</h1>
+                                <div class="flex justify-between mt-3 item-center">
+                                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                        @foreach ($song->tags as $tag)
+                                            #{{ $tag->name }}
+                                        @endforeach
+                                    </p>
+                                    <p class="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">
+                                        @if ($song->spotifyId)
+                                            <i class="fab fa-spotify"></i>
+                                        @endif
+                                        @if ($song->deezerId)
+                                            <i class="fab fa-deezer"></i>
+                                        @endif
+                                        @if ($song->youtubeId)
+                                            <i class="fab fa-youtube"></i>
+                                        @endif
+                                        @if ($song->soundcloudId)
+                                            <i class="fab fa-soundcloud"></i>
+                                        @endif
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </a>
+                @endforeach
             </div>
 
             <div class="flex justify-center mt-6">
