@@ -57,7 +57,7 @@
                 class="cursor-pointer w-full px-4 py-2 font-medium tracking-wide text-white transition-colors duration-200 transform bg-blue-600 rounded-md dark:bg-gray-800 hover:bg-blue-500 dark:hover:bg-gray-700 focus:outline-none focus:bg-blue-500 dark:focus:bg-gray-700 disabled:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 value="{{ __('Register') }} "
                 type="submit"
-            disabled/>
+            />
         </form>
     </x-jet-authentication-card>
 </x-guest-layout>

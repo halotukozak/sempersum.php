@@ -25,7 +25,7 @@ class Show extends Component
         if (current_user() && current_user()->isModerator) {
             $this->song = Model::withTrashed()->withLikes()->where('slug', $song)->where('isOutOfDate', false)->latest()->firstOrFail();
         } else {
-            $this->song = Model::withLikes()->where('slug', $song)->firstOrFail();
+            $this->song = Model::withLikes()->where('slug', $song)->latest()->firstOrFail();
         }
         $this->liked = $this->song->isLikedBy(current_user());
 
@@ -105,8 +105,6 @@ class Show extends Component
 
     public function render()
     {
-        return view('livewire.song.show')->with(
-            'songbooks', current_user()->songbooks()->paginate(3)
-        );
+        return view('livewire.song.show')->with('songbooks', current_user()->songbooks()->paginate(3));
     }
 }

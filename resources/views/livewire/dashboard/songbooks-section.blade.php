@@ -1,5 +1,8 @@
 <div class="space-y-3"
      wire:poll>
+    <div class="bg-red-500 bg-opacity-50 w-full h-full z-50">
+
+    </div>
     <section
         class="flex flex-col max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 md:flex-row md:h-48">
         <div class="md:flex md:items-center md:justify-center md:w-1/2 md:bg-gray-700 md:dark:bg-gray-800">
@@ -26,12 +29,14 @@
                         type="text" placeholder="Wpisz hasło do śpiewnika..."
                         aria-label="Wpisz hasło do śpiewnika..."/>
                     <button
-                        class="px-4 py-3 text-sm font-medium tracking-widest text-gray-100 uppercase transition-colors duration-200 transform bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none">
+                        class="px-4 py-3 text-sm font-medium tracking-widest text-gray-100 uppercase transition-colors duration-200 transform bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none"
+                        disabled>
                         Dołącz
                     </button>
                 </div>
                 <x-jet-input-error for="password"></x-jet-input-error>
             </form>
+            <h2 class="text-lg font-bold text-white md:text-gray-100">Jeszcze niegotowe...</h2>
         </div>
     </section>
     @foreach($songbooks as $songbook)
