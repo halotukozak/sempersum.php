@@ -5,7 +5,6 @@ namespace App\Models;
 use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 /**
  * App\Models\Artist
  *
@@ -82,7 +81,7 @@ class Artist extends Model
                     $size = 0;
                     break;
             }
-            return Spotify::artist($this->spotify)->get()['images'][$size]['url'];
+            return $this->spotify('images')[$size]['url'];
         }
         return null;
     }
@@ -94,10 +93,10 @@ class Artist extends Model
         return $append ? "{$path}/{$append}" : $path;
     }
 
-    public function spotify($attribute = 'name')
+    public function spotify($attribute = 'url')
     {
         if ($this->spotify) {
-            if ($attribute = 'url') {
+            if ($attribute === 'url') {
                 return Spotify::artist($this->spotify)->get()['external_urls']['spotify'];
             }
             return Spotify::artist($this->spotify)->get()[$attribute];

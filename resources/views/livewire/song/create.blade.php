@@ -379,4 +379,15 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            window.onbeforeunload = confirmExit;
+
+            function confirmExit() {
+                if (@this.choice === false) {
+                    return "Czy na pewno chcesz opuścić stronę?";
+                }
+            }
+        </script>
+    @endpush
 </div>

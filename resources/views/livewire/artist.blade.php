@@ -1,4 +1,4 @@
-<div class="py-12">
+<div>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-2">
         <div class="mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
             @if($artist->spotify)
@@ -97,13 +97,13 @@
 
             </div>
         </div>
-        <div class="md:col-span-2 mx-auto w-full overflow-hidden bg- rounded-lg shadow-lg">
+        <div class="md:col-span-2 mx-auto w-full overflow-hidden bg- rounded-lg">
             @foreach ($songs as $song)
                 <a href="{{ $song->path() }}" wire:key="$song->id" class="p-1">
                     <div
                         class="flex max-w-lg mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
                         @if($song->cover())
-                            <img class="w-1/3" src="{{$song->cover()}}" alt="{{ $song->title }}'s cover">
+                            <img class="w-1/3 object-cover" src="{{$song->cover()}}" alt="{{ $song->title }}'s cover">
                         @else
                             <div class="w-1/3"></div>
                         @endif

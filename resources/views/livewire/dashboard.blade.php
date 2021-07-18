@@ -1,4 +1,4 @@
-<div>
+<div class="-m-0.5 md:-m-2">
     <nav class="bg-white shadow dark:bg-gray-800"
          x-data="{ open: true}">
         <div class="container px-6 py-3 mx-auto">
@@ -83,9 +83,9 @@
                 @break
 
                 @default
-                <livewire:dashboard.songbooks-section/>
+{{--                <livewire:dashboard.songbooks-section/>--}}
 
-{{--                <livewire:song.create/>--}}
+                <livewire:song.create/>
 
             @endswitch
         </div>

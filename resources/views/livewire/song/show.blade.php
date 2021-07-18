@@ -4,7 +4,7 @@
             <div
                 class="px-6 py-4 mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800 shadow-md mt-16 border-2 dark:border-blue-400 dark:border-opacity-75">
                 <div class="flex justify-center -mt-16 md:justify-end mb-3 ">
-                    @if($song->artist)
+                    @if($song->artist && $song->artist->avatar('md'))
                         <a href="{{ $song->artist->path() }}">
                             <img
                                 class="object-cover w-32 h-32 rounded-full border-2 dark:border-blue-400 dark:border-opacity-75"

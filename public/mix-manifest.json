@@ -1,6 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/theme-switcher.js": "/js/theme-switcher.js",
-    "/js/chord-hider.js": "/js/chord-hider.js",
-    "/css/app.css": "/css/app.css"
+    "/js/app.js": "/js/app.js?id=9e812e63f8c51ad8c52e",
+    "/js/theme-switcher.js": "/js/theme-switcher.js?id=b99f2f4d9c99f68748c6",
+    "/js/chord-hider.js": "/js/chord-hider.js?id=bf6d2b677967184c5be0",
+    "/css/app.css": "/css/app.css?id=36257e67eecbc4ba7cae"
 }

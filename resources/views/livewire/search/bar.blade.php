@@ -37,7 +37,7 @@
             @endif
         @empty
             <div class="block z-10 bg-white w-full rounded-t-none shadow-lg p-4 dark:bg-gray-800 dark:text-gray-300">
-                Przykro mi, ale nie wiem o co Ci chodzi...
+                Przykro mi, ale nie wiem co masz na myśli...
             </div>
         @endforelse
         <div class="fixed top-0 right-0 bottom-0 left-0" wire:click="resetBar"></div>

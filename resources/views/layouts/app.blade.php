@@ -28,10 +28,10 @@
 <x-jet-banner/>
 
 <div class="min-h-screen bg-gray-100 dark:bg-gray-900 bg-pattern">
-@livewire('navigation-menu')
+<livewire:navigation-menu />
 
 <!-- Page Content -->
-    <main class="p-2 md:p-0">
+    <main class="p-0.5 md:p-2">
         {{ $slot }}
     </main>
 </div>

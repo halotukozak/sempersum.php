@@ -124,31 +124,31 @@
 
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link>
-                <livewire:search.bar />
+                <livewire:search.bar/>
             </x-jet-responsive-nav-link>
         </div>
         <!-- Responsive Settings Options -->
-            @auth
-                <div class="flex items-center px-4">
-                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                        <div class="flex-shrink-0 mr-3">
-                            <img class="h-10 w-10 rounded-full object-cover"
-                                 src="{{ current_user()->profile_photo_url }}"
-                                 alt="{{ current_user()->name }}"/>
-                        </div>
-                    @endif
+        <x-jet-responsive-nav-link>
+            <button id="switchTheme"
+                    class="h-12 w-12 flex justify-center items-center focus:outline-none text-black dark:text-gray-300 dark:hover:text-gray-100">
+                <i class="fas fa-lightbulb" id="themeSwitcher"></i>
+            </button>
+        </x-jet-responsive-nav-link>
+        @auth
+            <div class="flex items-center px-4">
+                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                    <div class="flex-shrink-0 mr-3">
+                        <img class="h-10 w-10 rounded-full object-cover"
+                             src="{{ current_user()->profile_photo_url }}"
+                             alt="{{ current_user()->name }}"/>
+                    </div>
+                @endif
 
-                    <div>
+                <div>
                         <div class="font-medium text-base text-gray-800">{{ current_user()->name }}</div>
                         <div class="font-medium text-sm text-gray-500">{{ current_user()->email }}</div>
                     </div>
                 </div>
-                <x-jet-responsive-nav-link>
-                    <button id="switchTheme"
-                            class="h-12 w-12 flex justify-center items-center focus:outline-none text-black dark:text-gray-300 dark:hover:text-gray-100">
-                        <i class="fas fa-lightbulb" id="themeSwitcher"></i>
-                    </button>
-                </x-jet-responsive-nav-link>
             <div class="space-y-1">
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}"

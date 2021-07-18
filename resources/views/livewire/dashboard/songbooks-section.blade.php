@@ -21,25 +21,25 @@
         </div>
 
         <div class="flex items-center justify-center pb-6 md:py-0 md:w-1/2">
-            <form wire:submit.prevent="add" autocomplete="off" class="text-center">
-                <div class="flex flex-col overflow-hidden lg:flex-row rounded-lg border-2 border-gray-700">
-                    <input
-                        class="border-transparent px-6 py-3 text-gray-600 placeholder-gray-500 bg-white outline-none dark:bg-gray-800 dark:placeholder-gray-400 focus:placeholder-transparent dark:focus:placeholder-transparent focus:outline-none"
-                        wire:model="password"
-                        type="text" placeholder="Wpisz hasło do śpiewnika..."
-                        aria-label="Wpisz hasło do śpiewnika..."/>
-                    <button
-                        class="px-4 py-3 text-sm font-medium tracking-widest text-gray-100 uppercase transition-colors duration-200 transform bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none"
-                        disabled>
-                        Dołącz
-                    </button>
-                </div>
-                <x-jet-input-error for="password"></x-jet-input-error>
-            </form>
+{{--            <form wire:submit.prevent="add" autocomplete="off" class="text-center">--}}
+{{--                <div class="flex flex-col overflow-hidden lg:flex-row rounded-lg border-2 border-gray-700">--}}
+{{--                    <input--}}
+{{--                        class="border-transparent px-6 py-3 text-gray-600 placeholder-gray-500 bg-white outline-none dark:bg-gray-800 dark:placeholder-gray-400 focus:placeholder-transparent dark:focus:placeholder-transparent focus:outline-none"--}}
+{{--                        wire:model="password"--}}
+{{--                        type="text" placeholder="Wpisz hasło do śpiewnika..."--}}
+{{--                        aria-label="Wpisz hasło do śpiewnika..."/>--}}
+{{--                    <button--}}
+{{--                        class="px-4 py-3 text-sm font-medium tracking-widest text-gray-100 uppercase transition-colors duration-200 transform bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none"--}}
+{{--                        disabled>--}}
+{{--                        Dołącz--}}
+{{--                    </button>--}}
+{{--                </div>--}}
+{{--                <x-jet-input-error for="password"></x-jet-input-error>--}}
+{{--            </form>--}}
             <h2 class="text-lg font-bold text-white md:text-gray-100">Jeszcze niegotowe...</h2>
         </div>
     </section>
-    @foreach($songbooks as $songbook)
-        <livewire:songbook.index :songbook="$songbook" :key="$loop->index"/>
-    @endforeach
+{{--    @foreach($songbooks as $songbook)--}}
+{{--        <livewire:songbook.index :songbook="$songbook" :key="$loop->index"/>--}}
+{{--    @endforeach--}}
 </div>

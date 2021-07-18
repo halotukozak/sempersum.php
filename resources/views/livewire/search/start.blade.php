@@ -1,6 +1,6 @@
-<div class="p-6 bg-white w-full dark:bg-gray-600 rounded-lg">
+<div class="p-3 md:p-6 bg-white w-full dark:bg-gray-600 rounded-lg">
     <div class="pt-2 relative mx-auto text-gray-600 ">
-        <div class="flex mb-10 justify-center align-middle">
+        <div class="flex justify-center align-middle">
             <input wire:model.debounce.500ms="term"
                    wire:keydown.enter="$refresh"
                    onclick="this.select()"

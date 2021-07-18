@@ -95,9 +95,13 @@
                                     wire:click="selectOption({{$option->id}})"
                                     x-bind:class="{ 'bg-gray-200': selectedIndex === {{ $loop->index }}}"
                                     x-on:mouseover="selectedIndex = {{ $loop->index }}">
+                                    @if($option->avatar())
                                     <img
                                         src="{{ $option->avatar() }}"
                                         alt="" class="flex-shrink-0 h-6 w-6 rounded-full">
+                                    @else
+
+                                    @endif
                                     <span class="ml-3 block truncate">
                                       {{ $option->name }}
                                     </span>

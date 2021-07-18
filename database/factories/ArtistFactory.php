@@ -30,7 +30,7 @@ class ArtistFactory extends Factory
             'facebook' => $this->faker->url(),
             'instagram' => $this->faker->url(),
             'email' => $this->faker->email(),
-            'spotify' => $this->faker->randomElement(['3k4IXngEeRFfKiBNiUn4qV', '53l3yjX8ITilPIlCRsVKEB', '4X5vA3EzcDxZQxAcECzGqH']),
+            'spotify' => Spotify::searchArtists($this->faker->randomLetter())->limit(1)->get('artists')['items'][0]['id'],
             'youtube' => $this->faker->randomElement(['3k4IXngEeRFfKiBNiUn4qV', '53l3yjX8ITilPIlCRsVKEB', '4X5vA3EzcDxZQxAcECzGqH'])
         ];
     }

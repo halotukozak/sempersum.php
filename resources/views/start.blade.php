@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-jetstream::welcome />
+        <div class="max-w-7xl mx-auto lg:px-8">
+            <livewire:welcome />
         </div>
     </div>
 </x-app-layout>
