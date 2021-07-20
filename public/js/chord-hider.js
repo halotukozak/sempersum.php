@@ -1,1 +1,22 @@
-(()=>{var e;(e=document.getElementById("hide"))&&e.addEventListener("click",(function(e){spans=document.getElementsByClassName("chordLine");for(var n=0;null!=spans[n];)spans[n].classList.toggle("spanHidden"),n++}))})();
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!*************************************!*\
+  !*** ./resources/js/chord-hider.js ***!
+  \*************************************/
+(function () {
+  var hideButton = document.getElementById("hide");
+
+  if (hideButton) {
+    hideButton.addEventListener("click", function (event) {
+      spans = document.getElementsByClassName("chordLine");
+      var i = 0;
+
+      while (spans[i] != null) {
+        spans[i].classList.toggle("spanHidden");
+        i++;
+      }
+    });
+  }
+})();
+/******/ })()
+;

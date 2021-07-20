@@ -62,7 +62,7 @@ class Artist extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName() : string
     {
         return 'slug';
     }

@@ -41,6 +41,8 @@ class SongbooksSection extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.songbooks-section')->with('songbooks', current_user()->songbooks);
+        return view('livewire.dashboard.songbooks-section')
+            ->with('songbooks', current_user()->songbooks)
+            ;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Song;
 
 use App\Models\Song as Model;
 use App\Models\Songbook;
+use Illuminate\Support\Collection;
 use Laravel\Jetstream\ConfirmsPasswords;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,6 +16,7 @@ class Show extends Component
     public bool $liked;
     public int $preferred_streaming_service = 3;
     public array $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
+    public Collection $songbooks;
 
     use ConfirmsPasswords;
     use WithPagination;
@@ -28,6 +30,8 @@ class Show extends Component
             $this->song = Model::withLikes()->where('slug', $song)->latest()->firstOrFail();
         }
         $this->liked = $this->song->isLikedBy(current_user());
+
+        current_user() ? $this->songbooks = current_user()->songbooks()->paginate(3) : $this->songbooks = collect();
 
         if ($this->song->likes) {
             $this->likes = $this->song->likes;
@@ -98,13 +102,13 @@ class Show extends Component
         $songbook->toggleSong($this->song);
     }
 
-    public function paginationView()
+    public function paginationView() : string
     {
         return 'songbook-pagination';
     }
 
     public function render()
     {
-        return view('livewire.song.show')->with('songbooks', current_user()->songbooks()->paginate(3));
+        return view('livewire.song.show');
     }
 }

@@ -57,7 +57,7 @@
             </div>
         </div>
     </nav>
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto m-2 md:py-10 sm:px-6 lg:px-8">
         <div wire:loading
              class="z-20 absolute left-0 top-0 rounded-lg w-full h-full text-blue-500 text-center">
             <i class="fas fa-spinner animate-spin text-2xl absolute top-1/2 left-1/2"></i>
@@ -83,9 +83,9 @@
                 @break
 
                 @default
-{{--                <livewire:dashboard.songbooks-section/>--}}
+                <livewire:dashboard.songbooks-section/>
 
-                <livewire:song.create/>
+{{--                <livewire:song.create/>--}}
 
             @endswitch
         </div>
