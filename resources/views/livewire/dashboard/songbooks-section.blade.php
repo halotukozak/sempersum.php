@@ -1,8 +1,8 @@
 <div class="space-y-3"
-     wire:poll>
+wire:poll>
     <section
-        class="flex flex-col max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 md:flex-row md:h-48">
-        <div class="flex items-center md:justify-center bg-gray-700 dark:bg-gray-800">
+        class="flex mx-auto overflow-hidden rounded-lg shadow-lg bg-gray-700 dark:bg-gray-800 md:flex-row md:h-48">
+        <div class="flex items-center md:justify-center">
             <div class="px-6 py-6 md:px-8 md:py-0">
                 <h2 class="text-lg font-bold text-white md:text-gray-100">Twórz śpiewniki <span
                         class="text-blue-400">wspólnie</span>. </h2>
@@ -13,7 +13,6 @@
                    class="text-blue-400 p-4 tracking-wider hover:text-blue-500 font-bold">stwórz nowy śpiewnik</a>
                 </span>
             </div>
-
         </div>
     </section>
     @foreach($songbooks as $songbook)
