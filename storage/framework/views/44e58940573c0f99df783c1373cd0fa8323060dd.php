@@ -1,2 +1,0 @@
-<input type="checkbox" <?php echo $attributes->merge(['class' => 'rounded border-blue-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-800']); ?>>
-<?php /**PATH /opt/lampp/htdocs/sempersum/resources/views/vendor/jetstream/components/checkbox.blade.php ENDPATH**/ ?>
