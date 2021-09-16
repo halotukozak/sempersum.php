@@ -13,7 +13,6 @@
         "ext-pdo": "*",
         "aerni/laravel-spotify": "^1.6",
         "alaouy/youtube": "^2.2",
-        "andcarpi/laravel-popper": "^0.9.4",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",

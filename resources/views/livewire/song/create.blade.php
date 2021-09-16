@@ -42,10 +42,13 @@
                             @csrf
                             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 text-gray-700 dark:text-gray-200">
                                 <div class="col-span-full">
-                                    <i class="fas fa-question-circle text-xl" {{ Popper::pop(tip('info', 'To pole służy do wyszukiwania piosenek w serwisie <span style="color: #1DB954">Spotify <i class="fab fa-spotify"></i></span>. Po pokazaniu się wyników, możesz odsłuchać trzydziestosekundowego fragmentu. Dodając piosenkę w ten sposób, pole <strong>tytuł</strong> i <strong>artysta</strong> zostaną uzupełnione automatycznie.', 'Łatwe
-                                            dodawanie
-                                            piosenek za
-                                            pomocą Spotify')) }}></i>
+                                    To pole służy do wyszukiwania piosenek w serwisie <span style="color: #1DB954">Spotify <i
+                                            class="fab fa-spotify"></i></span>. Po pokazaniu się wyników, możesz
+                                    odsłuchać trzydziestosekundowego fragmentu. Dodając piosenkę w ten sposób, pole
+                                    <strong>tytuł</strong> i <strong>artysta</strong> zostaną uzupełnione automatycznie.
+                                    dodawanie
+                                    piosenek za
+                                    pomocą Spotify
                                     <label class="text-gray-700 dark:text-gray-200 text-xl text-semibold select-none">
                                         Łatwe
                                         dodawanie
@@ -57,11 +60,10 @@
 
                                 </div>
                                 <div>
-                                    <i
-                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', 'W tym polu podajemy jedynie tytuł utworu w oryginalnej pisowni.', "Tytuł")) }}></i>
+                                    'W tym polu podajemy jedynie tytuł utworu w oryginalnej pisowni.
 
                                     <label class="text-gray-700 dark:text-gray-200" for="title">Tytuł <span
-                                            class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
+                                            class="text-red-700">*</span></label>
 
                                     <input wire:model="title" id="title" type="text" placeholder="Wpisz tytuł..."
                                            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md
@@ -72,9 +74,9 @@
                                     <p class="text-red-500 text-sm p-1 font-semibold">@error('title'){{ $message }}@enderror</p>
                                 </div>
                                 <div>
-                                    <i class="fas fa-question-circle" {{ Popper::interactive()->pop(tip('info', 'To pole służy przypisaniu piosenki do artysty. Jeśli nie ma go w naszej bazie, należy zgłosić to nam.<a href="mailto:kontakt@sempersum.pl"
+                                    To pole służy przypisaniu piosenki do artysty. Jeśli nie ma go w naszej bazie, należy zgłosić to nam.<a href="mailto:kontakt@sempersum.pl"
            class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300"
-           aria-label="mail" target="_blank"><i class="fas fa-envelope"></i></a>', "Artysta")) }}></i>
+           aria-label="mail" target="_blank"><i class="fas fa-envelope"></i></a>
                                     <label
                                         class="text-gray-700 dark:text-gray-200"
                                         for="artist">
@@ -86,19 +88,17 @@
 
                                 </div>
                                 <div>
-                                    <i
-                                        class="fas fa-question-circle" {{ Popper::interactive()->pop(tip('info', 'Podanie oryginalnej tonacji (bez rozróżnienia na molowe, durowe etc.) ułatwia transpozycję. Jeśli nie potrafisz samodzielnie ustalić tonacji, skorzystaj np. z <a href="https://chordify.net"><strong>chordify</strong></a>.  ', "Tonacja")) }}></i>
+                                    Podanie oryginalnej tonacji (bez rozróżnienia na molowe, durowe etc.) ułatwia transpozycję. Jeśli nie potrafisz samodzielnie ustalić tonacji, skorzystaj np. z <a href="https://chordify.net"><strong>chordify</strong></a>.
 
                                     <label class="text-gray-700 dark:text-gray-200" for="key">Tonacja <span
-                                            class="text-red-700"  {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
+                                            class="text-red-700">*</span></label>
                                     <livewire:input.select name="key" :options="$keys" :default="$key"
                                                            placeholder="Wybierz tonację..."/>
                                     <p class="text-red-500 text-sm p-1 font-semibold">@error('key'){{ $message }}@enderror</p>
 
                                 </div>
                                 <div class="col-span-full ">
-                                    <i
-                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', '  Zamieszczając opracowanie w serwisie należy przestrzegać poniższych reguł:
+                                    Zamieszczając opracowanie w serwisie należy przestrzegać poniższych reguł:
                                     <ul class="list-disc text-gray-600 dark:text-gray-200 px-1">
                                         <li>Używanie angielskiej notacji (C, D, E, F, G, A, B, C)</li>
                                         <li>Oznaczanie akordów molowych poprzez dodanie „m”, (np. Dm), septymowych jako „7”, (np. A7).</li>
@@ -106,11 +106,11 @@
                                         <li>Zapisywanie akordy nad tekstem oraz powtarzanie ich przy każdej zwrotce.</li>
                                         <li>Pusty wers pomiędzy zwrotkami, refrenami, bridgami etc.</li>
                                         <li>Repetycja (np. /x2) odnosi się do fragmentu tekstu od jednej pustej linii do drugiej.</li>
-                                    </ul>', "Tekst")) }}></i>
+                                    </ul>
 
                                     <label for="text"
                                            class="text-gray-700 dark:text-gray-200">
-                                        Tekst piosenki <span class="text-red-700" {{ Popper::pop(tip("warning", "To pole jest wymagane", "")) }}>*</span></label>
+                                        Tekst piosenki <span class="text-red-700">*</span></label>
 
                                     <textarea
                                         wire:model="text"
@@ -191,8 +191,7 @@
                                     <p class="text-red-500 text-sm p-1 font-semibold">@error('text'){{ $message }}@enderror</p>
                                 </div>
                                 <div x-data="{ open : false }" @click.away="open = false">
-                                    <i
-                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', 'Wpisanie kilku tagów pomaga w wyszukiwaniu piosenek. Liczba obok nazwy pokazuje popularność danego tagu.', "Tagi")) }}></i>
+                                    Wpisanie kilku tagów pomaga w wyszukiwaniu piosenek. Liczba obok nazwy pokazuje popularność danego tagu.
                                     <label for="tags"
                                            class="text-gray-700 dark:text-gray-200">
                                         Tagi</label>
@@ -252,8 +251,7 @@
 
                                 </div>
                                 <div>
-                                    <i
-                                        class="fas fa-question-circle" {{ Popper::pop(tip('info', 'Warto podać link do teledysku.', "Link do YouTube")) }}></i>
+                                    Warto podać link do teledysku.
                                     <label class="text-gray-700 dark:text-gray-200" for="youtubeId">Link do YouTube<i
                                             class="fab fa-youtube p-1"></i></label>
                                     <input wire:model.debounce.500ms="youtubeId" id="youtubeId" type="text"

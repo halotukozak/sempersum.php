@@ -46,6 +46,5 @@
 @stack('scripts')
 
 
-@include('popper::assets')
 </body>
 </html>

@@ -35,7 +35,6 @@
                             <x-button-icon icon="fa fa-list-ul">Dodaj do śpiewnika</x-button-icon>
                         </x-slot>
                         <x-slot name="content">
-
                             @foreach($songbooks as $songbook)
                                 <x-jet-dropdown-link wire:click="toggleSongToSongbook({{$songbook->id}})">
 

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12">
+    <div class="lg:py-10">
         <div class="max-w-7xl mx-auto lg:px-8">
             <livewire:welcome />
         </div>

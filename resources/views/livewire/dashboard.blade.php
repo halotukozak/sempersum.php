@@ -30,6 +30,10 @@
                         <a href="{{ route('createSong') }}"
                            class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
                                 class="fa fa-plus p-2"></i>Dodaj piosenkę</a>
+                        <span
+                            wire:click="$set('page', 'create')"
+                            class="cursor-pointer px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"><i
+                                class="fa fa-list-ul p-2"></i>Dodaj piosenkę</span>
                         @can('verify', \App\Http\Livewire\Dashboard::class)
                             <span
                                 wire:click="$set('page','verify')"
@@ -83,9 +87,7 @@
                 @break
 
                 @default
-                <livewire:dashboard.songbooks-section/>
-
-{{--                <livewire:song.create/>--}}
+                <livewire:song.create/>
 
             @endswitch
         </div>

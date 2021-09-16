@@ -16,7 +16,7 @@ class Show extends Component
     public bool $liked;
     public int $preferred_streaming_service = 3;
     public array $keys = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#'];
-    public Collection $songbooks;
+//    public  $songbooks;
 
     use ConfirmsPasswords;
     use WithPagination;
@@ -31,7 +31,6 @@ class Show extends Component
         }
         $this->liked = $this->song->isLikedBy(current_user());
 
-        current_user() ? $this->songbooks = current_user()->songbooks()->paginate(3) : $this->songbooks = collect();
 
         if ($this->song->likes) {
             $this->likes = $this->song->likes;
@@ -109,6 +108,8 @@ class Show extends Component
 
     public function render()
     {
-        return view('livewire.song.show');
+        return view('livewire.song.show')
+            ->with('songbooks', current_user() ? $this->songbooks = current_user()->songbooks()->paginate(3) : $this->songbooks = collect()
+            );
     }
 }
