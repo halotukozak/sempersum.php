@@ -19,8 +19,8 @@ span.c {
 }
 
 .spanHidden {
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
     display: none;
     overflow: hidden;
 }
@@ -28,3 +28,19 @@ span.c {
 //* {
 //    border: 1px solid red;
 //}
+
+.label {
+    @apply text-gray-700 dark:text-gray-200
+}
+
+.info {
+    @apply text-gray-500 dark:text-gray-400 py-4 text-sm
+}
+
+.streaming_header {
+    @apply w-full px-8 py-6 text-left shadow rounded-md bg-gray-50 dark:bg-gray-900
+}
+
+.streaming_li {
+    @apply relative dark:bg-gray-800 rounded-md
+}

@@ -17,8 +17,7 @@ class Artist extends Component
 
     public function render()
     {
-        return view('livewire.artist')
-            ->with('songbooks', current_user() ? $this->songbooks = current_user()->songbooks()->paginate(3) : $this->songbooks = collect())
-;
+        return view('livewire.artist', [
+            'songbooks' => current_user() ? current_user()->songbooks()->paginate(3) : collect()]);
     }
 }

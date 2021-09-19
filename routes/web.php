@@ -17,7 +17,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/songbook/{songbook}', Manage::class)->name('songbook');
 });
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/song/create', Create::class)->name('createSong');
     Route::get('/song/{song}/edit', Create::class)->name('editSong');
 });
 

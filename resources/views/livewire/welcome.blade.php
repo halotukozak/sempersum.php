@@ -32,7 +32,7 @@
                             <h1 class="text-2xl font-bold text-gray-800 dark:text-white">{{ $song->title }}</h1>
                             <div class="flex justify-between mt-3 item-center">
                                 <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                                    {{ $song->artist->name }}
+                                    {{ $song->artist ? $song->artist->name : '' }}
                                 </p>
                             </div>
                         </div>

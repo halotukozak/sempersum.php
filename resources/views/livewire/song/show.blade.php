@@ -130,7 +130,7 @@
             <div class="dark:text-white p-2" x-data="{selected: {!! $preferred_streaming_service; !!} }">
                 <ul class="shadow-box space-y-2">
                     @if($song->youtubeId)
-                        <li class="relative dark:bg-gray-800 rounded-md">
+                        <li class="streaming_li">
                             <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md"
                                     @click="selected !== 1 ? selected = 1 : selected = null"
                                     x-bind:class="selected === 2 ? 'bg-gray-50 dark:bg-gray-900' : ''">
@@ -155,7 +155,7 @@
                         </li>
                     @endif
                     @if($song->spotifyId)
-                        <li class="relative dark:bg-gray-800 rounded-md">
+                        <li class="streaming_li">
                             <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md"
                                     @click="selected !== 2 ? selected = 2 : selected = null"
                                     x-bind:class="selected === 2 ? 'bg-gray-50 dark:bg-gray-900' : ''">
@@ -178,7 +178,7 @@
                         </li>
                     @endif
                     @if($song->soundcloudId)
-                        <li class="relative dark:bg-gray-800 rounded-md">
+                        <li class="streaming_li">
                             <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md"
                                     @click="selected !== 3 ? selected = 3 : selected = null"
                                     x-bind:class="selected === 3 ? 'bg-gray-50 dark:bg-gray-900' : ''">
@@ -201,7 +201,7 @@
                         </li>
                     @endif
                     @if($song->deezerId)
-                        <li class="relative dark:bg-gray-800 rounded-md">
+                        <li class="streaming_li">
                             <button type="button" class="w-full px-8 py-6 text-left shadow rounded-md"
                                     @click="selected !== 4 ? selected = 4 : selected = null"
                                     x-bind:class="selected === 4 ? 'bg-gray-50 dark:bg-gray-900' : ''">

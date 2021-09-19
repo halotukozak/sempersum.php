@@ -108,8 +108,8 @@ class Show extends Component
 
     public function render()
     {
-        return view('livewire.song.show')
-            ->with('songbooks', current_user() ? $this->songbooks = current_user()->songbooks()->paginate(3) : $this->songbooks = collect()
-            );
+        return view('livewire.song.show', [
+                'songbooks' => current_user() ? current_user()->songbooks()->paginate(10) : collect()]
+        );
     }
 }
