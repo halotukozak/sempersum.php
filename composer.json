@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4.10",
+        "php": "^8.0",
         "ext-curl": "*",
         "ext-pdo": "*",
         "aerni/laravel-spotify": "^1.6",

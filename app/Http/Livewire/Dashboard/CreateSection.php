@@ -188,7 +188,6 @@ class CreateSection extends Component
     {
         $song = request('song');
         if ($song) {
-            $song = SongModel::withLikes()->where('isOutOfDate', false)->where('slug', $song)->firstOrFail();
             if (!$song) {
                 abort(404);
             }

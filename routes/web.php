@@ -2,7 +2,6 @@
 
 use App\Http\Livewire\Artist;
 use App\Http\Livewire\Dashboard;
-use App\Http\Livewire\Song\Create;
 use App\Http\Livewire\Song\Show;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Songbook\Manage;
@@ -17,7 +16,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/songbook/{songbook}', Manage::class)->name('songbook');
 });
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/song/{song}/edit', Create::class)->name('editSong');
+    Route::get('/dashboard/{song}/edit', Dashboard::class)->name('editSong');
 });
 
 Route::get('/song/{song}', Show::class)->name('showSong');

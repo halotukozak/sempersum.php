@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Artist;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Spotify;
 
 class ArtistFactory extends Factory
 {
