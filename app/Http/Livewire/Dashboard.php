@@ -4,10 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Models\Song;
 use Livewire\Component;
+use Spotify;
 
 class Dashboard extends Component
 {
     public string $page = 'favourites';
+    public $podcast;
 
     public function mount(Song $song)
     {

@@ -96,6 +96,7 @@
                 <livewire:dashboard.favourites-section/>
 
             @endswitch
+
         </div>
     </div>
 </div>
