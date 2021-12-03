@@ -9,9 +9,10 @@ use App\Http\Livewire\Songbook\Manage;
 Route::get('/', function () {
     return view('start');
 })->name('start');
-
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+});
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/songbook', Manage::class)->name('createSongbook');
     Route::get('/songbook/{songbook}', Manage::class)->name('songbook');
 });

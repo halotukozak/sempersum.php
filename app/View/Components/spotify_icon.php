@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class spotify-icon extends Component
+class spotify_icon extends Component
 {
     /**
      * Create a new component instance.

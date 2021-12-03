@@ -116,18 +116,18 @@
                                 focus:border-blue-500 dark:focus:border-blue-500
                                 focus:outline-none focus:ring font-mono resize-none overflow-hidden"
                         ></textarea>
-                        @push('scripts')
-                            <script>
-                                HTMLTextAreaElement.prototype.getCaretPosition = function () { //return the caret position of the textarea
-                                    return this.selectionStart;
-                                };
-                                HTMLTextAreaElement.prototype.setCaretPosition = function (position) { //change the caret position of the textarea
-                                    this.selectionStart = position;
-                                    this.selectionEnd = position;
-                                    this.focus();
-                                };
-                                HTMLTextAreaElement.prototype.hasSelection = function () { //if the textarea has selection then return true
-                                    return this.selectionStart !== this.selectionEnd;
+
+                        <script defer>
+                            HTMLTextAreaElement.prototype.getCaretPosition = function () { //return the caret position of the textarea
+                                return this.selectionStart;
+                            };
+                            HTMLTextAreaElement.prototype.setCaretPosition = function (position) { //change the caret position of the textarea
+                                this.selectionStart = position;
+                                this.selectionEnd = position;
+                                this.focus();
+                            };
+                            HTMLTextAreaElement.prototype.hasSelection = function () { //if the textarea has selection then return true
+                                return this.selectionStart !== this.selectionEnd;
                                 };
                                 HTMLTextAreaElement.prototype.getSelectedText = function () { //return the selection text
                                     return this.value.substring(this.selectionStart, this.selectionEnd);
@@ -171,7 +171,7 @@
                                     }
                                 }
                             </script>
-                    @endpush
+
                     <p class="text-red-500 text-sm p-1 font-semibold">@error('text'){{ $message }}@enderror</p>
 
 
